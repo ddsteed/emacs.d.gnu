@@ -7,30 +7,6 @@
 ;; You may delete these explanatory comments.
 (package-initialize)
 
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(auto-compression-mode t nil (jka-compr))
- '(case-fold-search t)
- '(column-number-mode t)
- '(display-time-mode t nil (time))
- '(fortran-comment-indent-char "")
- '(fortran-comment-region "C *")
- '(frame-background-mode nil)
- '(line-spacing 5)
- '(package-selected-packages
-   '(org-roam-server org-roam-bibtex org-roam org-ref monokai-theme monochrome-theme monokai-alt-theme darkokai-theme color-theme cal-china-x apropospriate-theme))
- '(paren-match-face 'paren-face-match-light)
- '(paren-sexp-mode t)
- '(safe-local-variable-values
-   '((todo-categories "Todo" "Todo" "Todo" "Todo" "Todo" "work" "Todo")))
- '(show-paren-mode t nil (paren))
- '(size-indication-mode t)
- '(tool-bar-mode nil nil (tool-bar))
- '(tooltip-mode nil nil (tooltip)))
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; 
 ;; 取消万恶的tab对齐方式，否则用emacs以外的其它编辑器无法正确显示空白
 (setq-default indent-tabs-mode nil)
@@ -40,6 +16,16 @@
 (global-visual-line-mode t)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; 
+;; general variables
+(column-number-mode t)    ;; status bar 显示列
+(display-time-mode t)     ;; status bar 显示时间
+
+(setq-default line-spacing 5)     ;; 设置行间距
+
+(size-indication-mode t)
+(tool-bar-mode nil)
+(tooltip-mode nil)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; 
 ;; key bindings for Hao Feng (RDS)
 (global-set-key [(meta left)]  'backward-sexp)				
