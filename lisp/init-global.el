@@ -1,0 +1,223 @@
+;; Global variables
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; 
+;; Added by Package.el.  This must come before configurations of
+;; installed packages.  Don't delete this line.  If you don't want it,
+;; just comment it out by adding a semicolon to the start of the line.
+;; You may delete these explanatory comments.
+(package-initialize)
+
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(auto-compression-mode t nil (jka-compr))
+ '(case-fold-search t)
+ '(column-number-mode t)
+ '(display-time-mode t nil (time))
+ '(fortran-comment-indent-char "")
+ '(fortran-comment-region "C *")
+ '(frame-background-mode nil)
+ '(line-spacing 5)
+ '(package-selected-packages
+   '(org-roam-server org-roam-bibtex org-roam org-ref monokai-theme monochrome-theme monokai-alt-theme darkokai-theme color-theme cal-china-x apropospriate-theme))
+ '(paren-match-face 'paren-face-match-light)
+ '(paren-sexp-mode t)
+ '(safe-local-variable-values
+   '((todo-categories "Todo" "Todo" "Todo" "Todo" "Todo" "work" "Todo")))
+ '(show-paren-mode t nil (paren))
+ '(size-indication-mode t)
+ '(tool-bar-mode nil nil (tool-bar))
+ '(tooltip-mode nil nil (tooltip)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; 
+;; 取消万恶的tab对齐方式，否则用emacs以外的其它编辑器无法正确显示空白
+(setq-default indent-tabs-mode nil)
+(setq tab-width 4)
+
+;; wrap lines at word boundary
+(global-visual-line-mode t)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; 
+;; key bindings for Hao Feng (RDS)
+(global-set-key [(meta left)]  'backward-sexp)				
+(global-set-key [(meta right)] 'forward-sexp)				
+
+(global-set-key (kbd "s-a") 'mark-whole-buffer) ;; 对应Windows上面的Ctrl-a 全选
+(global-set-key (kbd "s-c") 'kill-ring-save)    ;; 对应Windows上面的Ctrl-c 复制
+(global-set-key (kbd "s-s") 'save-buffer)       ;; 对应Windows上面的Ctrl-s 保存
+(global-set-key (kbd "s-v") 'yank)              ;; 对应Windows上面的Ctrl-v 粘贴
+(global-set-key (kbd "s-z") 'undo)              ;; 对应Windows上面的Ctrol-z 撤销
+(global-set-key (kbd "s-x") 'kill-region)       ;; 对应Windows上面的Ctrol-x 剪切
+
+;;;;;;
+;; 重新绑定设定块标记的命令
+(global-set-key (kbd "C-\\") 'set-mark-command)
+
+;;;;;;
+;; 快速跳转到某一行
+(global-set-key (kbd "M-g l") 'goto-line)
+
+;;;;;;
+;; 重新定义更换buffer名字的命令
+(global-set-key (kbd "C-c n") 'rename-buffer)
+
+;;;;;;
+;; 我经常会删除多个连续的空格，可Emacs没有提供这个功能，我只好自己写了一
+;; 个，这可是我写的第一个elisp哟 :-) 
+(defun delete-blank-chars ()
+  (interactive)
+  (while (or (looking-at " ")		; 如果是空格
+             (looking-at "\n"))		; 如果是回车符
+    (delete-char 1)))
+
+(global-set-key "\C-x\C-a" 'delete-blank-chars)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; 在 ~/.emacs 里设置 load-path，这样我把 lisp 文件放到 load-path 里任何
+;; 一个目录都行。
+
+(add-to-list 'load-path "~/.emacs.d/site-lisp")
+(add-to-list 'load-path "~/.emacs.d/addons")
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; 将反悔步长取长点，即可以反悔到很久以前的情况。默认值是30，我觉得太少了
+(setq kill-ring-max 10000)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; 如果在shell模式下需要输入密码，为了安全性设置密码显示为 *		
+(add-hook 'comint-output-filter-functions				
+          'comint-watch-for-password-prompt)				
+									
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; 如果不在X窗口下就不要menu-bar					
+(if (equal window-system nil)
+    (menu-bar-mode nil))
+
+;;;;;;
+;; 把讨厌的menu下的图标去掉
+(tool-bar-mode -1)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; 取消scroll-bar
+(set-scroll-bar-mode nil)  ; no scroll bar, even in X-Window system
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; 在标题栏显示buffer的名字						
+(setq frame-title-format "Life is too short to be little! @ %b")
+(setq user-full-name "RDS") 
+									
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; 光标不要闪烁								
+;; (blink-cursor-mode -1)		
+					
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; 不要总是没完没了地问yes或no，直接用y/n                               
+(fset 'yes-or-no-p 'y-or-n-p)						
+									
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; 递增地搜索单词
+(setq search-whitespace-regexp "[ \t\r\n]+")				
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; 对打开的文件显示行号
+;; (require 'display-line-numbers)
+
+;; (set 'display-line-numbers-certain-modes '(masm-mode nasm-mode))
+;; (defun display-line-numbers--turn-on ()
+;;   "turn on line numbers in certain majore modes defined in `display-line-numbers-certain-modes'"
+;;   (if (and
+;;        (member major-mode display-line-numbers-certain-modes)
+;;        (not (minibufferp)))
+;;       (display-line-numbers-mode)))
+
+;; (global-display-line-numbers-mode)
+
+(global-linum-mode 1) ; always show line numbers                              
+
+;; 设置行号宽度
+(setq linum-format "%4d ")
+
+;; (custom-set-faces
+;;  '(linum ((t (:inherit (shadow default) :foreground "yellow")))))
+
+;; 设置行号的大小
+(custom-set-faces
+ '(linum ((nil (:height 100)))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; 所有的备份文件转移到~/.emacs.d/backups目录下 
+;; (setq version-control t)
+;; (setq kept-old-versions 1)
+;; (setq kept-new-versions 1)
+;; (setq delete-old-versions t)
+  
+;; (setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
+;; (setq backup-by-copying t)
+
+;; set auto save
+(setq-default auto-save-timeout 15) ; 15秒无动作,自动保存
+(setq-default auto-save-interval 100) ; 100个字符间隔, 自动保存
+
+;; close backup files
+(setq make-backup-files nil)
+  
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; 交换两个buffer的内容
+(defun switch-buffers ()
+"Switch the two buffers in current window and next window."
+(interactive)
+(if (one-window-p)
+    (message "There is only one window!")
+  (let ((buffer1 (current-buffer))
+(buffer2 (window-buffer (next-window))))
+    (switch-to-buffer buffer2)
+    (set-window-buffer (next-window) buffer1))))
+
+(define-key global-map (kbd "\C-c b") 'switch-buffers)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; 用 ibuffer 帮助分析 buffer
+(require 'ibuffer)
+(global-set-key (kbd "C-x C-b") 'ibuffer)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; 
+;; merge the Emacs kill-ring with the clipboard
+(setq select-enable-clipboard t)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; 
+;; 彩色显示
+; 开启全局 hi lock 模式
+(global-hi-lock-mode 1) 
+
+;避免每次开启 hi lock mode 时询问是否需要高亮指定表达式
+(setq hi-lock-file-patterns-policy #'(lambda (dummy) t)) 
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; 
+; Automatically save and restore sessions
+;; (load "desktop")		  ; 这条语句似乎会导致Aquamacs崩溃，而且不用desktop save也可以工作
+
+(setq desktop-dirname             "~/.emacs.d/"
+      desktop-base-file-name      "emacs.desktop"
+      desktop-base-lock-name      "lock"
+      desktop-path                (list desktop-dirname)
+      desktop-save                t
+      desktop-files-not-to-save   "^$" ;reload tramp paths
+      desktop-load-locked-desktop nil)
+(desktop-save-mode 1)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; eshell path
+
+(setenv "andconda_path" "/opt/anaconda3")
+(setenv "feng_bin" "/Users/fenghao/Work/home1/feng/BIN")
+(setenv "local_bin" "/usr/local/bin")
+(setenv "PATH" (concat (getenv "PATH")
+                       ":" (getenv "anaconda_path") "/bin" 
+                       ":" (getenv "feng_bin")
+                       ":" (getenv "local_bin")
+                       ))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(provide 'init-global)
