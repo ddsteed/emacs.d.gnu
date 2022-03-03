@@ -10,15 +10,21 @@
 
 ;; 下面每一个被require的feature都对应一个lisp/目录下的同名elisp文件，
 ;; 例如init-global.el、init-elpa.el
+
+(require 'init-elpa)     ;; package installation
 (require 'init-global)   ;; global variables
 (require 'init-execpath) ;; eshell path
 (require 'init-look)     ;; look face
-(require 'init-elpa)     ;; package installation
 (require 'init-language) ;; programming language style
 (require 'init-org)      ;; org mode
 (require 'init-markdown) ;; markdown mode
 (require 'init-cal)      ;; calendar
+(require 'init-git)      ;; magit 
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; 设置一个空的custom file，这样系统默认的custom 就不会每次自动写入inti.el
+(setq custom-file "~/.emacs.d/custom.el")
+      
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; server start automatically
 (require 'server)

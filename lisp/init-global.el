@@ -1,13 +1,6 @@
 ;; Global variables
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; 
-;; Added by Package.el.  This must come before configurations of
-;; installed packages.  Don't delete this line.  If you don't want it,
-;; just comment it out by adding a semicolon to the start of the line.
-;; You may delete these explanatory comments.
-(package-initialize)
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; 
 ;; 取消万恶的tab对齐方式，否则用emacs以外的其它编辑器无法正确显示空白
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 4)
@@ -163,7 +156,6 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; 
 ; Automatically save and restore sessions
-
 (setq desktop-dirname             "~/.emacs.d/"
       desktop-base-file-name      "emacs.desktop"
       desktop-base-lock-name      "lock"
@@ -172,6 +164,39 @@
       desktop-files-not-to-save   "^$" ;reload tramp paths
       desktop-load-locked-desktop nil)
 (desktop-save-mode 1)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; 
+;; 增强 minibuffer 补全：vertico 和 Orderless
+(package-install 'vertico)
+(vertico-mode t)
+
+(package-install 'orderless)
+(setq completion-styles '(orderless))
+ 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; 配置 Marginalia 增强 minubuffer 的 annotation
+(package-install 'marginalia)
+(marginalia-mode t)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; modeline上显示我的所有的按键和执行的命令
+(package-install 'keycast)
+(keycast-mode t)
+  
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; minibuffer action 和自适应的 context menu：Embark
+(package-install 'embark)
+(global-set-key (kbd "C-;") 'embark-act)
+(setq prefix-help-command 'embark-prefix-help-command)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; 增强文件内搜索和跳转函数定义：Consult
+(package-install 'consult)
+(global-set-key (kbd "C-s") 'consult-line)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; 高亮当前行，当文本内容很多时可以很容易找到光标的位置。
+(global-hl-line-mode 1)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (provide 'init-global)
