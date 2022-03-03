@@ -10,7 +10,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; 
 ;; 取消万恶的tab对齐方式，否则用emacs以外的其它编辑器无法正确显示空白
 (setq-default indent-tabs-mode nil)
-(setq tab-width 4)
+(setq-default tab-width 4)
 
 ;; wrap lines at word boundary
 (global-visual-line-mode t)
@@ -31,12 +31,12 @@
 (global-set-key [(meta left)]  'backward-sexp)				
 (global-set-key [(meta right)] 'forward-sexp)				
 
-(global-set-key (kbd "s-a") 'mark-whole-buffer) ;; 对应Windows上面的Ctrl-a 全选
-(global-set-key (kbd "s-c") 'kill-ring-save)    ;; 对应Windows上面的Ctrl-c 复制
-(global-set-key (kbd "s-s") 'save-buffer)       ;; 对应Windows上面的Ctrl-s 保存
-(global-set-key (kbd "s-v") 'yank)              ;; 对应Windows上面的Ctrl-v 粘贴
-(global-set-key (kbd "s-z") 'undo)              ;; 对应Windows上面的Ctrol-z 撤销
-(global-set-key (kbd "s-x") 'kill-region)       ;; 对应Windows上面的Ctrol-x 剪切
+(global-set-key (kbd "s-a") 'mark-whole-buffer) ;; 对应Windows上面的 Ctrl-a 全选
+(global-set-key (kbd "s-c") 'kill-ring-save)    ;; 对应Windows上面的 Ctrl-c 复制
+(global-set-key (kbd "s-s") 'save-buffer)       ;; 对应Windows上面的 Ctrl-s 保存
+(global-set-key (kbd "s-v") 'yank)              ;; 对应Windows上面的 Ctrl-v 粘贴
+(global-set-key (kbd "s-z") 'undo)              ;; 对应Windows上面的 Ctrl-z 撤销
+(global-set-key (kbd "s-x") 'kill-region)       ;; 对应Windows上面的 Ctrl-x 剪切
 
 ;;;;;;
 ;; 重新绑定设定块标记的命令
@@ -108,18 +108,7 @@
 (setq search-whitespace-regexp "[ \t\r\n]+")				
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; 对打开的文件显示行号
-;; (require 'display-line-numbers)
-
-;; (set 'display-line-numbers-certain-modes '(masm-mode nasm-mode))
-;; (defun display-line-numbers--turn-on ()
-;;   "turn on line numbers in certain majore modes defined in `display-line-numbers-certain-modes'"
-;;   (if (and
-;;        (member major-mode display-line-numbers-certain-modes)
-;;        (not (minibufferp)))
-;;       (display-line-numbers-mode)))
-
-;; (global-display-line-numbers-mode)
+;; 设置行号
 
 (global-linum-mode 1) ; always show line numbers                              
 
@@ -134,15 +123,6 @@
  '(linum ((nil (:height 100)))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; 所有的备份文件转移到~/.emacs.d/backups目录下 
-;; (setq version-control t)
-;; (setq kept-old-versions 1)
-;; (setq kept-new-versions 1)
-;; (setq delete-old-versions t)
-  
-;; (setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
-;; (setq backup-by-copying t)
-
 ;; set auto save
 (setq-default auto-save-timeout 15) ; 15秒无动作,自动保存
 (setq-default auto-save-interval 100) ; 100个字符间隔, 自动保存
@@ -163,6 +143,7 @@
     (set-window-buffer (next-window) buffer1))))
 
 (define-key global-map (kbd "\C-c b") 'switch-buffers)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 用 ibuffer 帮助分析 buffer
 (require 'ibuffer)
@@ -182,7 +163,6 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; 
 ; Automatically save and restore sessions
-;; (load "desktop")		  ; 这条语句似乎会导致Aquamacs崩溃，而且不用desktop save也可以工作
 
 (setq desktop-dirname             "~/.emacs.d/"
       desktop-base-file-name      "emacs.desktop"
@@ -192,18 +172,6 @@
       desktop-files-not-to-save   "^$" ;reload tramp paths
       desktop-load-locked-desktop nil)
 (desktop-save-mode 1)
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; eshell path
-
-(setenv "andconda_path" "/opt/anaconda3")
-(setenv "feng_bin" "/Users/fenghao/Work/home1/feng/BIN")
-(setenv "local_bin" "/usr/local/bin")
-(setenv "PATH" (concat (getenv "PATH")
-                       ":" (getenv "anaconda_path") "/bin" 
-                       ":" (getenv "feng_bin")
-                       ":" (getenv "local_bin")
-                       ))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (provide 'init-global)

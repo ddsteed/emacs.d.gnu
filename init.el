@@ -11,6 +11,7 @@
 ;; 下面每一个被require的feature都对应一个lisp/目录下的同名elisp文件，
 ;; 例如init-global.el、init-elpa.el
 (require 'init-global)   ;; global variables
+(require 'init-execpath) ;; eshell path
 (require 'init-look)     ;; look face
 (require 'init-elpa)     ;; package installation
 (require 'init-language) ;; programming language style
