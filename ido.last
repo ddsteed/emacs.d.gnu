@@ -1,0 +1,33 @@
+;;; -*- coding: utf-8 -*-
+
+;; ----- ido-last-directory-list -----
+(
+ ("/Users/fengh/" . "Desktop/")
+)
+
+;; ----- ido-work-directory-list -----
+(
+ "/Users/fengh/.emacs.d/lisp/"
+ "/Users/fengh/Desktop/"
+)
+
+;; ----- ido-work-file-list -----
+(
+ "HW1.ipynb"
+)
+
+;; ----- ido-dir-file-cache -----
+(
+ ("/Users/fengh/.emacs.d/lisp/" (25120 50920 157147 829000) "init-language.el" "init-markdown.el" "init-org.el" "init-execpath.el" "init-git.el" "init-cal.el" "init-elpa.el" "init-global.el" "init-look.el" "../" "./")
+
+ ("/Users/fengh/Desktop/" (25120 45857 898401 659000) "HW1.ipynb" ".DS_Store" "../" "./")
+
+ ("/Users/" (25088 15363 0 0) "opt/" "Movies/" "Teaching/" "RDS Library/" "JOURNALS/" "Shared/" "fengh/" ".localized" "APP_SOURCE/" "../" "./")
+
+ ("/Users/fengh/" (25120 50039 887581 793000) ".cmake/" ".conda/" ".viminfo" ".gitconfig" ".cache/" ".continuum/" ".redhat/" ".python_history" "Downloads/" ".rediscli_history" ".oh-my-zsh/" ".Xauthority" ".kite/" ".bash_profile" ".m2/" ".vscode/" ".mysql_history" ".tmux/" "Documents/" ".npm/" ".zcompdump" ".jupyter/" ".gitflow_export" ".Trash/" ".zinit/" ".vimrc" "Movies/" ".ssh/" ".pip/" ".anaconda/" "Work/" ".tcshrc" ".rviz2/" "Public/" ".cups/" ".p10k.zsh" ".gitignore_global" ".android/" ".emacs.d/" ".git-completion.bash" ".matplotlib/" "Library/" "Desktop/" ".iterm2_shell_integration.zsh" ".ipython/" ".zsh_history" ".zcompdump-Hao’s MacBook Pro-5.8" ".gitk" ".sts4/" ".zprofile" ".powerlevel10k/" "Pictures/" ".local/" ".zshrc" ".ros/" ".wget-hsts" ".hgignore_global" ".CFUserTextEncoding" ".tmux.conf" ".gnupg/" ".DS_Store" ".vim/" ".anyconnect" ".aliyun/" ".condarc" ".eshell/" "Music/" "Init/" ".config/" ".molpro/" "Research/" "../" "./")
+
+ ("/Users/fengh/.emacs.d/" (25120 50044 537567 287000) "emacs.desktop" ".git/" "elpa/" "request/" ".gitignore" "org-clock-save.el" "init.el" "auto-save-list/" "custom.el" "lock" "addons/" "transient/" "elpy/" "lisp/" "snippets/" "../" "./")
+)
+
+;; ----- ido-unc-hosts-cache -----
+t

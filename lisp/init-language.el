@@ -23,7 +23,7 @@
 (require 'elpy nil t)  
 (elpy-enable)  
 
-(setq elpy-rpc-python-command "/usr/HOmebrew/bin/python3")  ;; python3
+(setq elpy-rpc-python-command "/opt/Homebrew/bin/python3")  ;; python3
 
 ;; for ipython notebook
 (defvar myPackages
