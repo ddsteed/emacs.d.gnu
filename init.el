@@ -18,7 +18,8 @@
 (require 'init-org)      ;; org mode
 (require 'init-markdown) ;; markdown mode
 (require 'init-cal)      ;; calendar
-(require 'init-git)      ;; magit 
+(require 'init-git)      ;; magit
+(require 'init-wolfram)  ;; wolfram mathematica
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 设置一个空的custom file，这样系统默认的custom 就不会每次自动写入inti.el
