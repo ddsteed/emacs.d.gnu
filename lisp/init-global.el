@@ -33,7 +33,6 @@
 (global-set-key (kbd "s-x") 'kill-region)       ; 对应Windows上面的 Ctrl-x 剪切
 
 (global-set-key (kbd "C-\\") 'set-mark-command) ; 重新绑定设定块标记的命令
-(global-set-key (kbd "M-g l") 'goto-line)       ; 快速跳转到某一行
 (global-set-key (kbd "C-c n") 'rename-buffer)   ; 重新定义更换buffer名字的命令
 
 ;; 

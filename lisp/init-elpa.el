@@ -11,12 +11,9 @@
 ;; M-x list-packages    (list packages)
 (require 'package)
 
-;; (setq package-archives '(("gnu"   . "http://elpa.emacs-china.org/gnu/")
-;;                          ("melpa" . "http://elpa.emacs-china.org/melpa/")
-;;                         ))
-
 (setq package-archives '(("gnu"   . "http://elpa.zilongshanren.com/gnu/")
-                         ("melpa" . "http://elpa.zilongshanren.com/melpa/")
+                         ("melpa" . "https://melpa.org/packages/")
+                         ("elpa"  . "https://elpa.gnu.org/packages/")
                          ))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

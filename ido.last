@@ -7,14 +7,17 @@
 
 ;; ----- ido-work-directory-list -----
 (
- "/Users/fengh/Work/home3/feng/temp/job1/"
  "/Users/fengh/.emacs.d/lisp/"
+ "/Users/fengh/Research/ROS/SETUP/src/"
+ "/Users/fengh/Work/home3/feng/temp/job1/emacs/"
+ "/Users/RDS Library/wizardforcel/SICP in Python (1299)/"
+ "/Users/RDS Library/Jin Yong/"
  "/Users/fengh/.emacs.d/"
- "/Users/fengh/Init/"
  "/Users/fengh/Work/GTD/"
+ "/Users/fengh/Work/home3/feng/temp/job1/"
+ "/Users/fengh/Init/"
  "/Users/fengh/Documents/RDS/NOTES/Org/after_reading/"
  "/Users/RDS Library/Bob Glickstein/Writing GNU Emacs Extensions (1257)/"
- "/Users/fengh/Research/ROS/SETUP/src/"
  "/opt/ros/noetic_src/src/catkin/bin/"
  "/usr/local/opt/log4cxx/include/log4cxx/"
  "/Users/fengh/Research/ROS/noetic/src/rosconsole/src/rosconsole/impl/"
@@ -24,6 +27,10 @@
 
 ;; ----- ido-work-file-list -----
 (
+ "Read.org"
+ "Study.org"
+ "Work.org"
+ "tt.el"
  "test.el"
  "Research.org"
  "rosconsole_log4cxx.cpp"
@@ -32,7 +39,21 @@
 
 ;; ----- ido-dir-file-cache -----
 (
- ("/Users/fengh/Desktop/" (25125 28841 935894 920000) ".DS_Store" "../" "./")
+ ("/Users/fengh/Work/home3/feng/temp/job1/emacs/" (25126 51859 114921 872000) "src/" "autogen.sh" "nextstep/" "aclocal.m4" "Makefile.in" "modules/" ".git/" ".gitlab-ci.yml" "config.bat" "lib-src/" "config.log" "doc/" "m4/" "lwlib/" "lib/" "ChangeLog.1" ".gitattributes" ".clang-format" "CONTRIBUTE" ".gitignore" "COPYING" "INSTALL.REPO" "make-dist" "README" "leim/" "oldXMenu/" "BUGS" "admin/" "etc/" "msdos/" "autom4te.cache/" "ChangeLog.2" "configure" "test/" "nt/" "ChangeLog.3" "INSTALL" "lisp/" "configure.ac" "build-aux/" "configure~" ".dir-locals.el" "GNUmakefile" "../" "./")
+
+ ("/Users/RDS Library/wizardforcel/SICP in Python (1299)/" (25125 27919 943084 909000) "cover.jpg" "metadata.opf" "SICP in Python - wizardforcel.epub" "../" "./")
+
+ ("/Users/RDS Library/Jin Yong/" (24997 39679 135298 491000) "Shu Jian En Chou Lu (240)/" "She Diao Ying Xiong Chuan (226)/" "Jin Yong Xiao Shuo Quan Ji (San Lian Ban ) (237)/" "Shen Diao Xia Lu (241)/" "Fei Hu Wai Chuan (234)/" "Xia Ke Xing (223)/" "Tian Long Ba Bu (231)/" "Xiao Ao Jiang Hu (233)/" "Jin Yong Xiao Shuo Quan Ji (Xin Xiu Ban ) (230)/" "Lu Ding Ji (229)/" "Jin Yong Xiao Shuo Quan Ji (Lian Zai Chu Hui Ben ) (236)/" "Bai Ma Xiao Xi Feng (238)/" "Yi Tian Tu Long Ji (228)/" "Jin Yong Xiao Shuo Quan Ji (Xin Xiu Ban ) (1043)/" "Yue Nu Jian (225)/" "Bi Xie Jian (235)/" ".DS_Store" "Xue Shan Fei Hu (227)/" "Yuan Yang Dao (239)/" "Lian Cheng Jue (232)/" "../" "./")
+
+ ("/Users/fengh/.emacs.d/lisp/" (25126 45308 481351 710000) "init-language.el" "init-markdown.el" "init-org.el" "init-execpath.el" "init-git.el" "init-cal.el" "init-elpa.el" "init-global.el" "init-look.el" "../" "./")
+
+ ("/Users/fengh/.emacs.d/" (25126 47596 261915 349000) "emacs.desktop" ".git/" "elpa/" "request/" ".gitignore" "org-clock-save.el" "init.el" "auto-save-list/" "custom.el" "lock" "addons/" "transient/" "elpy/" "lisp/" "ido.last" "snippets/" "../" "./")
+
+ ("/Users/fengh/Work/GTD/" (25126 47264 983878 429000) "Study.org_archive" "Personal.org" "Read.org" "Startup.org" "Study.org" "Inbox.org" "Tickler.org" "Research.org" "Personal.org_archive" "Research.org_archive" "Startup.org_archive" "Work.org" "Read.org_archive" "Work.org_archive" "../" "./")
+
+ ("/Users/fengh/Work/home3/feng/temp/job1/" (25125 49249 143214 655000) "tt.el" "test.el" "../" "./")
+
+ ("/Users/fengh/Desktop/" (25125 40219 555957 991000) ".DS_Store" "../" "./")
 
  ("/Users/fengh/Research/ROS/noetic/src/geometry2/tf2/" (25121 27077 339560 285000) "src/" "CHANGELOG.rst" "mainpage.dox" "include/" "package.xml" "test/" "CMakeLists.txt" "index.rst" "../" "./")
 
@@ -44,15 +65,7 @@
 
  ("/Users/fengh/Documents/RDS/NOTES/Org/after_reading/" (25124 29846 512131 295000) "scienceinsoul.org" "social_psychology.org" "apromisedland.org" "the_road_to_character.org" "cannot_forget.org" "cannot_forget.html" "leading_matters.org" "100philosophy.org" ".DS_Store" "index.html" "seen_justice.org" "index.org" "../" "./")
 
- ("/Users/fengh/Work/GTD/" (25125 29710 548600 369000) "Study.org_archive" "Personal.org" "Read.org" "Startup.org" "Study.org" "Inbox.org" "Tickler.org" "Research.org" "Personal.org_archive" "Research.org_archive" "Startup.org_archive" "Work.org" "Read.org_archive" "Work.org_archive" "../" "./")
-
  ("/Users/fengh/Init/" (25125 32212 825010 91000) "ghproxy" "convert" "git" "compiler" "gitraws" "w2m" ".git/" "mconda" "arm" "aconda" "git7" "mysql" "linux" "x86" "github" "gitclone" "gitseven" "gitcnp" "java" "llvm" "brew" "foxysrc" "multipass" "color" "ll" "ob" "redis" "conda" "dcm" "gitfast" "ros" "foxy" "d2m" "intel" "../" "./")
-
- ("/Users/fengh/.emacs.d/" (25125 37725 399443 914000) "emacs.desktop" ".git/" "elpa/" "request/" ".gitignore" "org-clock-save.el" "init.el" "auto-save-list/" "custom.el" "lock" "addons/" "transient/" "elpy/" "lisp/" "ido.last" "snippets/" "../" "./")
-
- ("/Users/fengh/.emacs.d/lisp/" (25125 34522 385919 674000) "init-language.el" "init-markdown.el" "init-org.el" "init-execpath.el" "init-git.el" "init-cal.el" "init-elpa.el" "init-global.el" "init-look.el" "../" "./")
-
- ("/Users/fengh/Work/home3/feng/temp/job1/" (25125 24909 912476 83000) "../" "./")
 
  ("/Users/RDS Library/Bob Glickstein/Writing GNU Emacs Extensions (1257)/" (25088 39382 206651 409000) "cover.jpg" "metadata.opf" "Writing GNU Emacs Extensions - Bob Glickstein.pdf" "../" "./")
 

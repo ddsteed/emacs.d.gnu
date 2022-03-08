@@ -56,13 +56,13 @@
 (if (equal window-system nil)
     (menu-bar-mode nil))
 
-;; 把讨厌的menu下的图标去掉
+;; 把 menu 下的图标去掉
 (tool-bar-mode -1)
 
-;; 取消scroll-bar
+;; 取消 scroll-bar
 (set-scroll-bar-mode nil)  ; no scroll bar, even in X-Window system
 
-;; 在标题栏显示buffer的名字						
+;; 在标题栏显示 buffer 的名字						
 (setq frame-title-format "Life is too short to be little! @ %b")
 (setq user-full-name "RDS") 
 									
