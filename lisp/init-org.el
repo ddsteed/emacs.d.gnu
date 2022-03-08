@@ -58,7 +58,7 @@
               ("DONE" :foreground "forest green" :weight bold)
               ("WAITING" :foreground "orange" :weight bold)
               ("HOLD" :foreground "dark red" :weight bold)
-              ("CANCELLED" :foreground "forest green" :weight bold)
+              ("CANCELLED" :foreground "dark red" :weight bold)
               ("MEETING" :foreground "forest green" :weight bold)
               ("PHONE" :foreground "forest green" :weight bold))))
 

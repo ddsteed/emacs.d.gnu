@@ -1,6 +1,11 @@
 .DS_Store
+.python-environments
+abbrev_defs
+ac-comphist.dat
 addons
 auto-save-list
+bookmarks
+custom.el
 elpa
 elpy
 emacs.desktop
@@ -12,4 +17,4 @@ org-clock-save.el
 request
 snippets
 transient
-
+url

@@ -18,18 +18,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Python
 
-;; Configuration of Python IDE  
-;; https://github.com/jorgenschaefer/elpy  
-(require 'elpy nil t)  
-(elpy-enable)  
-
-(setq elpy-rpc-python-command "/opt/Homebrew/bin/python3")  ;; python3
-
-;; for ipython notebook
-(defvar myPackages
-  '(better-defaults
-    ein ;; add the ein package (Emacs ipython notebook)
-    py-autopep8))
+(require 'init-python)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; FORTRAN

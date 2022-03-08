@@ -7,15 +7,15 @@
 
 ;; ----- ido-work-directory-list -----
 (
- "/Users/fengh/.emacs.d/"
  "/Users/fengh/Work/home3/feng/temp/job1/"
  "/Users/fengh/.emacs.d/lisp/"
+ "/Users/fengh/Work/GTD/"
+ "/Users/fengh/.emacs.d/"
  "/Users/fengh/Research/Bound/MP2/"
  "/Users/fengh/Research/ROS/SETUP/src/"
  "/Users/fengh/Work/home3/feng/temp/job1/emacs/"
  "/Users/RDS Library/wizardforcel/SICP in Python (1299)/"
  "/Users/RDS Library/Jin Yong/"
- "/Users/fengh/Work/GTD/"
  "/Users/fengh/Init/"
  "/Users/fengh/Documents/RDS/NOTES/Org/after_reading/"
  "/Users/RDS Library/Bob Glickstein/Writing GNU Emacs Extensions (1257)/"
@@ -28,29 +28,29 @@
 
 ;; ----- ido-work-file-list -----
 (
+ "tt.py"
+ "Study.org"
  "test.m"
  "test.nb"
  "test.el"
  ".gitignore"
  "init-cal.el"
  "Read.org"
- "Study.org"
  "Work.org"
  "tt.el"
- "Research.org"
 )
 
 ;; ----- ido-dir-file-cache -----
 (
- ("/Users/fengh/.emacs.d/" (25127 11556 369293 661000) "magithub/" "emacs.desktop" ".git/" "elpa/" "request/" ".gitignore" "bookmarks" "org-clock-save.el" "init.el" "auto-save-list/" "nov-places" "custom.el" "lock" "addons/" "transient/" "elpy/" "abbrev_defs" "lisp/" "ido.last" "snippets/" "../" "./")
+ ("/Users/fengh/.emacs.d/lisp/" (25127 21339 741398 833000) "init-python.el" "init-language.el" "init-markdown.el" "init-org.el" "init-execpath.el" "init-git.el" "init-cal.el" "init-wolfram.el" "init-elpa.el" "init-global.el" "init-look.el" "../" "./")
 
- ("/Users/fengh/Work/home3/feng/temp/job1/" (25127 9516 802711 531000) "test.nb" "test.m" "emacs/" "tt.el" "test.el" "../" "./")
+ ("/Users/fengh/Work/home3/feng/temp/job1/" (25127 20714 946823 423000) "tt.py" "../" "./")
 
- ("/Users/fengh/.emacs.d/lisp/" (25127 8316 326817 73000) "init-language.el" "init-markdown.el" "wolfram-mode/" "init-org.el" "init-execpath.el" "init-git.el" "init-cal.el" "xah-wolfram-mode/" "init-wolfram.el" "init-elpa.el" "math/" "init-global.el" "init-look.el" "../" "./")
+ ("/Users/fengh/.emacs.d/" (25127 20561 309966 119000) "magithub/" "emacs.desktop" ".git/" "elpa/" "request/" ".gitignore" "bookmarks" "org-clock-save.el" "init.el" "url/" "auto-save-list/" "nov-places" "custom.el" "lock" "addons/" "transient/" "elpy/" "abbrev_defs" "lisp/" "ido.last" "snippets/" "../" "./")
+
+ ("/Users/fengh/Work/GTD/" (25127 16341 450972 12000) "Study.org_archive" "Personal.org" "Read.org" "Startup.org" "Study.org" "Inbox.org" "Tickler.org" "Research.org" "Personal.org_archive" "Research.org_archive" "Startup.org_archive" "Work.org" "Read.org_archive" "Work.org_archive" "../" "./")
 
  ("/Users/fengh/Init/" (25126 45094 783002 168000) "ghproxy" "convert" "git" "compiler" "gitraws" "w2m" ".git/" "mconda" "arm" "aconda" "git7" "mysql" "linux" "x86" "github" "gitclone" "gitseven" "gitcnp" "java" "llvm" "brew" "foxysrc" "multipass" "color" "ll" "ob" "redis" "conda" "dcm" "gitfast" "ros" "foxy" "d2m" "intel" "../" "./")
-
- ("/Users/fengh/Work/GTD/" (25126 60916 877083 577000) "Study.org_archive" "Personal.org" "Read.org" "Startup.org" "Study.org" "Inbox.org" "Tickler.org" "Research.org" "Personal.org_archive" "Research.org_archive" "Startup.org_archive" "Work.org" "Read.org_archive" "Work.org_archive" "../" "./")
 
  ("/Users/RDS Library/wizardforcel/SICP in Python (1299)/" (25126 50576 37532 710000) "cover.jpg" "metadata.opf" "SICP in Python - wizardforcel.epub" "../" "./")
 
