@@ -10,10 +10,10 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; 
 ;; general variables
-(column-number-mode t)    ;; status bar 显示列
-(display-time-mode t)     ;; status bar 显示时间
+(column-number-mode t)         ; status bar 显示列
+(display-time-mode t)          ; status bar 显示时间
 
-(setq-default line-spacing 5)     ;; 设置行间距
+(setq-default line-spacing 5)  ; 设置行间距
 
 (size-indication-mode t)
 (tool-bar-mode nil)
@@ -24,24 +24,27 @@
 (global-set-key [(meta left)]  'backward-sexp)				
 (global-set-key [(meta right)] 'forward-sexp)				
 
-(global-set-key (kbd "s-a") 'mark-whole-buffer) ;; 对应Windows上面的 Ctrl-a 全选
-(global-set-key (kbd "s-c") 'kill-ring-save)    ;; 对应Windows上面的 Ctrl-c 复制
-(global-set-key (kbd "s-s") 'save-buffer)       ;; 对应Windows上面的 Ctrl-s 保存
-(global-set-key (kbd "s-v") 'yank)              ;; 对应Windows上面的 Ctrl-v 粘贴
-(global-set-key (kbd "s-z") 'undo)              ;; 对应Windows上面的 Ctrl-z 撤销
-(global-set-key (kbd "s-x") 'kill-region)       ;; 对应Windows上面的 Ctrl-x 剪切
+;;
+(global-set-key (kbd "s-a") 'mark-whole-buffer) ; 对应Windows上面的 Ctrl-a 全选
+(global-set-key (kbd "s-c") 'kill-ring-save)    ; 对应Windows上面的 Ctrl-c 复制
+(global-set-key (kbd "s-s") 'save-buffer)       ; 对应Windows上面的 Ctrl-s 保存
+(global-set-key (kbd "s-v") 'yank)              ; 对应Windows上面的 Ctrl-v 粘贴
+(global-set-key (kbd "s-z") 'undo)              ; 对应Windows上面的 Ctrl-z 撤销
+(global-set-key (kbd "s-x") 'kill-region)       ; 对应Windows上面的 Ctrl-x 剪切
 
-;;;;;;
-;; 重新绑定设定块标记的命令
-(global-set-key (kbd "C-\\") 'set-mark-command)
+(global-set-key (kbd "C-\\") 'set-mark-command) ; 重新绑定设定块标记的命令
+(global-set-key (kbd "M-g l") 'goto-line)       ; 快速跳转到某一行
+(global-set-key (kbd "C-c n") 'rename-buffer)   ; 重新定义更换buffer名字的命令
 
-;;;;;;
-;; 快速跳转到某一行
-(global-set-key (kbd "M-g l") 'goto-line)
+;; 
+(global-set-key (kbd "C-x C-n") 'other-window)  ; 移到下一个窗口
 
-;;;;;;
-;; 重新定义更换buffer名字的命令
-(global-set-key (kbd "C-c n") 'rename-buffer)
+(defun other-window-backward (&optional n)
+  "Select the previous window."
+  (interactive "P")
+  (other-window (- (prefix-numeric-value n))))
+
+(global-set-key (kbd "C-x C-p") 'other-window-backward) ; 移到上一个窗口
 
 ;;;;;;
 ;; 我经常会删除多个连续的空格，可Emacs没有提供这个功能，我只好自己写了一
@@ -71,28 +74,6 @@
           'comint-watch-for-password-prompt)				
 									
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; 如果不在X窗口下就不要menu-bar					
-(if (equal window-system nil)
-    (menu-bar-mode nil))
-
-;;;;;;
-;; 把讨厌的menu下的图标去掉
-(tool-bar-mode -1)
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; 取消scroll-bar
-(set-scroll-bar-mode nil)  ; no scroll bar, even in X-Window system
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; 在标题栏显示buffer的名字						
-(setq frame-title-format "Life is too short to be little! @ %b")
-(setq user-full-name "RDS") 
-									
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; 光标不要闪烁								
-;; (blink-cursor-mode -1)		
-					
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 不要总是没完没了地问yes或no，直接用y/n                               
 (fset 'yes-or-no-p 'y-or-n-p)						
 									
@@ -102,14 +83,10 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 设置行号
-
 (global-linum-mode 1) ; always show line numbers                              
 
 ;; 设置行号宽度
 (setq linum-format "%4d ")
-
-;; (custom-set-faces
-;;  '(linum ((t (:inherit (shadow default) :foreground "yellow")))))
 
 ;; 设置行号的大小
 (custom-set-faces
@@ -117,7 +94,7 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; set auto save
-(setq-default auto-save-timeout 15) ; 15秒无动作,自动保存
+(setq-default auto-save-timeout 15)   ; 15秒无动作,自动保存
 (setq-default auto-save-interval 100) ; 100个字符间隔, 自动保存
 
 ;; close backup files
@@ -145,14 +122,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; 
 ;; merge the Emacs kill-ring with the clipboard
 (setq select-enable-clipboard t)
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; 
-;; 彩色显示
-; 开启全局 hi lock 模式
-(global-hi-lock-mode 1) 
-
-;避免每次开启 hi lock mode 时询问是否需要高亮指定表达式
-(setq hi-lock-file-patterns-policy #'(lambda (dummy) t)) 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; 
 ; Automatically save and restore sessions
