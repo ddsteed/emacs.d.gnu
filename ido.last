@@ -9,8 +9,8 @@
 (
  "/Users/fengh/Work/home3/feng/temp/job1/"
  "/Users/fengh/.emacs.d/lisp/"
- "/Users/fengh/Work/GTD/"
  "/Users/fengh/.emacs.d/"
+ "/Users/fengh/Work/GTD/"
  "/Users/fengh/Research/Bound/MP2/"
  "/Users/fengh/Research/ROS/SETUP/src/"
  "/Users/fengh/Work/home3/feng/temp/job1/emacs/"
@@ -42,11 +42,11 @@
 
 ;; ----- ido-dir-file-cache -----
 (
- ("/Users/fengh/.emacs.d/lisp/" (25127 21339 741398 833000) "init-python.el" "init-language.el" "init-markdown.el" "init-org.el" "init-execpath.el" "init-git.el" "init-cal.el" "init-wolfram.el" "init-elpa.el" "init-global.el" "init-look.el" "../" "./")
+ ("/Users/fengh/Work/home3/feng/temp/job1/" (25127 23590 948772 800000) "tt.py" "../" "./")
 
- ("/Users/fengh/Work/home3/feng/temp/job1/" (25127 20714 946823 423000) "tt.py" "../" "./")
+ ("/Users/fengh/.emacs.d/lisp/" (25127 24056 564782 634000) "init-python.el" "init-language.el" "init-markdown.el" "init-org.el" "init-execpath.el" "init-git.el" "init-cal.el" "init-wolfram.el" "init-elpa.el" "init-global.el" "init-look.el" "../" "./")
 
- ("/Users/fengh/.emacs.d/" (25127 20561 309966 119000) "magithub/" "emacs.desktop" ".git/" "elpa/" "request/" ".gitignore" "bookmarks" "org-clock-save.el" "init.el" "url/" "auto-save-list/" "nov-places" "custom.el" "lock" "addons/" "transient/" "elpy/" "abbrev_defs" "lisp/" "ido.last" "snippets/" "../" "./")
+ ("/Users/fengh/.emacs.d/" (25127 24057 592593 428000) "magithub/" "emacs.desktop" ".git/" "elpa/" "request/" ".gitignore" "bookmarks" "org-clock-save.el" "init.el" ".python-environments/" "url/" "auto-save-list/" "nov-places" "custom.el" "lock" "addons/" "transient/" "elpy/" "abbrev_defs" "lisp/" "ido.last" "snippets/" "ac-comphist.dat" "../" "./")
 
  ("/Users/fengh/Work/GTD/" (25127 16341 450972 12000) "Study.org_archive" "Personal.org" "Read.org" "Startup.org" "Study.org" "Inbox.org" "Tickler.org" "Research.org" "Personal.org_archive" "Research.org_archive" "Startup.org_archive" "Work.org" "Read.org_archive" "Work.org_archive" "../" "./")
 

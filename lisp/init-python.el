@@ -1,4 +1,4 @@
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; python3 解释器位置
 (if (eq system-type 'darwin)
     ;; MacOS的python3目录
@@ -46,11 +46,8 @@
     (setq jedi:environment-root "jedi")))
 
 ;; 配合使用专业化的python开发环境elpy
-(use-package elpy
-  :ensure t
-  :commands elpy-enable
-  :hook
-  (python-mode . elpy-mode))
+(require 'elpy)
+(elpy-enable)
 
 ;; 使用flycheck进行语法检查
 (use-package flycheck
