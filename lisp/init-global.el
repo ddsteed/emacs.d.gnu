@@ -60,7 +60,7 @@
 ;; 在 ~/.emacs 里设置 load-path，这样我把 lisp 文件放到 load-path 里任何
 ;; 一个目录都行。
 
-(add-to-list 'load-path "~/.emacs.d/site-lisp")
+(add-to-list 'load-path "~/.emacs.d/elpa")
 (add-to-list 'load-path "~/.emacs.d/addons")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -148,8 +148,10 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; modeline上显示我的所有的按键和执行的命令
-(package-install 'keycast)
-(keycast-mode t)
+(use-package keycast
+  :init
+  (add-to-list 'global-mode-string '("" mode-line-keycast))
+  (keycast-mode))
   
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; minibuffer action 和自适应的 context menu：Embark

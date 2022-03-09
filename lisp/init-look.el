@@ -10,24 +10,52 @@
 ;; (color-theme-katester)  ; most used
 
 ;; Since emacs 24, color-theme has been replaced by deftheme. You can change the theme by loading it directly)
-(load-theme 'manoj-dark t)
+;; (load-theme 'manoj-dark t)
+;; (load-theme 'alect-dark t)
+;; (load-theme 'zenburn t)
+
+(use-package doom-themes
+  :ensure t
+  :config
+  ;; Global settings (defaults)
+  (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
+        doom-themes-enable-italic t) ; if nil, italics is universally disabled
+; (load-theme 'doom-oceanic-next t)
+  (load-theme 'doom-dracula t)
+
+  ;; Enable flashing mode-line on errors
+  (doom-themes-visual-bell-config)
+  ;; Enable custom neotree theme (all-the-icons must be installed!)
+  (doom-themes-neotree-config)
+  ;; or for treemacs users
+  (setq doom-themes-treemacs-theme "doom-oceanic-next") ; use "doom-colors" for less minimal icon theme
+  (doom-themes-treemacs-config)
+  ;; Corrects (and improves) org-mode's native fontification.
+  (doom-themes-org-config))
+
+;; ;; kaolin-theme
+;; (use-package kaolin-themes
+;;   :config
+;;   (load-theme 'kaolin-temple t)
+;; ;; Apply treemacs customization for Kaolin themes, requires the all-the-icons package.
+;;   (kaolin-treemacs-theme))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; vscode theme
 
-(use-package vscode-dark-plus-theme
-  :ensure t
-  :config
-  (load-theme 'vscode-dark-plus t))
+;; (use-package vscode-dark-plus-theme
+;;   :ensure t
+;;   :config
+;;   (load-theme 'vscode-dark-plus t))
 
-;; Remove the border around the TODO word on org-mode files
-(setq vscode-dark-plus-box-org-todo nil)
+;; ;; Remove the border around the TODO word on org-mode files
+;; (setq vscode-dark-plus-box-org-todo nil)
 
-;; Do not set different heights for some org faces
-(setq vscode-dark-plus-scale-org-faces nil)
+;; ;; Do not set different heights for some org faces
+;; (setq vscode-dark-plus-scale-org-faces nil)
 
-;; Avoid inverting hl-todo face
-(setq vscode-dark-plus-invert-hl-todo nil)
+;; ;; Avoid inverting hl-todo face
+;; (setq vscode-dark-plus-invert-hl-todo nil)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 自定义界面外观，一般要放在其他的theme之后，否则有些设置会被theme里重新定义
@@ -49,8 +77,8 @@
 )
 
 ;; make a frame transparent
-;; (set-frame-parameter (selected-frame) 'alpha '(90 . 75))
-;; (add-to-list 'default-frame-alist '(alpha . (90 . 75)))
+(set-frame-parameter (selected-frame) 'alpha '(85 . 75))
+(add-to-list 'default-frame-alist '(alpha . (85 . 75)))
 
 ;; 如果不在X窗口下就不要menu-bar					
 (if (equal window-system nil)

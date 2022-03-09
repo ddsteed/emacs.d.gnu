@@ -30,7 +30,7 @@
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; org mode 中开启高亮
-; (add-hook 'org-mode-hook 'bigboss-highlight)
+(add-hook 'org-mode-hook 'bigboss-highlight)
 
 ;; org src 语法高亮
 (setq org-src-fontify-natively t)
@@ -38,21 +38,25 @@
 ;; org 不同标题字体大小变化
 (set-face-attribute 'org-level-1 nil :height 1.3 :bold t)
 (set-face-attribute 'org-level-2 nil :height 1.2 :bold t)
-(set-face-attribute 'org-level-3 nil :height 1.1 :bold t)
-
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; org mode下默认不是自动换行，可以改变
-;; (add-hook 'org-mode-hook (lambda () (setq truncate-lines nil)))
+(set-face-attribute 'org-level-3 nil :height 1.0 :bold t)
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 增加TODO的状态
 ; 在一个 ｜ 之内的状态属于同一个类，除了显示的标志不同外，在org内部当成同一类处理
+; 字符:该状态的快捷键
+; ! : 切换到该状态时会自动添加时间戳
+; @ : 切换到该状态时要求输入文字说明
+; 如果同时设定@和!,使用@/!
+
 (setq org-todo-keywords
-      (quote ((sequence "TODO(t)"  "NEXT(n)" "|" "DONE(d)") 
-              (sequence "WAITING(w@/!)"  "HOLD(h@/!)"  "INPROGRESS(i@/!)" "|" "CANCELLED(c@/!)" ))))
+      '((sequence "☞ TODO(t)" "PROJ(p)"  "⚔ INPROCESS(i)" "⚑ WAITING(w)"
+                  "|"
+                  "☟ NEXT(n)" "✰ Important(I)" "✔ DONE(d)"  "✘ CANCELED(c@)")
+        (sequence "✍ NOTE(N)" "FIXME(f)" "☕ BREAK(b)" "❤ Love(l)" "REVIEW(r)")
+        ))
 
 (setq org-todo-keyword-faces
-      (quote (("TODO" :foreground "red" :weight bold)
+      (quote (("TODO" :foreground "magenta" :weight bold)
               ("NEXT" :foreground "blue" :weight bold)
               ("INPROGRESS" :foreground "red" :weight normal)
               ("DONE" :foreground "forest green" :weight bold)
@@ -62,7 +66,25 @@
               ("MEETING" :foreground "forest green" :weight bold)
               ("PHONE" :foreground "forest green" :weight bold))))
 
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(setq org-agenda-custom-commands
+      '(
+        ("w" . "任务安排")
+        ("wa" "重要且紧急的任务" tags-todo "+PRIORITY=\"A\"")
+        ("wb" "重要且不紧急的任务" tags-todo "-weekly-monthly-daily+PRIORITY=\"B\"")
+        ("wc" "不重要且紧急的任务" tags-todo "+PRIORITY=\"C\"")
+        ("W" "Weekly Review"
+         ((stuck "")                   ;; review stuck projects as designated by org-stuck-projects
+          (tags-todo "project")
+          (tags-todo "daily")
+          (tags-todo "weekly")
+          (tags-todo "school")
+          (tags-todo "code")
+          (tags-todo "theory")
+          ))
+        ))
+
+; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Agenda
 ; 将该目录下所有的org和org_archive文件作为日程表搜索范围
 (setq org-agenda-files (directory-files-recursively "~/Work/GTD/" "\\.org*"))

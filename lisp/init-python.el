@@ -1,4 +1,19 @@
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; 配合使用专业化的python开发环境elpy
+(add-to-list 'package-archives
+             '("elpy" . "http://jorgenschaefer.github.io/packages/"))
+ 
+(add-to-list 'load-path "~/.emacs.d/elpa/pyvenv-20211014.707")
+(require 'pyvenv)
+(elpy-enable)
+
+;; 使用flycheck进行语法检查
+(use-package flycheck
+  :ensure t  
+  :hook
+  (progn
+    (python-mode . flycheck-mode)))
+
 ;; python3 解释器位置
 (if (eq system-type 'darwin)
     ;; MacOS的python3目录
@@ -44,17 +59,6 @@
     (setq company-selection-wrap-around t)
     ;; 虚拟环境
     (setq jedi:environment-root "jedi")))
-
-;; 配合使用专业化的python开发环境elpy
-(require 'elpy)
-(elpy-enable)
-
-;; 使用flycheck进行语法检查
-(use-package flycheck
-  :ensure t  
-  :hook
-  (progn
-    (python-mode . flycheck-mode)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
