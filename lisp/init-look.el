@@ -9,10 +9,27 @@
 ;; (color-theme-initialize) 
 ;; (color-theme-katester)  ; most used
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Since emacs 24, color-theme has been replaced by deftheme. You can change the theme by loading it directly)
+;; direct load theme
 ;; (load-theme 'manoj-dark t)
 ;; (load-theme 'alect-dark t)
 ;; (load-theme 'zenburn t)
+
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; doom-theme
+;; (use-package doom-themes
+;;   :config
+;;   (load-theme 'doom-tomorrow-night t)
+;;   (doom-themes-visual-bell-config)
+;;   (doom-themes-org-config))
+
+;; (use-package doom-modeline
+;;   :hook (after-init . doom-modeline-mode)
+;;   :config
+;;   (setq doom-modeline-enable-word-count t)
+;;   (setq doom-modeline-buffer-encoding nil)
+;;   (setq doom-modeline-github t))
 
 (use-package doom-themes
   :ensure t
@@ -33,6 +50,7 @@
   ;; Corrects (and improves) org-mode's native fontification.
   (doom-themes-org-config))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; ;; kaolin-theme
 ;; (use-package kaolin-themes
 ;;   :config
