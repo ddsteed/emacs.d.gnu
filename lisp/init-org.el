@@ -59,11 +59,11 @@
 (setq org-todo-keywords
       '((sequence "☞ TODO(t)"
                   "⚔ INPR(i)"
-                  "⚑ WAIT(w)"
                   "❤ LOVE(l)"
                   "✍ NOTE(N)"
                   "|"
                   "☟ NEXT(n)"
+                  "⚑ WAIT(w)"
                   "✰ IMPO(I)"
                   "✔ DONE(d)"
                   "✘ CANL(c@)"
