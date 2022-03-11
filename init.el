@@ -12,14 +12,15 @@
 
 (require 'init-elpa)     ;; package repository
 
-(require 'init-global)   ;; global variables
 (require 'init-execpath) ;; eshell path
+(require 'init-global)   ;; global variables
 (require 'init-look)     ;; look face
 (require 'init-language) ;; programming language style
 (require 'init-org)      ;; org mode
 (require 'init-markdown) ;; markdown mode
 (require 'init-cal)      ;; calendar
 (require 'init-git)      ;; magit
+(require 'init-project)  ;; project management
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 设置一个空的custom file，这样系统默认的custom 就不会每次自动写入inti.el

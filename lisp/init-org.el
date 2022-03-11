@@ -3,7 +3,8 @@
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (add-to-list 'auto-mode-alist '("\\.\\(org\\|org_archive\\|txt\\)$" . org-mode))
-(require 'org)
+
+(use-package org)
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 添加org插件
@@ -29,7 +30,14 @@
 (setq org-startup-indented t)
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; org mode 中开启高亮
+;; 利用 highlight-regexp 高亮指定的正则表达式
+(defun bigboss-highlight ()
+  (interactive)
+  (highlight-regexp "0[0-9]\\{2\\}-[0-9]\\{8\\}" 'phone-number-lock-face)
+  (highlight-regexp "Lisp\\|Scheme" 'language-lock-face)
+  (highlight-regexp "神之编辑器\\|编辑器之神" 'emacs-vim-lock-face)
+)
+
 (add-hook 'org-mode-hook 'bigboss-highlight)
 
 ;; org src 语法高亮
@@ -38,7 +46,7 @@
 ;; org 不同标题字体大小变化
 (set-face-attribute 'org-level-1 nil :height 1.3 :bold t)
 (set-face-attribute 'org-level-2 nil :height 1.2 :bold t)
-(set-face-attribute 'org-level-3 nil :height 1.0 :bold t)
+(set-face-attribute 'org-level-3 nil :height 1.1 :bold t)
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 增加TODO的状态
@@ -49,40 +57,27 @@
 ; 如果同时设定@和!,使用@/!
 
 (setq org-todo-keywords
-      '((sequence "☞ TODO(t)" "PROJ(p)"  "⚔ INPROCESS(i)" "⚑ WAITING(w)"
+      '((sequence "☞ TODO(t)"
+                  "⚔ INPR(i)"
+                  "⚑ WAIT(w)"
+                  "❤ LOVE(l)"
+                  "✍ NOTE(N)"
                   "|"
-                  "☟ NEXT(n)" "✰ Important(I)" "✔ DONE(d)"  "✘ CANCELED(c@)")
-        (sequence "✍ NOTE(N)" "FIXME(f)" "☕ BREAK(b)" "❤ Love(l)" "REVIEW(r)")
-        ))
+                  "☟ NEXT(n)"
+                  "✰ IMPO(I)"
+                  "✔ DONE(d)"
+                  "✘ CANL(c@)"
+                  "☕ BREK(b)")))
 
 (setq org-todo-keyword-faces
-      (quote (("TODO" :foreground "magenta" :weight bold)
-              ("NEXT" :foreground "blue" :weight bold)
-              ("INPROGRESS" :foreground "red" :weight normal)
-              ("DONE" :foreground "forest green" :weight bold)
-              ("WAITING" :foreground "orange" :weight bold)
-              ("HOLD" :foreground "dark red" :weight bold)
-              ("CANCELLED" :foreground "dark red" :weight bold)
-              ("MEETING" :foreground "forest green" :weight bold)
-              ("PHONE" :foreground "forest green" :weight bold))))
+      (quote (("☞ TODO" :foreground "magenta" :weight thin)
+              ("☟ NEXT" :foreground "blue" :weight thin)
+              ("⚔ INPR" :foreground "red" :weight thin)
+              ("✔ DONE" :foreground "forest green" :weight thin)
+              ("⚑ WAIT" :foreground "orange" :weight thin)
+              ("✘ CANL" :foreground "dark red" :weight bold)
+              )))
 
-
-(setq org-agenda-custom-commands
-      '(
-        ("w" . "任务安排")
-        ("wa" "重要且紧急的任务" tags-todo "+PRIORITY=\"A\"")
-        ("wb" "重要且不紧急的任务" tags-todo "-weekly-monthly-daily+PRIORITY=\"B\"")
-        ("wc" "不重要且紧急的任务" tags-todo "+PRIORITY=\"C\"")
-        ("W" "Weekly Review"
-         ((stuck "")                   ;; review stuck projects as designated by org-stuck-projects
-          (tags-todo "project")
-          (tags-todo "daily")
-          (tags-todo "weekly")
-          (tags-todo "school")
-          (tags-todo "code")
-          (tags-todo "theory")
-          ))
-        ))
 
 ; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Agenda
@@ -326,7 +321,7 @@ A prefix arg forces clock in of the default task."
                                (file+headline "~/Work/GTD/Tickler.org" "Tickler")
                                "* %i%? \n %U")))
 
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; refile
 ;  Targets include this file and any file contributing to the agenda - up to 9 levels deep
 (setq org-refile-targets (quote ((nil :maxlevel . 9)
@@ -353,43 +348,11 @@ A prefix arg forces clock in of the default task."
 ; Use the current window for indirect buffer display
 (setq org-indirect-buffer-display 'current-window)
 
-;;;; Refile settings
-; Exclude DONE state tasks from refile targets
-(defun bh/verify-refile-target ()
-  "Exclude todo keywords with a done state from refile targets"
-  (not (member (nth 2 (org-heading-components)) org-done-keywords)))
-
-(setq org-refile-target-verify-function 'bh/verify-refile-target)
-
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Archive
 (setq org-archive-mark-done nil)
 (setq org-archive-location "%s_archive::* Archived Tasks")
 
-(defun bh/skip-non-archivable-tasks ()
-  "Skip trees that are not available for archiving"
-  (save-restriction
-    (widen)
-    ;; Consider only tasks with done todo headings as archivable candidates
-    (let ((next-headline (save-excursion (or (outline-next-heading) (point-max))))
-          (subtree-end (save-excursion (org-end-of-subtree t))))
-      (if (member (org-get-todo-state) org-todo-keywords-1)
-          (if (member (org-get-todo-state) org-done-keywords)
-              (let* ((daynr (string-to-int (format-time-string "%d" (current-time))))
-                     (a-month-ago (* 60 60 24 (+ daynr 1)))
-                     (last-month (format-time-string "%Y-%m-" (time-subtract (current-time) (seconds-to-time a-month-ago))))
-                     (this-month (format-time-string "%Y-%m-" (current-time)))
-                     (subtree-is-current (save-excursion
-                                           (forward-line 1)
-                                           (and (< (point) subtree-end)
-                                                (re-search-forward (concat last-month "\\|" this-month) subtree-end t)))))
-                (if subtree-is-current
-                    subtree-end ; Has a date in this month or last month, skip it
-                  nil))  ; available to archive
-            (or subtree-end (point-max)))
-        next-headline))))
-
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 用XeLaTeX输出中文pdf
 (require 'ox-latex)
 
@@ -425,10 +388,10 @@ A prefix arg forces clock in of the default task."
 (use-package org-ref
   :config
   (setq
-        reftex-default-bibliography '("~//work/home1/feng/REFERENCES/RDS.bib")
-        org-ref-bibliography-notes "~/work/home1/feng/REFERENCES/notes.org"
-        org-ref-default-bibliography '("~/work/home1/feng/REFERENCES/RDS.bib")
-        org-ref-pdf-directory "~/work/home1/feng/REFERENCES/"
+        reftex-default-bibliography '("~//Work/home1/feng/REFERENCES/RDS.bib")
+        org-ref-bibliography-notes "~/Work/home1/feng/REFERENCES/notes.org"
+        org-ref-default-bibliography '("~/Work/home1/feng/REFERENCES/RDS.bib")
+        org-ref-pdf-directory "~/Work/home1/feng/REFERENCES/"
 
         bibtex-completion-bibliography  "~/Work/home1/feng/REFERENCES/notes.org"
         bibtex-completion-library-path "~/Work/home1/feng/REFERENCES"
@@ -445,8 +408,17 @@ A prefix arg forces clock in of the default task."
 ;; org bullets
 (use-package org-bullets
   :config
-  (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
-)
+  (progn
+    (setq org-bullets-bullet-list '("☯" "✿" "✚" "◉" "❀"))
+    (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+    ))
+
+(use-package org-alert
+  :defer t
+  :config
+  (progn
+    (setq alert-default-style 'libnotify)
+    ))
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; org roam
@@ -495,22 +467,22 @@ A prefix arg forces clock in of the default task."
 ;; Reminders
 
 ; Erase all reminders and rebuilt reminders for today from the agenda
-(defun bh/org-agenda-to-appt ()
+(defun rds/org-agenda-to-appt ()
   (interactive)
   (setq appt-time-msg-list nil)
   (org-agenda-to-appt))
 
 ; Rebuild the reminders everytime the agenda is displayed
-(add-hook 'org-agenda-finalize-hook 'bh/org-agenda-to-appt 'append)
+(add-hook 'org-agenda-finalize-hook 'rds/org-agenda-to-appt 'append)
 
 ; This is at the end of my .emacs - so appointments are set up when Emacs starts
-(bh/org-agenda-to-appt)
+(rds/org-agenda-to-appt)
 
 ; Activate appointments so we get notifications
 (appt-activate t)
 
 ; If we leave Emacs running overnight - reset the appointments one minute after midnight
-(run-at-time "24:01" nil 'bh/org-agenda-to-appt)
+(run-at-time "24:01" nil 'rds/org-agenda-to-appt)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 

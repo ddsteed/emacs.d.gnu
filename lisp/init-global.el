@@ -35,6 +35,8 @@
 (global-set-key (kbd "C-\\") 'set-mark-command) ; 重新绑定设定块标记的命令
 (global-set-key (kbd "C-c n") 'rename-buffer)   ; 重新定义更换buffer名字的命令
 
+(global-set-key (kbd "C-x C-;") 'comment-line)  ; 注释一行
+
 ;; 
 (global-set-key (kbd "C-x C-n") 'other-window)  ; 移到下一个窗口
 

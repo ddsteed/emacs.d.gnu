@@ -1,9 +1,19 @@
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(use-package python
+  :mode ("\\.py" . python-mode)
+  :ensure t)
+
+(use-package python-black
+  :demand t
+  :after python
+  :config
+  (python-black-on-save-mode))
+
 ;; 配合使用专业化的python开发环境elpy
 (add-to-list 'package-archives
              '("elpy" . "http://jorgenschaefer.github.io/packages/"))
  
-(add-to-list 'load-path "~/.emacs.d/elpa/pyvenv-20211014.707")
+(add-to-list 'load-path "~/.emacs.d/elpa/pyvenv-1.10")
 (require 'pyvenv)
 (elpy-enable)
 

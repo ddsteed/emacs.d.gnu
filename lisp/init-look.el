@@ -18,18 +18,7 @@
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; doom-theme
-;; (use-package doom-themes
-;;   :config
-;;   (load-theme 'doom-tomorrow-night t)
-;;   (doom-themes-visual-bell-config)
-;;   (doom-themes-org-config))
-
-;; (use-package doom-modeline
-;;   :hook (after-init . doom-modeline-mode)
-;;   :config
-;;   (setq doom-modeline-enable-word-count t)
-;;   (setq doom-modeline-buffer-encoding nil)
-;;   (setq doom-modeline-github t))
+(setq custom-safe-themes t)
 
 (use-package doom-themes
   :ensure t
@@ -37,8 +26,8 @@
   ;; Global settings (defaults)
   (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
         doom-themes-enable-italic t) ; if nil, italics is universally disabled
-; (load-theme 'doom-oceanic-next t)
-  (load-theme 'doom-dracula t)
+
+  (load-theme 'doom-dracula t)       ; set doom theme
 
   ;; Enable flashing mode-line on errors
   (doom-themes-visual-bell-config)
@@ -49,6 +38,15 @@
   (doom-themes-treemacs-config)
   ;; Corrects (and improves) org-mode's native fontification.
   (doom-themes-org-config))
+
+(if (string-equal system-type "darwin")
+    (use-package darkokai-theme
+      :ensure t
+      :config (load-theme 'darkokai t))
+  (use-package doom-themes
+    :ensure t
+    :config (load-theme 'doom-nord))
+  )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; ;; kaolin-theme
@@ -81,7 +79,7 @@
 ;; tranparent background
 (global-set-key [(f8)] 'loop-alpha)  ; 注意这行中的F8 , 可以改成你想要的按键    
     
-(setq alpha-list '((100 100) (95 65) (85 55) (75 45) (65 35)))
+(setq alpha-list '((100 100) (95 75) (85 65) (75 55) (65 45)))
 
 (defun loop-alpha ()
   (interactive)
@@ -95,8 +93,8 @@
 )
 
 ;; make a frame transparent
-(set-frame-parameter (selected-frame) 'alpha '(85 . 75))
-(add-to-list 'default-frame-alist '(alpha . (85 . 75)))
+(set-frame-parameter (selected-frame) 'alpha '(95 . 75))
+(add-to-list 'default-frame-alist '(alpha . (95 . 75)))
 
 ;; 如果不在X窗口下就不要menu-bar					
 (if (equal window-system nil)
@@ -107,6 +105,16 @@
 
 ;; 取消 scroll-bar
 (set-scroll-bar-mode nil)  ; no scroll bar, even in X-Window system
+
+;; titlebar
+(add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
+(add-to-list 'default-frame-alist '(ns-appearance . dark))
+
+(let ((display-table (or standard-display-table (make-display-table))))
+  (set-display-table-slot display-table 'vertical-border (make-glyph-code ?│)) ; or ┃ │
+  (setq standard-display-table display-table))
+(set-face-background 'vertical-border (face-background 'default))
+(set-face-foreground 'vertical-border "grey")
 
 ;; 在标题栏显示 buffer 的名字						
 (setq frame-title-format "Life is too short to be little! @ %b")
@@ -123,13 +131,17 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 括号匹配高亮
-
 (require 'highlight-parentheses)
 (define-globalized-minor-mode global-highlight-parentheses-mode
   highlight-parentheses-mode
   (lambda ()
     (highlight-parentheses-mode t)))
 (global-highlight-parentheses-mode t)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(use-package all-the-icons
+  :after memoize
+  :load-path "site-lisp/all-the-icons")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
