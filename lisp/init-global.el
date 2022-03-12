@@ -47,6 +47,9 @@
 
 (global-set-key (kbd "C-x C-p") 'other-window-backward) ; 移到上一个窗口
 
+;;
+(global-set-key (kbd "C-c v") 'evil-mode); 切换到 vi mode
+
 ;;;;;;
 ;; 我经常会删除多个连续的空格，可Emacs没有提供这个功能，我只好自己写了一
 ;; 个，这可是我写的第一个elisp哟 :-) 
