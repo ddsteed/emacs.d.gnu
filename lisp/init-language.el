@@ -38,5 +38,12 @@
 (require 'init-wolfram)  ;; wolfram mathematica
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; shell script
+
+; 不显示过长的行
+(add-hook 'sh-mode-hook (lambda () (setq truncate-lines t)))
+(add-hook 'shell-script-mode-hook (lambda () (setq truncate-lines t)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (provide 'init-language)

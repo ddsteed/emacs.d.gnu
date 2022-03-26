@@ -59,15 +59,17 @@
 (setq org-todo-keywords
       '((sequence "☞ TODO(t)"
                   "⚔ INPR(i)"
-                  "⚑ WAIT(w)"
                   "❤ LOVE(l)"
                   "✍ NOTE(N)"
                   "|"
-                  "☟ NEXT(n)"
                   "✰ IMPO(I)"
                   "✔ DONE(d)"
                   "✘ CANL(c@)"
-                  "☕ BREK(b)")))
+                  "|"
+                  "☟ NEXT(n)"
+                  "⚑ WAIT(w)"
+                  "☕ BREK(b)"
+                  )))
 
 (setq org-todo-keyword-faces
       (quote (("☞ TODO" :foreground "magenta" :weight thin)
@@ -483,6 +485,10 @@ A prefix arg forces clock in of the default task."
 
 ; If we leave Emacs running overnight - reset the appointments one minute after midnight
 (run-at-time "24:01" nil 'rds/org-agenda-to-appt)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; 设置org mode自动换行
+(add-hook 'org-mode-hook (lambda () (setq truncate-lines nil)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 

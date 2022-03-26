@@ -39,14 +39,14 @@
   ;; Corrects (and improves) org-mode's native fontification.
   (doom-themes-org-config))
 
-(if (string-equal system-type "darwin")
-    (use-package darkokai-theme
-      :ensure t
-      :config (load-theme 'darkokai t))
-  (use-package doom-themes
-    :ensure t
-    :config (load-theme 'doom-nord))
-  )
+;; (if (string-equal system-type "darwin")
+;;     (use-package darkokai-theme
+;;       :ensure t
+;;       :config (load-theme 'darkokai t))
+;;   (use-package doom-themes
+;;     :ensure t
+;;     :config (load-theme 'doom-dracula))
+;;   )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; ;; kaolin-theme
