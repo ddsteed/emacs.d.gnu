@@ -2,6 +2,7 @@
 ;; Org-mode
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; (add-to-list 'auto-mode-alist '("\\.\\(org\\|org_archive\\|txt\\)$" . org-mode))
 (add-to-list 'auto-mode-alist '("\\.\\(org\\|org_archive\\|txt\\)$" . org-mode))
 
 (use-package org)
@@ -408,13 +409,14 @@ A prefix arg forces clock in of the default task."
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; org bullets
-(use-package org-bullets
-  :config
-  (progn
-    (setq org-bullets-bullet-list '("☯" "✿" "✚" "◉" "❀"))
-    (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
-    ))
+ (use-package org-bullets
+   :ensure t
+   :init
+   (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+   (setq org-bullets-bullet-list '("☯" "✿" "◉" "❀" "►" "✚"))
+   )
 
+;; org alert
 (use-package org-alert
   :defer t
   :config

@@ -18,35 +18,27 @@
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; doom-theme
-(setq custom-safe-themes t)
+;; (setq custom-safe-themes t)
 
-(use-package doom-themes
-  :ensure t
-  :config
-  ;; Global settings (defaults)
-  (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
-        doom-themes-enable-italic t) ; if nil, italics is universally disabled
+;; (use-package doom-themes
+;;   :ensure t
+;;   :config
+;;   ;; Global settings (defaults)
+;;   (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
+;;         doom-themes-enable-italic t) ; if nil, italics is universally disabled
 
-  (load-theme 'doom-dracula t)       ; set doom theme
+;;   (load-theme 'doom-dracula t)       ; set doom theme
 
-  ;; Enable flashing mode-line on errors
-  (doom-themes-visual-bell-config)
-  ;; Enable custom neotree theme (all-the-icons must be installed!)
-  (doom-themes-neotree-config)
-  ;; or for treemacs users
-  (setq doom-themes-treemacs-theme "doom-oceanic-next") ; use "doom-colors" for less minimal icon theme
-  (doom-themes-treemacs-config)
-  ;; Corrects (and improves) org-mode's native fontification.
-  (doom-themes-org-config))
+;;   ;; Enable flashing mode-line on errors
+;;   (doom-themes-visual-bell-config)
+;;   ;; Enable custom neotree theme (all-the-icons must be installed!)
+;;   (doom-themes-neotree-config)
+;;   ;; or for treemacs users
+;;   (setq doom-themes-treemacs-theme "doom-oceanic-next") ; use "doom-colors" for less minimal icon theme
+;;   (doom-themes-treemacs-config)
+;;   ;; Corrects (and improves) org-mode's native fontification.
+;;   (doom-themes-org-config))
 
-;; (if (string-equal system-type "darwin")
-;;     (use-package darkokai-theme
-;;       :ensure t
-;;       :config (load-theme 'darkokai t))
-;;   (use-package doom-themes
-;;     :ensure t
-;;     :config (load-theme 'doom-dracula))
-;;   )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; ;; kaolin-theme
@@ -59,19 +51,19 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; vscode theme
 
-;; (use-package vscode-dark-plus-theme
-;;   :ensure t
-;;   :config
-;;   (load-theme 'vscode-dark-plus t))
+(use-package vscode-dark-plus-theme
+  :ensure t
+  :config
+  (load-theme 'vscode-dark-plus t))
 
-;; ;; Remove the border around the TODO word on org-mode files
-;; (setq vscode-dark-plus-box-org-todo nil)
+;; Remove the border around the TODO word on org-mode files
+(setq vscode-dark-plus-box-org-todo nil)
 
-;; ;; Do not set different heights for some org faces
-;; (setq vscode-dark-plus-scale-org-faces nil)
+;; Do not set different heights for some org faces
+(setq vscode-dark-plus-scale-org-faces nil)
 
-;; ;; Avoid inverting hl-todo face
-;; (setq vscode-dark-plus-invert-hl-todo nil)
+;; Avoid inverting hl-todo face
+(setq vscode-dark-plus-invert-hl-todo nil)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 自定义界面外观，一般要放在其他的theme之后，否则有些设置会被theme里重新定义

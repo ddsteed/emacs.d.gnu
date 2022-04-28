@@ -10,5 +10,9 @@
                        ":" (getenv "local_bin")
                        ))
 
+;; call $PATH from working shell
+(when (memq window-system '(mac ns x))
+  (exec-path-from-shell-initialize))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (provide 'init-execpath)
