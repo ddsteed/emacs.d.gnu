@@ -16,7 +16,7 @@
 ;; (load-theme 'alect-dark t)
 ;; (load-theme 'zenburn t)
 
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; ;;
 ;; doom-theme
 ;; (setq custom-safe-themes t)
 
@@ -40,7 +40,7 @@
 ;;   (doom-themes-org-config))
 
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; ;;;
 ;; ;; kaolin-theme
 ;; (use-package kaolin-themes
 ;;   :config
@@ -48,22 +48,35 @@
 ;; ;; Apply treemacs customization for Kaolin themes, requires the all-the-icons package.
 ;;   (kaolin-treemacs-theme))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; ;;;
 ;; vscode theme
 
-(use-package vscode-dark-plus-theme
-  :ensure t
-  :config
-  (load-theme 'vscode-dark-plus t))
+;; (use-package vscode-dark-plus-theme
+;;   :ensure t
+;;   :config
+;;   (load-theme 'vscode-dark-plus t))
 
-;; Remove the border around the TODO word on org-mode files
-(setq vscode-dark-plus-box-org-todo nil)
+;; ;; Remove the border around the TODO word on org-mode files
+;; (setq vscode-dark-plus-box-org-todo nil)
 
-;; Do not set different heights for some org faces
-(setq vscode-dark-plus-scale-org-faces nil)
+;; ;; Do not set different heights for some org faces
+;; (setq vscode-dark-plus-scale-org-faces nil)
 
-;; Avoid inverting hl-todo face
-(setq vscode-dark-plus-invert-hl-todo nil)
+;; ;; Avoid inverting hl-todo face
+;; (setq vscode-dark-plus-invert-hl-todo nil)
+
+;; ;;;
+;; ;; night-owl them
+
+(load-theme 'night-owl t)
+
+(defun night-owl/ivy-format-function-line (cands)
+  "Transform CANDS into a string for minibuffer."
+  (let ((str (ivy-format-function-line cands)))
+    (font-lock-append-text-property 0 (length str) 'face 'ivy-not-current str)
+    str))
+
+(setq ivy-format-function #'night-owl/ivy-format-function-line)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 自定义界面外观，一般要放在其他的theme之后，否则有些设置会被theme里重新定义
@@ -134,6 +147,10 @@
 (use-package all-the-icons
   :after memoize
   :load-path "site-lisp/all-the-icons")
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; scrolling smoothly like vim
+(setq scroll-margin 5 scroll-conservatively 9999 scroll-step 1)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 

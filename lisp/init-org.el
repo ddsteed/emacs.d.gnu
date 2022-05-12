@@ -42,12 +42,14 @@
 (add-hook 'org-mode-hook 'bigboss-highlight)
 
 ;; org src 语法高亮
-(setq org-src-fontify-natively t)
+(setq org-confirm-babel-evaluate nil
+      org-src-fontify-natively t
+      org-src-tab-acts-natively t)
 
 ;; org 不同标题字体大小变化
 (set-face-attribute 'org-level-1 nil :height 1.3 :bold t)
 (set-face-attribute 'org-level-2 nil :height 1.2 :bold t)
-(set-face-attribute 'org-level-3 nil :height 1.1 :bold t)
+(set-face-attribute 'org-level-3 nil :height 1.1)
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 增加TODO的状态
@@ -491,6 +493,22 @@ A prefix arg forces clock in of the default task."
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 设置org mode自动换行
 (add-hook 'org-mode-hook (lambda () (setq truncate-lines nil)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; 支持多个语言
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((sh         . t)
+   (js         . t)
+   (emacs-lisp . t)
+   (perl       . t)
+   (scala      . t)
+   (clojure    . t)
+   (python     . t)
+   (ruby       . t)
+   (dot        . t)
+   (css        . t)
+   (plantuml   . t)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
