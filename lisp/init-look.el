@@ -1,23 +1,9 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; theme select
 ;;
-;; you have to install color-theme.el, then you can M-x color-theme-select
-;; to select different color theme.
+;; ;;;;;;;;;;
+;; ;; doom-theme
 
-;; (require 'color-theme)
-;; (setq color-theme-is-global t)
-;; (color-theme-initialize) 
-;; (color-theme-katester)  ; most used
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Since emacs 24, color-theme has been replaced by deftheme. You can change the theme by loading it directly)
-;; direct load theme
-;; (load-theme 'manoj-dark t)
-;; (load-theme 'alect-dark t)
-;; (load-theme 'zenburn t)
-
-;; ;;
-;; doom-theme
 ;; (setq custom-safe-themes t)
 
 ;; (use-package doom-themes
@@ -39,8 +25,7 @@
 ;;   ;; Corrects (and improves) org-mode's native fontification.
 ;;   (doom-themes-org-config))
 
-
-;; ;;;
+;; ;;;;;;;;;;
 ;; ;; kaolin-theme
 ;; (use-package kaolin-themes
 ;;   :config
@@ -48,8 +33,8 @@
 ;; ;; Apply treemacs customization for Kaolin themes, requires the all-the-icons package.
 ;;   (kaolin-treemacs-theme))
 
-;; ;;;
-;; vscode theme
+;; ;;;;;;;;;;
+;; ;; vscode theme
 
 ;; (use-package vscode-dark-plus-theme
 ;;   :ensure t
@@ -65,7 +50,7 @@
 ;; ;; Avoid inverting hl-todo face
 ;; (setq vscode-dark-plus-invert-hl-todo nil)
 
-;; ;;;
+;; ;;;;;;;;;;
 ;; ;; night-owl them
 
 (load-theme 'night-owl t)
