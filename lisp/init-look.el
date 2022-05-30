@@ -138,5 +138,32 @@
 (setq scroll-margin 5 scroll-conservatively 9999 scroll-step 1)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; font
+;;;中文与英文字体设置
+
+;; Setting English Font
+(set-face-attribute
+ 'default nil
+ :font "Monaco" 
+;:font "LXGW WenKai Screen 14"
+ :size 12
+ :height 120
+)
+;'default nil :font "LXGW WenKai Screen 14")
+
+;; Chinese Font
+(dolist (charset '(kana han symbol cjk-misc bopomofo))
+  (set-fontset-font (frame-parameter nil 'font)
+      charset
+;(font-spec :family "WenQuanYi Micro Hei Mono" :size 16)))
+      (font-spec
+;        :family "LXGW WenKai Screen"
+         :family "PingFang SC Regular"
+         :size 16
+      )
+   )
+)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (provide 'init-look)
