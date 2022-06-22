@@ -8,6 +8,8 @@
 ;; wrap lines at word boundary
 (global-visual-line-mode t)
 
+(setq-default fill-column 200000000) ; column for paragraph filling 
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; 
 ;; general variables
 (column-number-mode t)         ; status bar 显示列

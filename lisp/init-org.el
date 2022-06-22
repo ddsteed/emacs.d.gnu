@@ -415,7 +415,7 @@ A prefix arg forces clock in of the default task."
    :ensure t
    :init
    (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
-   (setq org-bullets-bullet-list '("☯" "✿" "◉" "❀" "►" "✚"))
+   (setq org-bullets-bullet-list '("☯" "✿" "❀" "►" "✚" "◉"))
    )
 
 ;; org alert

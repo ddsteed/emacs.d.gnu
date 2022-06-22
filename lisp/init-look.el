@@ -144,9 +144,8 @@
 ;; Setting English Font
 (set-face-attribute
  'default nil
- :font "Monaco" 
+ :font "Monaco 12" 
 ;:font "LXGW WenKai Screen 14"
- :size 12
  :height 120
 )
 ;'default nil :font "LXGW WenKai Screen 14")

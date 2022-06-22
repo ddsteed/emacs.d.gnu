@@ -22,6 +22,7 @@
 (require 'init-git)      ;; magit
 (require 'init-project)  ;; project management
 (require 'init-evil)     ;; evil mode
+(require 'init-ein)      ;; emacs ipython notebook
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 设置一个空的custom file，这样系统默认的custom 就不会每次自动写入inti.el
