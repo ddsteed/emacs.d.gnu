@@ -5,16 +5,16 @@
 ;; ;; doom-theme
 
 ;; (setq custom-safe-themes t)
-
+;; 
 ;; (use-package doom-themes
 ;;   :ensure t
 ;;   :config
 ;;   ;; Global settings (defaults)
 ;;   (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
 ;;         doom-themes-enable-italic t) ; if nil, italics is universally disabled
-
+;; 
 ;;   (load-theme 'doom-dracula t)       ; set doom theme
-
+;; 
 ;;   ;; Enable flashing mode-line on errors
 ;;   (doom-themes-visual-bell-config)
 ;;   ;; Enable custom neotree theme (all-the-icons must be installed!)
@@ -36,32 +36,37 @@
 ;; ;;;;;;;;;;
 ;; ;; vscode theme
 
-;; (use-package vscode-dark-plus-theme
-;;   :ensure t
-;;   :config
-;;   (load-theme 'vscode-dark-plus t))
+(use-package solaire-mode
+  :ensure t
+  :config
+  (solaire-global-mode +1))
 
-;; ;; Remove the border around the TODO word on org-mode files
-;; (setq vscode-dark-plus-box-org-todo nil)
+(use-package vscode-dark-plus-theme
+  :ensure t
+  :config
+  (load-theme 'vscode-dark-plus t))
 
-;; ;; Do not set different heights for some org faces
-;; (setq vscode-dark-plus-scale-org-faces nil)
+;; Remove the border around the TODO word on org-mode files
+(setq vscode-dark-plus-box-org-todo nil)
 
-;; ;; Avoid inverting hl-todo face
-;; (setq vscode-dark-plus-invert-hl-todo nil)
+;; Do not set different heights for some org faces
+(setq vscode-dark-plus-scale-org-faces nil)
+
+;; Avoid inverting hl-todo face
+(setq vscode-dark-plus-invert-hl-todo nil)
 
 ;; ;;;;;;;;;;
 ;; ;; night-owl them
 
-(load-theme 'night-owl t)
-
-(defun night-owl/ivy-format-function-line (cands)
-  "Transform CANDS into a string for minibuffer."
-  (let ((str (ivy-format-function-line cands)))
-    (font-lock-append-text-property 0 (length str) 'face 'ivy-not-current str)
-    str))
-
-(setq ivy-format-function #'night-owl/ivy-format-function-line)
+;; (load-theme 'night-owl t)
+;; 
+;; (defun night-owl/ivy-format-function-line (cands)
+;;   "Transform CANDS into a string for minibuffer."
+;;   (let ((str (ivy-format-function-line cands)))
+;;     (font-lock-append-text-property 0 (length str) 'face 'ivy-not-current str)
+;;     str))
+;; 
+;; (setq ivy-format-function #'night-owl/ivy-format-function-line)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 自定义界面外观，一般要放在其他的theme之后，否则有些设置会被theme里重新定义
@@ -83,8 +88,8 @@
 )
 
 ;; make a frame transparent
-(set-frame-parameter (selected-frame) 'alpha '(95 . 75))
-(add-to-list 'default-frame-alist '(alpha . (95 . 75)))
+(set-frame-parameter (selected-frame) 'alpha '(85 . 65))
+(add-to-list 'default-frame-alist '(alpha . (85 . 65)))
 
 ;; 如果不在X窗口下就不要menu-bar					
 (if (equal window-system nil)
@@ -136,6 +141,10 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; scrolling smoothly like vim
 (setq scroll-margin 5 scroll-conservatively 9999 scroll-step 1)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; show column number
+(setq column-number-mode t)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; font

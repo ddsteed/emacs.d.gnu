@@ -498,14 +498,11 @@ A prefix arg forces clock in of the default task."
 ;; 支持多个语言
 (org-babel-do-load-languages
  'org-babel-load-languages
- '((sh         . t)
+ '((shell      . t)
    (js         . t)
    (emacs-lisp . t)
    (perl       . t)
-   (scala      . t)
-   (clojure    . t)
    (python     . t)
-   (ruby       . t)
    (dot        . t)
    (css        . t)
    (plantuml   . t)))

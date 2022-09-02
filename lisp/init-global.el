@@ -36,11 +36,13 @@
 
 (global-set-key (kbd "C-\\") 'set-mark-command) ; 重新绑定设定块标记的命令
 (global-set-key (kbd "C-c n") 'rename-buffer)   ; 重新定义更换buffer名字的命令
-
+(global-set-key (kbd "C-x C-n") 'other-window)  ; 移到下一个窗口
 (global-set-key (kbd "C-x C-;") 'comment-line)  ; 注释一行
 
-;; 
-(global-set-key (kbd "C-x C-n") 'other-window)  ; 移到下一个窗口
+(global-set-key (kbd "C-c m") 'multi-term)      ; 启动 multi-term
+(global-set-key (kbd "C-c t")
+                'toggle-truncate-lines)         ; truncate-lin
+
 
 (defun other-window-backward (&optional n)
   "Select the previous window."
@@ -97,6 +99,9 @@
 ;; 设置行号的大小
 (custom-set-faces
  '(linum ((nil (:height 100)))))
+
+;; 设置列号
+(setq column-number-mode t)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; set auto save
