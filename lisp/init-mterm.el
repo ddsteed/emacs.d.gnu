@@ -9,5 +9,5 @@
 (add-to-list 'term-bind-key-alist '("C-j"))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(provide 'init-evil)
+(provide 'init-mterm)
 

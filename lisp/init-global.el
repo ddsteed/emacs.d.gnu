@@ -40,6 +40,8 @@
 (global-set-key (kbd "C-x C-;") 'comment-line)  ; 注释一行
 
 (global-set-key (kbd "C-c m") 'multi-term)      ; 启动 multi-term
+(global-set-key (kbd "C-c s") 'shell)           ; 启动 shell
+(global-set-key (kbd "C-c e") 'eshell)          ; 启动 eshell
 (global-set-key (kbd "C-c t")
                 'toggle-truncate-lines)         ; truncate-lin
 
