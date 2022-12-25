@@ -12,10 +12,8 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; 
 ;; general variables
-(column-number-mode t)         ; status bar 显示列
-(display-time-mode t)          ; status bar 显示时间
-
-(setq-default line-spacing 5)  ; 设置行间距
+(display-time-mode nil)          ; status bar 不显示时间
+; (setq display-time-day-and-date 0)  ;不显示时间、星期、日期
 
 (size-indication-mode t)
 (tool-bar-mode nil)
@@ -94,6 +92,9 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 设置行号
 (global-linum-mode 1) ; always show line numbers                              
+
+;; 设置行间距
+(setq-default line-spacing 5)
 
 ;; 设置行号宽度
 (setq linum-format "%4d ")

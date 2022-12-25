@@ -24,7 +24,7 @@
 (require 'init-mterm)    ;; multi-term
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; 设置一个空的custom file，这样系统默认的custom 就不会每次自动写入inti.el
+;; 设置一个空的custom file，这样系统默认的custom 就不会每次自动写入 init.el
 (setq custom-file "~/.emacs.d/custom.el")
       
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
