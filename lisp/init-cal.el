@@ -2,7 +2,7 @@
 ;; 日历的设置
 
 ;; 显示农历
-(require 'cal-china-x)   ;; 通过melpa安装
+(use-package cal-china-x)
 (setq mark-holidays-in-calendar t)
 (setq cal-china-x-important-holidays cal-china-x-chinese-holidays)
 (setq calendar-holidays cal-china-x-important-holidays)

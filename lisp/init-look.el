@@ -126,7 +126,8 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 括号匹配高亮
-(require 'highlight-parentheses)
+(use-package highlight-parentheses
+  :ensure t)
 (define-globalized-minor-mode global-highlight-parentheses-mode
   highlight-parentheses-mode
   (lambda ()

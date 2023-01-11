@@ -1,5 +1,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Org-mode
+(use-package org
+  :pin gnu)
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; (add-to-list 'auto-mode-alist '("\\.\\(org\\|org_archive\\|txt\\)$" . org-mode))
@@ -47,8 +49,8 @@
       org-src-tab-acts-natively t)
 
 ;; org 不同标题字体大小变化
-(set-face-attribute 'org-level-1 nil :height 1.3 :bold t)
-(set-face-attribute 'org-level-2 nil :height 1.2 :bold t)
+(set-face-attribute 'org-level-1 nil :height 1.2 :bold t)
+(set-face-attribute 'org-level-2 nil :height 1.1 :bold t)
 (set-face-attribute 'org-level-3 nil :height 1.1)
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -358,57 +360,6 @@ A prefix arg forces clock in of the default task."
 (setq org-archive-mark-done nil)
 (setq org-archive-location "%s_archive::* Archived Tasks")
 
-;; 用XeLaTeX输出中文pdf
-(require 'ox-latex)
-
-(setq org-latex-pdf-process
-      '("xelatex -interaction nonstopmode -output-directory %o %f"
-        "xelatex -interaction nonstopmode -output-directory %o %f"
-        "xelatex -interaction nonstopmode -output-directory %o %f"))
-
-;; 只列基本的宏包
-(add-to-list 'org-latex-classes
-             '("cn-article"
-               "\\documentclass[11pt,a4paper]{article}
-                \\usepackage{xltxtra,fontspec,xunicode}
-                \\usepackage[slantfont,boldfont]{xeCJK}     
-                \\usepackage{indentfirst}      
-                \\XeTeXlinebreaklocale \"zh\"
-                \\XeTeXlinebreakskip = 0pt plus 1pt minus 0.1pt
-                \\setCJKmainfont{Kai}   
-                \\setCJKmonofont{Hei}   
-                \\setmainfont{Optima}   
-                \\setmonofont{Monaco}   
-                \\setsansfont{Trebuchet MS}
-                \\renewcommand{\\baselinestretch}{1.2}"
-                ("\\section{%s}" . "\\section*{%s}")
-                ("\\subsection{%s}" . "\\subsection*{%s}")
-                ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
-                ("\\paragraph{%s}" . "\\paragraph*{%s}")
-                ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
-
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; org-ref: citations, cross-references, indexes, glossaries and bibtex utilities for org-mode
-;;(require 'org-ref)
-(use-package org-ref
-  :config
-  (setq
-        reftex-default-bibliography '("~//Work/home1/feng/REFERENCES/RDS.bib")
-        org-ref-bibliography-notes "~/Work/home1/feng/REFERENCES/notes.org"
-        org-ref-default-bibliography '("~/Work/home1/feng/REFERENCES/RDS.bib")
-        org-ref-pdf-directory "~/Work/home1/feng/REFERENCES/"
-
-        bibtex-completion-bibliography  "~/Work/home1/feng/REFERENCES/notes.org"
-        bibtex-completion-library-path "~/Work/home1/feng/REFERENCES"
-        bibtex-completion-notes-path "~/Work/home1/feng/REFERENCES/helm-bibtex-notes"
-
-        ;; open pdf with system pdf viewer (works on mac)
-        bibtex-completion-pdf-open-function
-           (lambda (fpath)
-             (start-process "open" "*open*" "open" fpath))
-           org-latex-pdf-process (list "latexmk -shell-escape -bibtex -f -pdf %f"))
-)
-
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; org bullets
  (use-package org-bullets
@@ -425,49 +376,6 @@ A prefix arg forces clock in of the default task."
   (progn
     (setq alert-default-style 'libnotify)
     ))
-
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; org roam
-;; (use-package org-roam
-;;       :ensure t
-;;       :hook
-;;       (after-init . org-roam-mode)
-;;       :custom
-;;       (org-roam-directory "~/DOC/RDS/NOTES/Org")
-;;       :bind (:map org-roam-mode-map
-;;               (("C-c n l" . org-roam)
-;;                ("C-c n f" . org-roam-find-file)
-;;                ("C-c n g" . org-roam-graph-show))
-;;              :map org-mode-map
-;;               (("C-c n i" . org-roam-insert))
-;;               (("C-c n I" . org-roam-insert-immediate))))
-
-; 让 org-roam 在 Emacs 启动后就启用
-; (add-hook 'after-init-hook 'org-roam-mode)
-
-; 设置并启动 org-roam-server 来监听笔记的变化并进行可视化（见org-roam-server 安装说明）
-;; (use-package org-roam-server
-;;   :ensure t
-;;   :config
-;;   (setq org-roam-server-host "127.0.0.1"
-;;         org-roam-server-port 8080
-;;         org-roam-server-authenticate nil
-;;         org-roam-server-export-inline-images t
-;;         org-roam-server-serve-files nil
-;;         org-roam-server-served-file-extensions '("pdf" "mp4" "ogv")
-;;         org-roam-server-network-poll t
-;;         org-roam-server-network-arrows nil
-;;         org-roam-server-network-label-truncate t
-;;         org-roam-server-network-label-truncate-length 60
-;;         org-roam-server-network-label-wrap-length 20))
-
-; 启用 org-roam-protocol，用来在笔记可视化网页上和 org-roam-server 通信
-;; (use-package org-roam-protocol)
-
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; export freemind
-;; (load "~/Work/GTD/ox-freemind.el")
-;; (require 'ox-freemind)
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Reminders

@@ -20,7 +20,7 @@
 ;; (require 'xah-wolfram-mode)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(require 'wolfram)
+(use-package wolfram)
 
 (setq wolfram-alpha-app-id "4EEGR9-2J4263E6QU")
 

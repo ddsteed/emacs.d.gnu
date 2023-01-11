@@ -1,15 +1,16 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; evil mode
-(require 'evil)
+(use-package evil)
 (evil-mode 1)
 
 ;; vim-like search highlighting
-(require 'evil-search-highlight-persist)
+(use-package evil-search-highlight-persist)
 (global-evil-search-highlight-persist t)
 
 ;; powerline
-(require 'powerline)
-(powerline-evil-vim-color-theme)
+;(require 'powerline)
+(use-package powerline)
+;(powerline-evil-vim-color-theme)
 (display-time-mode t)
 
 ;; j/k for browsing wrapped lines

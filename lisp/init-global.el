@@ -12,7 +12,7 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; 
 ;; general variables
-(display-time-mode nil)          ; status bar 不显示时间
+(display-time-mode nil)               ; status bar 不显示时间
 ; (setq display-time-day-and-date 0)  ;不显示时间、星期、日期
 
 (size-indication-mode t)
@@ -64,13 +64,6 @@
     (delete-char 1)))
 
 (global-set-key "\C-x\C-a" 'delete-blank-chars)
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; 在 ~/.emacs 里设置 load-path，这样我把 lisp 文件放到 load-path 里任何
-;; 一个目录都行。
-
-(add-to-list 'load-path "~/.emacs.d/elpa")
-(add-to-list 'load-path "~/.emacs.d/addons")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 将反悔步长取长点，即可以反悔到很久以前的情况。默认值是30，我觉得太少了
@@ -161,13 +154,6 @@
 (package-install 'marginalia)
 (marginalia-mode t)
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; modeline上显示我的所有的按键和执行的命令
-(use-package keycast
-  :init
-  (add-to-list 'global-mode-string '("" mode-line-keycast))
-  (keycast-mode))
-  
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; minibuffer action 和自适应的 context menu：Embark
 (package-install 'embark)
@@ -176,7 +162,7 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 增强文件内搜索和跳转函数定义：Consult
-(package-install 'consult)
+(use-package consult)
 (global-set-key (kbd "C-s") 'consult-line)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
