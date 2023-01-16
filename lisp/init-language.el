@@ -21,13 +21,9 @@
 
 (require 'init-python)
 
-(add-hook 'python-mode-hook
-	      (lambda ()
-            (setq truncate-lines t)
-))
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; C和C++语言编程风格
+;; C/C++
+
 (add-hook 'c-mode-hook
 	      (lambda ()
 	        (setq truncate-lines t)
@@ -60,11 +56,18 @@
        '(("CMakeLists\\.txt\\'" . cmake-mode))
        '(("\\.cmake\\'" . cmake-mode))
        auto-mode-alist))
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; wolfram mathematica
-(require 'init-wolfram)  ;; wolfram mathematica
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; wolfram mathematica
+; (require 'init-wolfram)  ;; wolfram mathematica
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; lisp
+
+; 不显示过长的行
+(add-hook 'lisp-mode-hook (lambda () (setq truncate-lines t)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; shell script
 
 ; 不显示过长的行

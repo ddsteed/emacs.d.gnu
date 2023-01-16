@@ -1,39 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; theme select
 ;;
-;; ;;;;;;;;;;
-;; ;; doom-theme
-
-;; (setq custom-safe-themes t)
-;; 
-;; (use-package doom-themes
-;;   :ensure t
-;;   :config
-;;   ;; Global settings (defaults)
-;;   (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
-;;         doom-themes-enable-italic t) ; if nil, italics is universally disabled
-;; 
-;;   (load-theme 'doom-dracula t)       ; set doom theme
-;; 
-;;   ;; Enable flashing mode-line on errors
-;;   (doom-themes-visual-bell-config)
-;;   ;; Enable custom neotree theme (all-the-icons must be installed!)
-;;   (doom-themes-neotree-config)
-;;   ;; or for treemacs users
-;;   (setq doom-themes-treemacs-theme "doom-oceanic-next") ; use "doom-colors" for less minimal icon theme
-;;   (doom-themes-treemacs-config)
-;;   ;; Corrects (and improves) org-mode's native fontification.
-;;   (doom-themes-org-config))
-
-;; ;;;;;;;;;;
-;; ;; kaolin-theme
-;; (use-package kaolin-themes
-;;   :config
-;;   (load-theme 'kaolin-temple t)
-;; ;; Apply treemacs customization for Kaolin themes, requires the all-the-icons package.
-;;   (kaolin-treemacs-theme))
-
-;; ;;;;;;;;;;
 ;; ;; vscode theme
 
 (use-package solaire-mode
@@ -54,19 +21,6 @@
 
 ;; Avoid inverting hl-todo face
 (setq vscode-dark-plus-invert-hl-todo nil)
-
-;; ;;;;;;;;;;
-;; ;; night-owl them
-
-;; (load-theme 'night-owl t)
-;; 
-;; (defun night-owl/ivy-format-function-line (cands)
-;;   "Transform CANDS into a string for minibuffer."
-;;   (let ((str (ivy-format-function-line cands)))
-;;     (font-lock-append-text-property 0 (length str) 'face 'ivy-not-current str)
-;;     str))
-;; 
-;; (setq ivy-format-function #'night-owl/ivy-format-function-line)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 自定义界面外观，一般要放在其他的theme之后，否则有些设置会被theme里重新定义
@@ -106,7 +60,7 @@
 (add-to-list 'default-frame-alist '(ns-appearance . dark))
 
 (let ((display-table (or standard-display-table (make-display-table))))
-  (set-display-table-slot display-table 'vertical-border (make-glyph-code ?│)) ; or ┃ │
+  (set-display-table-slot display-table 'vertical-border (make-glyph-code ?│)) 
   (setq standard-display-table display-table))
 (set-face-background 'vertical-border (face-background 'default))
 (set-face-foreground 'vertical-border "grey")
@@ -136,8 +90,7 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (use-package all-the-icons
-  :after memoize
-  :load-path "site-lisp/all-the-icons")
+  :after memoize)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; scrolling smoothly like vim
@@ -151,18 +104,14 @@
 (set-face-attribute
  'default nil
  :font "Monaco 12" 
-;:font "LXGW WenKai Screen 14"
  :height 120
 )
-;'default nil :font "LXGW WenKai Screen 14")
 
 ;; Chinese Font
 (dolist (charset '(kana han symbol cjk-misc bopomofo))
   (set-fontset-font (frame-parameter nil 'font)
       charset
-;(font-spec :family "WenQuanYi Micro Hei Mono" :size 16)))
       (font-spec
-;        :family "LXGW WenKai Screen"
          :family "PingFang SC Regular"
          :size 16
       )

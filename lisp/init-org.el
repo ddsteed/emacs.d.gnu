@@ -7,8 +7,6 @@
 ;; (add-to-list 'auto-mode-alist '("\\.\\(org\\|org_archive\\|txt\\)$" . org-mode))
 (add-to-list 'auto-mode-alist '("\\.\\(org\\|org_archive\\|txt\\)$" . org-mode))
 
-(use-package org)
-
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 添加org插件
 (add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/") t)
@@ -22,7 +20,7 @@
 (global-set-key  "\C-cl"  'org-store-link)
 (global-set-key  "\C-ca"  'org-agenda)
 (global-set-key  "\C-cc"  'org-capture)
-(global-set-key  "\C-cb"  'org-iswitchb)
+(global-set-key  "\C-cb"  'org-switchb)
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 跟踪一个特定项目的完成
@@ -34,14 +32,14 @@
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 利用 highlight-regexp 高亮指定的正则表达式
-(defun bigboss-highlight ()
+(defun rds/bigboss-highlight ()
   (interactive)
   (highlight-regexp "0[0-9]\\{2\\}-[0-9]\\{8\\}" 'phone-number-lock-face)
   (highlight-regexp "Lisp\\|Scheme" 'language-lock-face)
   (highlight-regexp "神之编辑器\\|编辑器之神" 'emacs-vim-lock-face)
 )
 
-(add-hook 'org-mode-hook 'bigboss-highlight)
+(add-hook 'org-mode-hook 'rds/bigboss-highlight)
 
 ;; org src 语法高亮
 (setq org-confirm-babel-evaluate nil
@@ -56,9 +54,9 @@
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 增加TODO的状态
 ; 在一个 ｜ 之内的状态属于同一个类，除了显示的标志不同外，在org内部当成同一类处理
-; 字符:该状态的快捷键
-; ! : 切换到该状态时会自动添加时间戳
-; @ : 切换到该状态时要求输入文字说明
+; 字符: 该状态的快捷键
+; ! :  切换到该状态时会自动添加时间戳
+; @ :  切换到该状态时要求输入文字说明
 ; 如果同时设定@和!,使用@/!
 
 (setq org-todo-keywords
@@ -157,7 +155,7 @@
 ;; Resume clocking task on clock-in if the clock is open
 (setq org-clock-in-resume t)
 ;; Change tasks to NEXT when clocking in
-(setq org-clock-in-switch-to-state 'bh/clock-in-to-next)
+(setq org-clock-in-switch-to-state 'rds/clock-in-to-next)
 ;; Separate drawers for clocking and logs
 (setq org-drawers (quote ("PROPERTIES" "LOGBOOK")))
 ;; Save clock data and state changes and notes in the LOGBOOK drawer
@@ -175,22 +173,22 @@
 ;; Include current clocking task in clock reports
 (setq org-clock-report-include-clocking-task t)
 
-(setq bh/keep-clock-running nil)
+(setq rds/keep-clock-running nil)
 
-(defun bh/clock-in-to-next (kw)
+(defun rds/clock-in-to-next (kw)
   "Switch a task from TODO to NEXT when clocking in.
 Skips capture tasks, projects, and subprojects.
 Switch projects and subprojects from NEXT back to TODO"
   (when (not (and (boundp 'org-capture-mode) org-capture-mode))
     (cond
      ((and (member (org-get-todo-state) (list "TODO"))
-           (bh/is-task-p))
+           (rds/is-task-p))
       "NEXT")
      ((and (member (org-get-todo-state) (list "NEXT"))
-           (bh/is-project-p))
+           (rds/is-project-p))
       "TODO"))))
 
-(defun bh/find-project-task ()
+(defun rds/find-project-task ()
   "Move point to the parent (project) task if any"
   (save-restriction
     (widen)
@@ -201,12 +199,12 @@ Switch projects and subprojects from NEXT back to TODO"
       (goto-char parent-task)
       parent-task)))
 
-(defun bh/punch-in (arg)
+(defun rds/punch-in (arg)
   "Start continuous clocking and set the default task to the
 selected task.  If no task is selected set the Organization task
 as the default task."
   (interactive "p")
-  (setq bh/keep-clock-running t)
+  (setq rds/keep-clock-running t)
   (if (equal major-mode 'org-agenda-mode)
       ;;
       ;; We're in the agenda
@@ -215,7 +213,7 @@ as the default task."
              (tags (org-with-point-at marker (org-get-tags-at))))
         (if (and (eq arg 4) tags)
             (org-agenda-clock-in '(16))
-          (bh/clock-in-organization-task-as-default)))
+          (rds/clock-in-organization-task-as-default)))
     ;;
     ;; We are not in the agenda
     ;;
@@ -224,21 +222,21 @@ as the default task."
       ; Find the tags on the current task
       (if (and (equal major-mode 'org-mode) (not (org-before-first-heading-p)) (eq arg 4))
           (org-clock-in '(16))
-        (bh/clock-in-organization-task-as-default)))))
+        (rds/clock-in-organization-task-as-default)))))
 
-(defun bh/punch-out ()
+(defun rds/punch-out ()
   (interactive)
-  (setq bh/keep-clock-running nil)
+  (setq rds/keep-clock-running nil)
   (when (org-clock-is-active)
     (org-clock-out))
   (org-agenda-remove-restriction-lock))
 
-(defun bh/clock-in-default-task ()
+(defun rds/clock-in-default-task ()
   (save-excursion
     (org-with-point-at org-clock-default-task
       (org-clock-in))))
 
-(defun bh/clock-in-parent-task ()
+(defun rds/clock-in-parent-task ()
   "Move point to the parent (project) task if any and clock in"
   (let ((parent-task))
     (save-excursion
@@ -250,32 +248,32 @@ as the default task."
         (if parent-task
             (org-with-point-at parent-task
               (org-clock-in))
-          (when bh/keep-clock-running
-            (bh/clock-in-default-task)))))))
+          (when rds/keep-clock-running
+            (rds/clock-in-default-task)))))))
 
-(defvar bh/organization-task-id "eb155a82-92b2-4f25-a3c6-0304591af2f9")
+(defvar rds/organization-task-id "eb155a82-92b2-4f25-a3c6-0304591af2f9")
 
-(defun bh/clock-in-organization-task-as-default ()
+(defun rds/clock-in-organization-task-as-default ()
   (interactive)
-  (org-with-point-at (org-id-find bh/organization-task-id 'marker)
+  (org-with-point-at (org-id-find rds/organization-task-id 'marker)
     (org-clock-in '(16))))
 
-(defun bh/clock-out-maybe ()
-  (when (and bh/keep-clock-running
+(defun rds/clock-out-maybe ()
+  (when (and rds/keep-clock-running
              (not org-clock-clocking-in)
              (marker-buffer org-clock-default-task)
              (not org-clock-resolving-clocks-due-to-idleness))
-    (bh/clock-in-parent-task)))
+    (rds/clock-in-parent-task)))
 
-(add-hook 'org-clock-out-hook 'bh/clock-out-maybe 'append)
+(add-hook 'org-clock-out-hook 'rds/clock-out-maybe 'append)
 
 (require 'org-id)
-(defun bh/clock-in-task-by-id (id)
+(defun rds/clock-in-task-by-id (id)
   "Clock in a task by id"
   (org-with-point-at (org-id-find id 'marker)
     (org-clock-in nil)))
 
-(defun bh/clock-in-last-task (arg)
+(defun rds/clock-in-last-task (arg)
   "Clock in the interrupted task if there is one
 Skip the default task and get the next one.
 A prefix arg forces clock in of the default task."
@@ -321,12 +319,21 @@ A prefix arg forces clock in of the default task."
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; capture
+; (setq org-capture-templates '(("t" "Todo [Inbox]" entry
+;                                (file+headline "~/Work/GTD/Inbox.org" "Tasks")
+;                                "* TODO %i%?")
+;                               ("T" "Tickler" entry
+;                                (file+headline "~/Work/GTD/Tickler.org" "Tickler")
+;                                "* %i%? \n %U")))
+
 (setq org-capture-templates '(("t" "Todo [Inbox]" entry
                                (file+headline "~/Work/GTD/Inbox.org" "Tasks")
-                               "* TODO %i%?")
-                              ("T" "Tickler" entry
-                               (file+headline "~/Work/GTD/Tickler.org" "Tickler")
-                               "* %i%? \n %U")))
+                               "* TODO %i%?")))
+
+; add org capture file
+(add-to-list 'org-capture-templates 
+             '("T" "Tickler" entry (file+headline "~/Work/GTD/Tickler.org" "Tickler")
+                "* %i%? \n %U"))
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; refile
@@ -403,6 +410,10 @@ A prefix arg forces clock in of the default task."
 (add-hook 'org-mode-hook (lambda () (setq truncate-lines nil)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; 设置org插入图片的存储方式
+(setq org-download-method 'directory)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 支持多个语言
 (org-babel-do-load-languages
  'org-babel-load-languages
@@ -411,10 +422,28 @@ A prefix arg forces clock in of the default task."
    (emacs-lisp . t)
    (perl       . t)
    (python     . t)
+   (C          . t)
+   (latex      . t)
    (dot        . t)
    (css        . t)
    (plantuml   . t)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; org mode 转换功能
+(setq org-export-backends (quote (ascii html icalendar latex md)))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; 插入快捷键
+(add-hook 'org-mode-hook
+	  (lambda ()
+	    (require 'org-tempo)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; ox-hugo: org to html
+(use-package ox-hugo
+  :ensure t   ;Auto-install the package from Melpa
+  :pin melpa  ;`package-archives' should already have ("melpa" . "https://melpa.org/packages/")
+  :after ox)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (provide 'init-org)

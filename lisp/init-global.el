@@ -126,6 +126,9 @@
 (require 'ibuffer)
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 
+; 自动截断
+(add-hook 'ibuffer-mode-hook (lambda () (setq truncate-lines t)))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; 
 ;; merge the Emacs kill-ring with the clipboard
 (setq select-enable-clipboard t)
@@ -183,4 +186,8 @@
            (start-process "default-app" nil "open" fn))))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; 显示自动截断
+(setq-default truncate-lines t)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (provide 'init-global)
