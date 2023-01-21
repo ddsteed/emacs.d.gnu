@@ -432,7 +432,10 @@ A prefix arg forces clock in of the default task."
 ;; org mode 转换功能
 (setq org-export-backends (quote (ascii html icalendar latex md)))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+(require 'init-publish)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 插入快捷键
 (add-hook 'org-mode-hook
 	  (lambda ()

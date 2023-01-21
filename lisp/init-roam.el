@@ -31,12 +31,18 @@
 ;;;;;;;
 ;; My Org-roam capture templates. There is one for each zettel type.
 (setq org-roam-capture-templates
-      '(("m" "main" plain
+      '(
+        ("f" "fleeting" plain
          "%?"
-         :if-new (file+head "main/${slug}.org"
-                            "#+title: ${title}\n#+filetags: :draft:\n")
+         :if-new (file+head "fleeting/${slug}.org"
+                            "#+title: ${title}\n#+filetags: :fleeting:\n")
          :immediate-finish t
          :unnarrowed t)
+         ("p" "progress" plain "%?"
+         :if-new
+         (file+head "progress/${title}.org" "#+title: ${title}\n#+filetags: :progress:\n")
+         :immediate-finish t
+        :unnarrowed t)
         ("r" "reference" plain "%?"
          :if-new
          (file+head "reference/${title}.org" "#+title: ${title}\n#+filetags: :reference:\n")
@@ -46,7 +52,9 @@
          :if-new
          (file+head "articles/${title}.org" "#+title: ${title}\n#+filetags: :article:\n")
          :immediate-finish t
-         :unnarrowed t)))
+         :unnarrowed t)
+        )
+)
 
 
 ; add org capture file
