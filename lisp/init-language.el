@@ -49,8 +49,7 @@
 ))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; auto load cmake-mode for CMakeLists.txt
-;; (require 'cmake-mode)
+;; cmake
 (setq auto-mode-alist
       (append
        '(("CMakeLists\\.txt\\'" . cmake-mode))
@@ -95,4 +94,20 @@
 (require 'init-jupyter)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; plantuml 画图
+
+;; plantuml is based java, so jar has to be specified
+(setq org-plantuml-jar-path
+      (expand-file-name "/opt/Homebrew/Cellar/plantuml/1.2023.1/libexec/plantuml.jar"))
+
+;; babel accept plantuml
+(org-babel-do-load-languages 'org-babel-load-languages '((plantuml . t)))
+
+;; Integration with org-mode
+(add-to-list 'org-src-lang-modes '("plantuml" . plantuml))
+
+;; Enable plantuml-mode for PlantUML files
+(add-to-list 'auto-mode-alist '("\\.plantuml\\'" . plantuml-mode))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (provide 'init-language)

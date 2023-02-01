@@ -1,7 +1,13 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Org-mode
 (use-package org
-  :pin gnu)
+  :pin gnu
+  :hook
+  (org-babel-after-execute . org-redisplay-inline-images)
+  :custom
+  ;; Do not ask before evaluating a code block
+  (org-confirm-babel-evaluate nil)
+)
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; (add-to-list 'auto-mode-alist '("\\.\\(org\\|org_archive\\|txt\\)$" . org-mode))
@@ -369,12 +375,12 @@ A prefix arg forces clock in of the default task."
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; org bullets
- (use-package org-bullets
-   :ensure t
-   :init
-   (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
-   (setq org-bullets-bullet-list '("☯" "✿" "❀" "►" "✚" "◉"))
-   )
+(use-package org-bullets
+  :ensure t
+  :init
+  (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+  (setq org-bullets-bullet-list '("☯" "✿" "❀" "►" "✚" "◉"))
+)
 
 ;; org alert
 (use-package org-alert
@@ -382,7 +388,8 @@ A prefix arg forces clock in of the default task."
   :config
   (progn
     (setq alert-default-style 'libnotify)
-    ))
+  )
+)
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Reminders
@@ -426,7 +433,8 @@ A prefix arg forces clock in of the default task."
    (latex      . t)
    (dot        . t)
    (css        . t)
-   (plantuml   . t)))
+  )
+)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; org mode 转换功能
