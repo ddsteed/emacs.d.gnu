@@ -223,4 +223,21 @@ Version 2015-01-26"
 (global-set-key (kbd "C-c o") 'rds-open-in-external-app)          
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Use IDO for both buffer and file completion and ido-everywhere to t
+(setq org-completion-use-ido t)
+(setq ido-everywhere t)
+(setq ido-max-directory-size 100000)
+(ido-mode (quote both))
+
+; Use the current window when visiting files and buffers with ido
+(setq ido-default-file-method 'selected-window)
+(setq ido-default-buffer-method 'selected-window)
+
+; Use the current window for indirect buffer display
+(setq org-indirect-buffer-display 'current-window)
+
+; disable the feature that lets Ido retrieve files from subdirectories for good
+(setq ido-auto-merge-work-directories-length -1)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (provide 'init-global)
