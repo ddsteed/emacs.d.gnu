@@ -240,4 +240,10 @@ Version 2015-01-26"
 (setq ido-auto-merge-work-directories-length -1)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; open files with system default application
+(use-package crux
+  :bind (("C-c o" . crux-open-with)
+         ("C-a" . crux-move-beginning-of-line)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (provide 'init-global)

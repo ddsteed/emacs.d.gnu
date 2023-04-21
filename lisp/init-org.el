@@ -408,6 +408,21 @@ A prefix arg forces clock in of the default task."
 ;; 设置org插入图片的存储方式
 (setq org-download-method 'directory)
 
+(require 'org-download)
+
+;; Drag-and-drop to `dired`
+(add-hook 'dired-mode-hook 'org-download-enable)
+
+(use-package org-download
+	  :ensure t 
+	  ;;将截屏功能绑定到快捷键：Ctrl + Shift + Y
+	  :bind ("C-S-y" . org-download-screenshot)
+	  :config
+	  (require 'org-download)
+	  ;; Drag and drop to Dired
+	  (add-hook 'dired-mode-hook 'org-download-enable)
+	  )
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 支持多个语言
 (org-babel-do-load-languages
@@ -443,6 +458,16 @@ A prefix arg forces clock in of the default task."
   :ensure t   ;Auto-install the package from Melpa
   :pin melpa  ;`package-archives' should already have ("melpa" . "https://melpa.org/packages/")
   :after ox)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; open files using system default application in org mode
+
+(setq org-file-apps
+      '(
+        ("\\.xlsx\\'" . "excel %s")
+        ("\\.md\\'" . "MacDown %s")
+        ("\\.nb\\'" . "mathematica %s")
+        ))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (provide 'init-org)
