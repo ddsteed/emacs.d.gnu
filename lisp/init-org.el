@@ -470,4 +470,10 @@ A prefix arg forces clock in of the default task."
         ))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; org preview html
+(require 'org-preview-html)
+
+(global-set-key  "\C-cp"  'org-preview-html-mode)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (provide 'init-org)

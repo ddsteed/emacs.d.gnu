@@ -28,14 +28,14 @@
 	      (lambda ()
 	        (setq truncate-lines t)
  	        (c-set-style "Stroustrup")
- 	        (c-toggle-auto-state) ; 加上自动开始新行的功能
+ 	        (c-toggle-auto-newline) ; 加上自动开始新行的功能
 ))   
 
 (add-hook 'c++-mode-hook
 	      (lambda ()
 	        (setq truncate-lines t)
 	        (c-set-style "Stroustrup")
-            (c-toggle-auto-state) ; 加上自动开始新行的功能
+            (c-toggle-auto-newline) ; 加上自动开始新行的功能
 ))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -98,7 +98,7 @@
 
 ;; plantuml is based java, so jar has to be specified
 (setq org-plantuml-jar-path
-      (expand-file-name "/opt/Homebrew/Cellar/plantuml/1.2023.6/libexec/plantuml.jar"))
+      (expand-file-name "/opt/Homebrew/Cellar/plantuml/1.2023.8/libexec/plantuml.jar"))
 
 ;; babel accept plantuml
 (org-babel-do-load-languages 'org-babel-load-languages '((plantuml . t)))
