@@ -1,7 +1,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; theme select
 ;;
-;; ;; vscode theme
+;; vscode theme
 
 (use-package solaire-mode
   :ensure t

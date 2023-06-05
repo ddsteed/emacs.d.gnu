@@ -23,7 +23,7 @@
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Keybindings
-(global-set-key  "\C-cl"  'org-store-link)
+; (global-set-key  "\C-cl"  'org-store-link)
 (global-set-key  "\C-ca"  'org-agenda)
 (global-set-key  "\C-cc"  'org-capture)
 (global-set-key  "\C-cb"  'org-switchb)
@@ -474,6 +474,10 @@ A prefix arg forces clock in of the default task."
 (require 'org-preview-html)
 
 (global-set-key  "\C-cp"  'org-preview-html-mode)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; link
+(global-set-key "\C-cl" 'org-insert-link)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (provide 'init-org)
