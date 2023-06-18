@@ -84,7 +84,28 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 设置行号
-(global-linum-mode 1) ; always show line numbers                              
+;;(global-linum-mode 1) ; always show line numbers                              
+
+;(when (version<= "26.0.50" emacs-version )
+;  (global-display-line-numbers-mode))
+
+;(require 'display-line-numbers)
+
+;(defcustom display-line-numbers-exempt-modes
+;  '(vterm-mode eshell-mode shell-mode term-mode ansi-term-mode)
+;  "Major modes on which to disable line numbers."
+;  :group 'display-line-numbers
+;  :type 'list
+;  :version "green")
+;
+;(defun display-line-numbers--turn-on ()
+;  "Turn on line numbers except for certain major modes.
+;Exempt major modes are defined in `display-line-numbers-exempt-modes'."
+;  (unless (or (minibufferp)
+;              (member major-mode display-line-numbers-exempt-modes))
+;    (display-line-numbers-mode)))
+;
+; (global-display-line-numbers-mode)
 
 ;; 设置行间距
 (setq-default line-spacing 5)
@@ -244,6 +265,15 @@ Version 2015-01-26"
 (use-package crux
   :bind (("C-c o" . crux-open-with)
          ("C-a" . crux-move-beginning-of-line)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; 不在新 frame 打开文件（如 Finder 的 "Open with Emacs") 。
+(setq ns-pop-up-frames nil)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; 像素平滑滚动。
+(if (boundp 'pixel-scroll-precision-mode)
+    (pixel-scroll-precision-mode t))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (provide 'init-global)

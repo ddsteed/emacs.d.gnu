@@ -118,6 +118,75 @@
    )
 )
 
+;; 缺省字体；
+(setq +font-family "Iosevka Comfy")
+;; modeline 字体，未设置的情况下使用 variable-pitch 字体。
+(setq +modeline-font-family "Iosevka Comfy")
+;; fixed-pitch 字体；
+(setq +fixed-pitch-family "Iosevka Comfy")
+;; variable-pitch 字体；
+(setq +variable-pitch-family "LXGW WenKai Screen")
+
+;; 中文字体；
+(setq +font-unicode-family "LXGW WenKai Screen")
+;; 中文字体和英文字体按照 1:1 缩放，在偶数字号的情况下可以实现等宽等高。
+(setq face-font-rescale-alist '(("LXGW WenKai Screen" . 1))) ;; 1:1 缩放。
+(setq +font-size 14) ;; 偶数字号。
+
+;; 设置缺省字体。
+(defun +load-base-font ()
+  ;; 只为缺省字体设置 size, 其它字体都通过 :height 动态伸缩。
+  (let* ((font-spec (format "%s-%d" +font-family +font-size)))
+    (set-frame-parameter nil 'font font-spec)
+    (add-to-list 'default-frame-alist `(font . ,font-spec))))
+
+;; 设置各特定 face 的字体。
+(defun +load-face-font (&optional frame)
+  (let ((font-spec (format "%s" +font-family))
+	(modeline-font-spec (format "%s" +modeline-font-family))
+	(variable-pitch-font-spec (format "%s" +variable-pitch-family))
+	(fixed-pitch-font-spec (format "%s" +fixed-pitch-family)))
+    (set-face-attribute 'variable-pitch frame :font variable-pitch-font-spec)
+    (set-face-attribute 'fixed-pitch frame :font fixed-pitch-font-spec)
+    (set-face-attribute 'fixed-pitch-serif frame :font fixed-pitch-font-spec)
+    (set-face-attribute 'tab-bar frame :font font-spec)
+    (set-face-attribute 'mode-line frame :font modeline-font-spec)
+    (set-face-attribute 'mode-line-inactive frame :font modeline-font-spec)))
+
+;; 设置中文字体。
+(defun +load-ext-font ()
+  (when window-system
+    (let ((font (frame-parameter nil 'font))
+	  (font-spec (font-spec :family +font-unicode-family)))
+      (dolist (charset '(kana han hangul cjk-misc bopomofo))
+	(set-fontset-font font charset font-spec)))))
+
+;; 设置 Emoji 和 Symbol 字体。
+(defun +load-emoji-font ()
+  (when window-system
+    (setq use-default-font-for-symbols nil)
+    (set-fontset-font t 'emoji (font-spec :family "Apple Color Emoji")) ;; Noto Color Emoji
+    (set-fontset-font t 'symbol (font-spec :family "Apple Symbols")))) ;; Symbola
+
+(add-hook 'after-make-frame-functions 
+	  ( lambda (f) 
+	    (+load-face-font)
+	    (+load-ext-font)
+	    (+load-emoji-font)))
+
+;; 加载字体。
+(defun +load-font ()
+  (+load-base-font)
+  (+load-face-font)
+  (+load-ext-font)
+  (+load-emoji-font))
+
+(+load-font)
+
+;; all-the-icons 只能在 GUI 模式下使用。
+(when (display-graphic-p)
+  (use-package all-the-icons :demand))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (provide 'init-look)

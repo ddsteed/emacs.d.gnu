@@ -134,10 +134,12 @@
       (goto-char (point-min))
       (while (setq pos (next-single-property-change (point) 'duration))
         (goto-char pos)
-        (when (and (not (equal pos (point-at-eol)))
+;       (when (and (not (equal pos (point-at-eol)))
+        (when (and (not (equal pos (pos-eol)))
                    (setq duration (org-get-at-bol 'duration)))
           (let ((line-height (if (< duration 30) 1.0 (+ 0.5 (/ duration 60))))
-                (ov (make-overlay (point-at-bol) (1+ (point-at-eol)))))
+;               (ov (make-overlay (point-at-bol) (1+ (point-at-eol)))))
+                (ov (make-overlay (point-bol) (1+ (point-eol)))))
             (overlay-put ov 'face `(:background ,(car colors)
                                                 :foreground
                                                 ,(if background-dark-p "black" "white")))
@@ -474,6 +476,9 @@ A prefix arg forces clock in of the default task."
 (require 'org-preview-html)
 
 (global-set-key  "\C-cp"  'org-preview-html-mode)
+
+;(setq org-preview-html-viewer 'xwidget)
+(setq org-preview-html-viewer 'eww)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; link
