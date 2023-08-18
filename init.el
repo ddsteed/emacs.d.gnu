@@ -19,6 +19,7 @@
 (require 'init-language) ;; programming language style
 (require 'init-org)      ;; org mode
 (require 'init-markdown) ;; markdown mode
+(require 'init-tex)      ;; TeX/LaTeX mode
 (require 'init-cal)      ;; calendar
 (require 'init-git)      ;; magit
 (require 'init-project)  ;; project management
