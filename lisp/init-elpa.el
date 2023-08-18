@@ -4,7 +4,7 @@
 ;;;;;;;;;
 ;; Add useful package repo
 (add-to-list 'package-archives '("gnu"          . "http://elpa.gnu.org/packages/") t)
-(add-to-list 'package-archives '("melpa"        . "http://stable.melpa.org/packages/") t)
+(add-to-list 'package-archives '("melpa"        . "http://melpa.org/packages/") t)
 ; melpa-stable 中的某些包缺失了功能，尽量不用。
 ; (add-to-list 'package-archives '("melpa-stable" . "http://stable.melpa.org/packages/") t)
 

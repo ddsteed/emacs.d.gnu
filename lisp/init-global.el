@@ -33,11 +33,12 @@
 (global-set-key (kbd "s-x") 'kill-region)       ; 对应Windows上面的 Ctrl-x 剪切
 
 (global-set-key (kbd "C-\\") 'set-mark-command) ; 重新绑定设定块标记的命令
-(global-set-key (kbd "C-c n") 'rename-buffer)   ; 重新定义更换buffer名字的命令
+;;(global-set-key (kbd "C-c n") 'rename-buffer)   ; 重新定义更换buffer名字的命令
 (global-set-key (kbd "C-x C-n") 'other-window)  ; 移到下一个窗口
 (global-set-key (kbd "C-x C-;") 'comment-line)  ; 注释一行
 
-(global-set-key (kbd "C-c m") 'multi-term)      ; 启动 multi-term
+;(global-set-key (kbd "C-c m") 'multi-term)     ; 启动 multi-term
+(global-set-key (kbd "C-c m") 'multi-vterm)     ; 启动 multi-vterm
 (global-set-key (kbd "C-c s") 'shell)           ; 启动 shell
 (global-set-key (kbd "C-c e") 'eshell)          ; 启动 eshell
 (global-set-key (kbd "C-c t")
