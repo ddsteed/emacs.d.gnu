@@ -19,7 +19,10 @@
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 图片显示大小固定位屏幕宽度的三分之一
-(setq org-image-actual-width (/ (display-pixel-width) 3))
+; (setq org-image-actual-width (/ (display-pixel-width) 3))
+
+; 不自动设置图片的大小，请自行在org文件里指定
+(setq org-image-actual-width nil)
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Keybindings
@@ -497,7 +500,7 @@ A prefix arg forces clock in of the default task."
 ;; fly spell check
 ;; 1. hook flyspell into org-mode
 (add-hook 'org-mode-hook 'flyspell-mode)
-(add-hook 'org-mode-hook 'flyspell-buffer)
+;(add-hook 'org-mode-hook 'flyspell-buffer) ; it changed org-bullets symbols
 
 ;; 2. ignore message flags
 (setq flyspell-issue-message-flag nil)

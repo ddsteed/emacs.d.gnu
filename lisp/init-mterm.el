@@ -10,9 +10,14 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; multi-vterm
-(use-package vterm
-  :config
-  (setq vterm-kill-buffer-on-exit t))
+; update current directory
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; (use-package vterm              ;;
+;;   :ensure t                     ;;
+;;   :custom                       ;;
+;;   (vterm-kill-buffer-on-exit t) ;;
+;; )                               ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (provide 'init-mterm)

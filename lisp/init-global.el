@@ -33,27 +33,24 @@
 (global-set-key (kbd "s-x") 'kill-region)       ; 对应Windows上面的 Ctrl-x 剪切
 
 (global-set-key (kbd "C-\\") 'set-mark-command) ; 重新绑定设定块标记的命令
-;;(global-set-key (kbd "C-c n") 'rename-buffer)   ; 重新定义更换buffer名字的命令
+;;(global-set-key (kbd "C-c n") 'rename-buffer) ; 重新定义更换buffer名字的命令
 (global-set-key (kbd "C-x C-n") 'other-window)  ; 移到下一个窗口
+(global-set-key (kbd "C-x C-p")
+                'other-window-backward)         ; 移到上一个窗口
 (global-set-key (kbd "C-x C-;") 'comment-line)  ; 注释一行
 
-;(global-set-key (kbd "C-c m") 'multi-term)     ; 启动 multi-term
-(global-set-key (kbd "C-c m") 'multi-vterm)     ; 启动 multi-vterm
+(global-set-key (kbd "C-c m") 'multi-term)      ; 启动 multi-term
+;(global-set-key (kbd "C-c m") 'multi-vterm)    ; 启动 multi-vterm
 (global-set-key (kbd "C-c s") 'shell)           ; 启动 shell
 (global-set-key (kbd "C-c e") 'eshell)          ; 启动 eshell
 (global-set-key (kbd "C-c t")
                 'toggle-truncate-lines)         ; truncate-lin
-
 
 (defun other-window-backward (&optional n)
   "Select the previous window."
   (interactive "P")
   (other-window (- (prefix-numeric-value n))))
 
-(global-set-key (kbd "C-x C-p") 'other-window-backward) ; 移到上一个窗口
-
-;;
-(global-set-key (kbd "C-c v") 'evil-mode); 切换到 vi mode
 
 ;;;;;;
 ;; 我经常会删除多个连续的空格，可Emacs没有提供这个功能，我只好自己写了一
@@ -84,30 +81,6 @@
 (setq search-whitespace-regexp "[ \t\r\n]+")				
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; 设置行号
-;;(global-linum-mode 1) ; always show line numbers                              
-
-;(when (version<= "26.0.50" emacs-version )
-;  (global-display-line-numbers-mode))
-
-;(require 'display-line-numbers)
-
-;(defcustom display-line-numbers-exempt-modes
-;  '(vterm-mode eshell-mode shell-mode term-mode ansi-term-mode)
-;  "Major modes on which to disable line numbers."
-;  :group 'display-line-numbers
-;  :type 'list
-;  :version "green")
-;
-;(defun display-line-numbers--turn-on ()
-;  "Turn on line numbers except for certain major modes.
-;Exempt major modes are defined in `display-line-numbers-exempt-modes'."
-;  (unless (or (minibufferp)
-;              (member major-mode display-line-numbers-exempt-modes))
-;    (display-line-numbers-mode)))
-;
-; (global-display-line-numbers-mode)
-
 ;; 设置行间距
 (setq-default line-spacing 5)
 

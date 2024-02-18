@@ -98,7 +98,7 @@
 
 ;; plantuml is based java, so jar has to be specified
 (setq org-plantuml-jar-path
-      (expand-file-name "/opt/Homebrew/Cellar/plantuml/1.2023.9/libexec/plantuml.jar"))
+      (expand-file-name "/opt/Homebrew/opt/plantuml/libexec/plantuml.jar"))
 
 ;; babel accept plantuml
 (org-babel-do-load-languages 'org-babel-load-languages '((plantuml . t)))

@@ -1,6 +1,10 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; theme select
 ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; favorite theme
+
+;; ------------
 ;; vscode theme
 
 (use-package solaire-mode
@@ -21,6 +25,34 @@
 
 ;; Avoid inverting hl-todo face
 (setq vscode-dark-plus-invert-hl-todo nil)
+
+; ;; ------------
+; ;; timu-caribbean
+; (use-package timu-caribbean-theme
+;   :ensure t
+;   :config
+;   (load-theme 'timu-caribbean t))
+
+;; ------------
+; ;; timu-spacegrey
+; (use-package timu-spacegrey-theme
+;   :ensure t
+;   :config
+;   (load-theme 'timu-spacegrey t))
+
+; ;; ------------
+; ;; timu-rouge
+; (use-package timu-rouge-theme
+;   :ensure t
+;   :config
+;   (load-theme 'timu-rouge t))
+
+; ;; ------------
+; ;; timu-macos
+; (use-package timu-macos-theme
+;   :ensure t
+;   :config
+;   (load-theme 'timu-macos t))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 自定义界面外观，一般要放在其他的theme之后，否则有些设置会被theme里重新定义
@@ -71,6 +103,12 @@
 									
 ;; 光标不要闪烁								
 (blink-cursor-mode -1)		
+
+;; 光标颜色
+(set-cursor-color "green")
+
+;; 光标性状
+(setq-default cursor-type 'bar) 
 
 ;; 开启全局 hi lock 模式
 (global-hi-lock-mode 1) 
