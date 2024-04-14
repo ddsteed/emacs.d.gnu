@@ -31,3 +31,8 @@ snippets
 tramp
 transient
 url
+
+*
+!.gitignore
+!init.el
+!lisp/
