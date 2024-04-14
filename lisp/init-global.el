@@ -5,7 +5,7 @@
 ;;; Code:
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; 
-;; 取消万恶的tab对齐方式，否则用emacs以外的其它编辑器无法正确显示空白
+;; 取消万恶的 tab 对齐方式，否则用 emacs 以外的其它编辑器无法正确显示空白
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 4)
 
@@ -29,15 +29,15 @@
 (global-set-key [(meta right)] 'forward-sexp)
 
 ;;
-(global-set-key (kbd "s-a") 'mark-whole-buffer) ; 对应Windows上面的 Ctrl-a 全选
-(global-set-key (kbd "s-c") 'kill-ring-save)    ; 对应Windows上面的 Ctrl-c 复制
-(global-set-key (kbd "s-s") 'save-buffer)       ; 对应Windows上面的 Ctrl-s 保存
-(global-set-key (kbd "s-v") 'yank)              ; 对应Windows上面的 Ctrl-v 粘贴
-(global-set-key (kbd "s-z") 'undo)              ; 对应Windows上面的 Ctrl-z 撤销
-(global-set-key (kbd "s-x") 'kill-region)       ; 对应Windows上面的 Ctrl-x 剪切
+(global-set-key (kbd "s-a") 'mark-whole-buffer) ; 对应 Windows 上面的 Ctrl-a 全选
+(global-set-key (kbd "s-c") 'kill-ring-save)    ; 对应 Windows 上面的 Ctrl-c 复制
+(global-set-key (kbd "s-s") 'save-buffer)       ; 对应 Windows 上面的 Ctrl-s 保存
+(global-set-key (kbd "s-v") 'yank)              ; 对应 Windows 上面的 Ctrl-v 粘贴
+(global-set-key (kbd "s-z") 'undo)              ; 对应 Windows 上面的 Ctrl-z 撤销
+(global-set-key (kbd "s-x") 'kill-region)       ; 对应 Windows 上面的 Ctrl-x 剪切
 
 (global-set-key (kbd "C-\\") 'set-mark-command) ; 重新绑定设定块标记的命令
-;;(global-set-key (kbd "C-c n") 'rename-buffer) ; 重新定义更换buffer名字的命令
+;;(global-set-key (kbd "C-c n") 'rename-buffer) ; 重新定义更换 buffer 名字的命令
 (global-set-key (kbd "C-x C-n") 'other-window)  ; 移到下一个窗口
 (global-set-key (kbd "C-x C-p")
                 'other-window-backward)         ; 移到上一个窗口
@@ -54,8 +54,8 @@
                 'display-line-numbers-mode)     ; Show line numbers
 
 ;;;;;;
-;; 我经常会删除多个连续的空格，可Emacs没有提供这个功能，我只好自己写了一
-;; 个，这可是我写的第一个elisp哟 :-)
+;; 我经常会删除多个连续的空格，可 Emacs 没有提供这个功能，我只好自己写了一
+;; 个，这可是我写的第一个 elisp 哟 :-)
 (defun delete-blank-chars ()
   "Delete multiple blanks."
   (interactive)
@@ -67,16 +67,16 @@
                 'delete-blank-chars)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; 将反悔步长取长点，即可以反悔到很久以前的情况。默认值是30，我觉得太少了
+;; 将反悔步长取长点，即可以反悔到很久以前的情况。默认值是 30，我觉得太少了
 (setq kill-ring-max 10000)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; 如果在shell模式下需要输入密码，为了安全性设置密码显示为 *
+;; 如果在 shell 模式下需要输入密码，为了安全性设置密码显示为 *
 (add-hook 'comint-output-filter-functions				
           'comint-watch-for-password-prompt)				
 									
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; 不要总是没完没了地问yes或no，直接用y/n                               
+;; 不要总是没完没了地问 yes 或 no，直接用 y/n                               
 (fset 'yes-or-no-p 'y-or-n-p)						
 									
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -99,14 +99,14 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; set auto save
-(setq-default auto-save-timeout 15)   ; 15秒无动作,自动保存
-(setq-default auto-save-interval 100) ; 100个字符间隔, 自动保存
+(setq-default auto-save-timeout 15)   ; 15 秒无动作,自动保存
+(setq-default auto-save-interval 100) ; 100 个字符间隔, 自动保存
 
 ;; close backup files
 (setq make-backup-files nil)
   
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; 交换两个buffer的内容
+;; 交换两个 buffer 的内容
 (defun switch-buffers ()
 "Switch the two buffers in current window and next window."
 (interactive)
@@ -354,6 +354,15 @@ Version 2015-01-26"
                           (projects . 2))   ;; 显示多少个最近项目
   )
   (dashboard-setup-startup-hook))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; 英文之间自动增加空格
+(use-package pangu-spacing
+  :ensure t
+  :config
+  (global-pangu-spacing-mode 1)
+  (setq pangu-spacing-real-insert-separtor t)
+)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (provide 'init-global)
