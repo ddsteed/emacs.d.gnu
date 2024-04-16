@@ -16,14 +16,14 @@
 (add-to-list 'auto-mode-alist '("\\.\\(org\\|org_archive\\|txt\\)$" . org-mode))
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; 添加org插件
+;; 添加 org 插件
 (add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/") t)
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 图片显示大小固定位屏幕宽度的三分之一
 ; (setq org-image-actual-width (/ (display-pixel-width) 3))
 
-; 不自动设置图片的大小，请自行在org文件里指定
+; 不自动设置图片的大小，请自行在 org 文件里指定
 (setq org-image-actual-width nil)
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -63,8 +63,8 @@
 (set-face-attribute 'org-level-3 nil :height 1.1)
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; 增加TODO的状态
-; 在一个 ｜ 之内的状态属于同一个类，除了显示的标志不同外，在org内部当成同一类处理
+;; 增加 TODO 的状态
+; 在一个 ｜ 之内的状态属于同一个类，除了显示的标志不同外，在 org 内部当成同一类处理
 ; 字符: 该状态的快捷键
 ; ! :  切换到该状态时会自动添加时间戳
 ; @ :  切换到该状态时要求输入文字说明
@@ -97,10 +97,10 @@
 
 ; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Agenda
-; 将该目录下所有的org和org_archive文件作为日程表搜索范围
+; 将该目录下所有的 org 和 org_archive 文件作为日程表搜索范围
 (setq org-agenda-files (directory-files-recursively "~/Work/GTD/" "\\.org*"))
 
-;; 融合ical和agenda
+;; 融合 ical 和 agenda
 (add-to-list 'org-modules 'org-mac-iCal)
 
 ; 显示节日
@@ -154,7 +154,7 @@
 
 (add-hook 'org-agenda-finalize-hook #'ljg/org-agenda-time-grid-spacing)
 
-;; 日程表视图默认显示当天，可以用w，d切换称一周或一天
+;; 日程表视图默认显示当天，可以用 w，d 切换称一周或一天
 (setq org-agenda-span 'day)
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -408,11 +408,11 @@ A prefix arg forces clock in of the default task."
 (run-at-time "24:01" nil 'rds/org-agenda-to-appt)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; 设置org mode自动换行
+;; 设置 org mode 自动换行
 (add-hook 'org-mode-hook (lambda () (setq truncate-lines nil)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; 设置org插入图片的存储方式
+;; 设置 org 插入图片的存储方式
 (setq org-download-method 'directory)
 
 (require 'org-download)
@@ -510,31 +510,37 @@ A prefix arg forces clock in of the default task."
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Counting sub-headings
 (cl-defun my/count-org-headings (&optional (level 4))
-  "计算当前headings下指定sub-headings的数目.
-LEVEL 是一个数字，作为参数提供，默认指定第4级"
+  "计算当前 headings 下指定 sub-headings 的数目.
+LEVEL 是一个数字，作为参数提供，默认指定第 4 级"
   (interactive "nLevel: ")
   (let ((count 0))
     (save-excursion
       (org-map-entries
        (lambda ()
          (when (= (org-current-level) level)
-           (setq count (+ count 1))
-         )
-       )
+           (setq count (+ count 1))))
        nil 'tree
-       )
-    )
+       ))
 
     (insert (number-to-string count))
-    (message "Number of level %d subheadings: %d" level count)
-  )
-)
+    (message "Number of level %d subheadings: %d" level count)))
+
+(defun my/org-count-4headings-in-parentheses ()
+  "Delete the content inside parentheses and execute a function."
+  (interactive)
+  (save-excursion
+    (let ((beg (progn (backward-up-list) (point)))
+          (end (progn (forward-sexp) (point))))
+      (delete-region (+ beg 1) (- end 1))
+      (goto-char (+ beg 1))
+       (apply '(my/count-org-headings 4)))))
 
 (add-hook 'org-mode-hook
           (lambda ()
-            (local-set-key
-             (kbd "C-c C-h n")
-             (lambda () (interactive) (my/count-org-headings 4)))))
+            (local-set-key (kbd "C-c C-h n 2") (lambda () (interactive) (my/count-org-headings 2)))
+            (local-set-key (kbd "C-c C-h n 4") (lambda () (interactive) (my/count-org-headings 4)))
+            (local-set-key (kbd "C-c C-h c") 'my/org-count-4headings-in-parentheses)
+))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (provide 'init-org)
