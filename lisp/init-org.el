@@ -499,15 +499,6 @@ A prefix arg forces clock in of the default task."
 (add-hook 'org-mode-hook #'turn-on-org-cdlatex)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; fly spell check
-;; 1. hook flyspell into org-mode
-(add-hook 'org-mode-hook 'flyspell-mode)
-;(add-hook 'org-mode-hook 'flyspell-buffer) ; it changed org-bullets symbols
-
-;; 2. ignore message flags
-(setq flyspell-issue-message-flag nil)
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Counting sub-headings
 (cl-defun my/count-org-headings (&optional (level 4))
   "计算当前 headings 下指定 sub-headings 的数目.

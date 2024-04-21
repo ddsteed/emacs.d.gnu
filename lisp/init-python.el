@@ -19,20 +19,21 @@
 )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; python virtual environment
 (use-package pyvenv
   :ensure t
   :config
-  (setenv "WORKON_HOME" (expand-file-name "/opt/homebrew/Caskroom/miniconda/base/envs"))
+; (setenv "WORKON_HOME" (expand-file-name "/opt/homebrew/Caskroom/miniconda/base"))
+  (setenv "WORKON_HOME" (expand-file-name "~/.emacs.d/elpy/rpc-venv")) 
   (setq python-shell-interpreter "python3")  ; （可选）更改解释器名字
   (pyvenv-mode t)
   ;; （可选）如果希望启动后激活 miniconda 的 base 环境，就使用如下的 hook
   :hook
-  (python-mode . (lambda () (pyvenv-workon "..")))
+  (python-mode . (lambda () (pyvenv-workon ".")))
 )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; elpy: Emacs Lisp Python Environment
-
 (use-package elpy
   :ensure t
   :defer t

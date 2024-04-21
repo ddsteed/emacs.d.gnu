@@ -29,7 +29,7 @@
 (require 'init-evil)     ;; evil mode
 (require 'init-mterm)    ;; multi-term
 (require 'init-roam)     ;; org-roam mode
-(require 'init-lsp)      ;; LSP
+;(require 'init-lsp)      ;; LSP
 ;(require 'init-lspb)     ;; lsp-bridge
 ;(require 'init-eaf)      ;; emacs-application-framework
 
