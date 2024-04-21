@@ -323,6 +323,14 @@ Version 2015-01-26"
 (use-package which-key
   :ensure t
   :init
+  :config
+  ;; 通过 C-h 或 ? 才显示 which-key buffer
+  (setopt which-key-show-early-on-C-h t)
+  ;; 仅通过 C-h 触发
+; (setopt which-key-idle-delay 10000)
+  ;; 在随后的按键中迅速响应
+  (setopt which-key-idle-secondary-delay 0.05)
+  ;; 启动全局 which-key-mode
   (which-key-mode))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

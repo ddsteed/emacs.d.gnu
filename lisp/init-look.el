@@ -10,6 +10,11 @@
 ;; favorite theme
 
 ;; ------------
+;; material theme
+; (use-package material-theme
+;   :ensure t)
+
+;; ------------
 ;; vscode theme
 
 (use-package solaire-mode
@@ -60,10 +65,10 @@
 ;   (load-theme 'timu-macos t))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; 自定义界面外观，一般要放在其他的theme之后，否则有些设置会被theme里重新定义
+;; 自定义界面外观，一般要放在其他的 theme 之后，否则有些设置会被 theme 里重新定义
 
 ;; tranparent background
-(global-set-key [(f9)] 'loop-alpha)  ; 注意这行中的F8 , 可以改成你想要的按键
+(global-set-key [(f9)] 'loop-alpha)  ; 注意这行中的 F8 , 可以改成你想要的按键
     
 (setq alpha-list '((100 100) (95 75) (85 65) (75 55) (65 45)))
 
@@ -82,7 +87,7 @@
 (set-frame-parameter (selected-frame) 'alpha '(85 . 65))
 (add-to-list 'default-frame-alist '(alpha . (85 . 65)))
 
-;; 如果不在X窗口下就不要menu-bar					
+;; 如果不在 X 窗口下就不要 menu-bar					
 (if (equal window-system nil)
     (menu-bar-mode nil))
 
