@@ -127,6 +127,12 @@
 (setq hi-lock-file-patterns-policy #'(lambda (dummy) t)) 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; smart-mode-line: 一个让 mode line 更加漂亮、方便管理的插件，可以自动做一些模式的隐藏等等，也可以选择多种主题。
+(use-package smart-mode-line
+  :ensure t
+  :init (sml/setup))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 括号匹配高亮
 (use-package highlight-parentheses
   :ensure t)

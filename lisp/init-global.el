@@ -9,10 +9,9 @@
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 4)
 
-;; wrap lines at word boundary
+;; wrap lines at word boundary.
+;; NOTE: this configure is global and more preferred than truncate lines.
 (global-visual-line-mode t)
-
-(setq-default fill-column 200000000) ; column for paragraph filling
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; 
 ;; general variables
@@ -53,7 +52,7 @@
 (global-set-key (kbd "C-c C-x C-l")
                 'display-line-numbers-mode)     ; Show line numbers
 
-;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 我经常会删除多个连续的空格，可 Emacs 没有提供这个功能，我只好自己写了一
 ;; 个，这可是我写的第一个 elisp 哟 :-)
 (defun delete-blank-chars ()
@@ -72,12 +71,12 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 如果在 shell 模式下需要输入密码，为了安全性设置密码显示为 *
-(add-hook 'comint-output-filter-functions				
-          'comint-watch-for-password-prompt)				
+(add-hook 'comint-output-filter-functions
+          'comint-watch-for-password-prompt)
 									
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; 不要总是没完没了地问 yes 或 no，直接用 y/n                               
-(fset 'yes-or-no-p 'y-or-n-p)						
+;; 不要总是没完没了地问 yes 或 no，直接用 y/n
+(fset 'yes-or-no-p 'y-or-n-p)
 									
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 递增地搜索单词
@@ -113,7 +112,7 @@
 (if (one-window-p)
     (message "There is only one window!")
   (let ((buffer1 (current-buffer))
-(buffer2 (window-buffer (next-window))))
+        (buffer2 (window-buffer (next-window))))
     (switch-to-buffer buffer2)
     (set-window-buffer (next-window) buffer1))))
 
@@ -124,8 +123,8 @@
 (require 'ibuffer)
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 
-; 自动截断
-(add-hook 'ibuffer-mode-hook (lambda () (setq truncate-lines t)))
+(add-hook 'ibuffer-mode-hook (lambda ()
+                               (visual-line-mode -1)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; 
 ;; merge the Emacs kill-ring with the clipboard
@@ -186,6 +185,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; 显示自动截断
 (setq-default truncate-lines t)
+(setq-default truncate-partial-width-windows t)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; 用系统默认程序打开文件
@@ -300,8 +300,7 @@ Version 2015-01-26"
 ;; amx: 记录我们每次调用 M-x 时输入的命令历史，然后每次将最常用的显示在前面
 (use-package amx
   :ensure t
-  :init
-  (amx-mode))
+  :init (amx-mode))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; ace-window: 对 C-x o 重新绑定，使用时可以为每个 window 编个号，用编号进行跳转

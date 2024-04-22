@@ -17,19 +17,19 @@
 
 (require 'init-elpa)     ;; package repository
 (require 'init-execpath) ;; eshell path
-(require 'init-global)   ;; global variables
 (require 'init-look)     ;; look face
+(require 'init-global)   ;; global variables
+(require 'init-evil)     ;; evil mode
 (require 'init-language) ;; programming language style
 (require 'init-org)      ;; org mode
+(require 'init-roam)     ;; org-roam mode
 (require 'init-markdown) ;; markdown mode
 (require 'init-tex)      ;; TeX/LaTeX mode
 (require 'init-cal)      ;; calendar
 (require 'init-git)      ;; magit
 (require 'init-project)  ;; project management
-(require 'init-evil)     ;; evil mode
 (require 'init-mterm)    ;; multi-term
-(require 'init-roam)     ;; org-roam mode
-;(require 'init-lsp)      ;; LSP
+(require 'init-lsp)      ;; LSP
 ;(require 'init-lspb)     ;; lsp-bridge
 ;(require 'init-eaf)      ;; emacs-application-framework
 
@@ -44,3 +44,5 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (provide 'init)
+
+;;; init.el ends here
