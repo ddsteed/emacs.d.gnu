@@ -27,7 +27,6 @@
 (require 'init-tex)      ;; TeX/LaTeX mode
 (require 'init-cal)      ;; calendar
 (require 'init-git)      ;; magit
-(require 'init-project)  ;; project management
 (require 'init-mterm)    ;; multi-term
 (require 'init-lsp)      ;; LSP
 ;(require 'init-lspb)     ;; lsp-bridge

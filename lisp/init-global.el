@@ -123,6 +123,7 @@
 (require 'ibuffer)
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 
+;; ibuffer 里取消自动折行
 (add-hook 'ibuffer-mode-hook (lambda ()
                                (visual-line-mode -1)))
 

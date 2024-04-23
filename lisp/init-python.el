@@ -46,6 +46,16 @@
 )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; python LSP server 
+(use-package lsp-pyright
+  :ensure t
+  :config
+  :hook
+  (python-mode . (lambda ()
+		  (require 'lsp-pyright)
+		  (lsp-deferred))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Use IPython for REPL
 (setq python-shell-interpreter "jupyter"
       python-shell-interpreter-args "console --simple-prompt"
