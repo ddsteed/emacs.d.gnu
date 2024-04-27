@@ -36,5 +36,6 @@ url
 
 *
 !.gitignore
+!clean
 !init.el
 !lisp/

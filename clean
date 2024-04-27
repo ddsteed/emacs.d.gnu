@@ -1,0 +1,3 @@
+#!/bin/bash
+
+rm -rf .cache elpy abbrev_defs ac-comphist.dat amx-items custom.el emacs.desktop ido.last lock org-* projectile-bookmarks.eld recentf
