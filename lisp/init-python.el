@@ -12,6 +12,7 @@
   (setq indent-tabs-mode nil)
   (setq python-indent-offset 4)
   (setq flycheck-flake8rc "~/.flake8")
+  (setq python-shell-completion-native-disabled-interpreters '("python3"))
   (use-package py-autopep8
     :ensure t)
   :hook
