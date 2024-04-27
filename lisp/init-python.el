@@ -15,57 +15,45 @@
   (use-package py-autopep8
     :ensure t)
   :hook
-  ((python-mode . jedi:setup))
+  ((python-mode . py-autopep8-mode)
+   (python-mode . jedi:setup))  ; 代码跳转/函数查询
 )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; python virtual environment
-(use-package pyvenv
+(use-package auto-virtualenv
   :ensure t
+  :init
+  (use-package pyvenv
+    :ensure t)
   :config
-; (setenv "WORKON_HOME" (expand-file-name "/opt/homebrew/Caskroom/miniconda/base"))
-  (setenv "WORKON_HOME" (expand-file-name "~/.emacs.d/elpy/rpc-venv")) 
-  (setq python-shell-interpreter "python3")  ; （可选）更改解释器名字
-  (pyvenv-mode t)
-  ;; （可选）如果希望启动后激活 miniconda 的 base 环境，就使用如下的 hook
-  :hook
-  (python-mode . (lambda () (pyvenv-workon ".")))
-)
+  (add-hook 'python-mode-hook 'auto-virtualenv-set-virtualenv)
+  (add-hook 'projectile-after-switch-project-hook 'auto-virtualenv-set-virtualenv)  ;; If using projectile
+  )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; elpy: Emacs Lisp Python Environment
 (use-package elpy
   :ensure t
-  :defer t
   :init
   (elpy-enable)
-  (setq elpy-rpc-backend "jedi")  
-  (advice-add 'python-mode :before 'elpy-enable)
   :hook
   (elpy-mode . flycheck-mode) ;; 添加 flycheck, 替换 flymake
 )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; python LSP server 
-(use-package lsp-pyright
+;; 代码跳转: 必须设置 jedi:setup，否则要手动执行这个命令
+
+(use-package company-jedi
   :ensure t
   :config
-  :hook
-  (python-mode . (lambda ()
-		  (require 'lsp-pyright)
-		  (lsp-deferred))))
+  (add-to-list 'company-backends 'company-jedi)
+)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Use IPython for REPL
-(setq python-shell-interpreter "jupyter"
-      python-shell-interpreter-args "console --simple-prompt"
-      python-shell-prompt-detect-failure-warning nil)
-(add-to-list 'python-shell-completion-native-disabled-interpreters
-             "jupyter")
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; 自动折行
-(add-hook 'python-mode-hook (lambda () (setq truncate-lines t)))
+;; 取消自动折行
+(add-hook 'python-mode-hook (lambda () (setq truncate-lines nil)))
+(add-hook 'python-mode-hook (lambda () (visual-line-mode -1)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 接受 UTF-8 

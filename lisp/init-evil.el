@@ -2,12 +2,16 @@
 ;;; Commentary:
 ;;;   vim shortcuts
 ;;; Code:
-(use-package evil)
+(use-package evil
+  :ensure t)
+
 (evil-mode 1)
 
 ;; vim-like search highlighting
-(use-package evil-search-highlight-persist)
-(global-evil-search-highlight-persist t)
+(use-package evil-search-highlight-persist
+  :ensure t)
+
+; (global-evil-search-highlight-persist nil)
 
 ;; powerline
 (use-package powerline)

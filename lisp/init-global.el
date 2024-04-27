@@ -9,7 +9,7 @@
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 4)
 
-;; wrap lines at word boundary.
+;; if wrap lines at word boundary.
 ;; NOTE: this configure is global and more preferred than truncate lines.
 (global-visual-line-mode t)
 

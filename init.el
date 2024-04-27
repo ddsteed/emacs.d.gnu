@@ -28,7 +28,7 @@
 (require 'init-cal)      ;; calendar
 (require 'init-git)      ;; magit
 (require 'init-mterm)    ;; multi-term
-(require 'init-lsp)      ;; LSP
+;(require 'init-lsp)      ;; LSP
 ;(require 'init-lspb)     ;; lsp-bridge
 ;(require 'init-eaf)      ;; emacs-application-framework
 

@@ -19,6 +19,10 @@
 ;; 添加 org 插件
 (add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/") t)
 
+;; org 里设置自动折行
+(add-hook 'org-mode-hook (lambda ()
+                           (visual-line-mode 1)))
+
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 图片显示大小固定位屏幕宽度的三分之一
 ; (setq org-image-actual-width (/ (display-pixel-width) 3))

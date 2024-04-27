@@ -4,20 +4,26 @@
 ;;; Code:
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; 代码检查工具
+;; 语法检查工具
+
 (use-package flycheck
   :ensure t
-  :hook                        ; 为模式设置 hook
-  (prog-mode . flycheck-mode))
+  :init (global-flycheck-mode))
+
+; 关闭 flymake，使用 flycheck
+(when (require 'flycheck nil t)
+  (add-hook 'elpy-mode-hook 'flycheck-mode))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; rainbow: 不同颜色标记多级括号
+
 (use-package rainbow-delimiters
   :ensure t
   :hook (prog-mode . rainbow-delimiters-mode))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; gtags
+
 (use-package ggtags)
 
 (global-set-key (kbd "M-.") 'gtags-find-tag)
@@ -30,6 +36,20 @@
           (lambda ()
             (when (derived-mode-p 'c-mode 'c++-mode 'java-mode 'python-mode)
               (ggtags-mode 1))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; lisp/elisp
+
+;; 取消自动折行
+(add-hook 'lisp-mode-hook (lambda () (setq truncate-lines nil)))
+(add-hook 'lisp-mode-hook (lambda () (visual-line-mode -1)))
+
+(add-hook 'emacs-lisp-mode-hook (lambda () (setq truncate-lines nil)))
+(add-hook 'emacs-lisp-mode-hook (lambda () (visual-line-mode -1)))
+
+(add-hook 'emacs-lisp-mode-hook (lambda () 
+            (add-to-list (make-local-variable 'company-backends) 
+            '(company-elisp))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Python
@@ -73,12 +93,6 @@
 ;; wolfram mathematica
 (require 'init-wolfram)  ;; wolfram mathematica
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; lisp
-
-; 自动折行
-(add-hook 'lisp-mode-hook (lambda () (setq truncate-lines t)))
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; shell script
 
@@ -111,21 +125,19 @@
 (add-to-list 'auto-mode-alist '("\\.plantuml\\'" . plantuml-mode))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; company
+;; company: complete anything
+
 (use-package company
   :ensure t
   :init (global-company-mode)
   :config
-  (setq company-minimum-prefix-length 1) ; 只需敲 1 个字母就开始进行自动补全
+  (setq company-minimum-prefix-length 2) ; 只需敲 2 个字母就开始进行自动补全
   (setq company-tooltip-align-annotations t)
-  (setq company-idle-delay 0.0)
+  (setq company-idle-delay 0.3)
   (setq company-show-numbers t) ;; 给选项编号 (按快捷键 M-1、M-2 等等来进行选择).
   (setq company-selection-wrap-around t)
-  (setq company-transformers '(company-sort-by-occurrence))) ; 根据选择的频率进行排序，读者如果不喜欢可以去掉
-
-(use-package company-jedi
-  :init
-  (add-to-list 'company-backends 'company-jedi))
+  (setq company-transformers '(company-sort-by-occurrence)) ; 根据选择的频率进行排序，读者如果不喜欢可以去掉
+)
 
 (use-package company-box
   :ensure t
@@ -188,12 +200,55 @@
 (define-key yas-minor-mode-map (kbd "<tab>") nil)
 (define-key yas-minor-mode-map (kbd "TAB") nil)
 
+;; 文本展开
+(global-set-key (kbd "M-/") 'hippie-expand)
+
 ;; ;; auto-complete
 (ac-config-default)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; show line numbers in programming modes
 (add-hook 'prog-mode-hook #'display-line-numbers-mode)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; 项目管理
+
+(use-package projectile
+  :ensure t
+  :bind (("C-c p" . projectile-command-map))
+  :config
+  (setq projectile-mode-line "Projectile")
+  (setq projectile-track-known-projects-automatically nil))
+
+(use-package counsel-projectile
+  :ensure t
+  :after (projectile)
+  :init (counsel-projectile-mode))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; 工作区管理
+
+(use-package treemacs
+  :ensure t
+  :defer t
+  :config
+  (treemacs-tag-follow-mode)
+  (treemacs-project-follow-mode)
+  :bind
+  (:map global-map
+        ("M-0"       . treemacs-select-window)
+        ("C-x t 1"   . treemacs-delete-other-windows)
+        ("C-x t t"   . treemacs)
+        ("C-x t q"   . treemacs-quit)
+        ("C-x t B"   . treemacs-bookmark)
+        ;; ("C-x t C-t" . treemacs-find-file)
+        ("C-x t M-t" . treemacs-find-tag))
+  (:map treemacs-mode-map
+	("/" . treemacs-advanced-helpful-hydra)))
+
+(use-package treemacs-projectile
+  :ensure t
+  :after (treemacs projectile))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (provide 'init-language)
