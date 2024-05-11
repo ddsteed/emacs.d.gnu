@@ -144,33 +144,6 @@
   :if window-system
   :hook (company-mode . company-box-mode))
 
-;; TabNine: AI 自动补全工具.  NOTE: 会导致 CPU 占用过高，引起“死机”。
-; (use-package company-tabnine
-;   :ensure t
-;   :init
-;   (add-to-list 'company-backends #'company-tabnine)
-;   :config
-;    ;; Trigger completion immediately.
-;    (setq company-idle-delay 0)
-;    ;; Number the candidates (use M-1, M-2 etc to select completions).
-;    (setq company-show-numbers t)
-;    ;; workaround for company-transformers
-;    (setq company-tabnine--disable-next-transform nil)
-;    (defun my-company--transform-candidates (func &rest args)
-;      (if (not company-tabnine--disable-next-transform)
-;          (apply func args)
-;        (setq company-tabnine--disable-next-transform nil)
-;        (car args)))
-; 
-;    (defun my-company-tabnine (func &rest args)
-;      (when (eq (car args) 'candidates)
-;        (setq company-tabnine--disable-next-transform t))
-;      (apply func args))
-; 
-;    (advice-add #'company--transform-candidates :around #'my-company--transform-candidates)
-;    (advice-add #'company-tabnine :around #'my-company-tabnine)
-; )
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 代码扩展和自动补全
 (use-package yasnippet
