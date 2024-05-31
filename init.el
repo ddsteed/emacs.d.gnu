@@ -10,7 +10,7 @@
 ;; 把自定义的插件目录添加进来
 (add-to-list 'load-path "~/.emacs.d/elpa")
 (add-to-list 'load-path "~/.emacs.d/addons")
-; (add-to-list 'load-path (expand-file-name "~/.emacs.d/addons"))
+;(add-to-list 'load-path (expand-file-name "~/.emacs.d/addons"))
 
 ;; 下面每一个被 require 的 feature 都对应一个 lisp/目录下的同名 elisp 文件，
 ;; 例如 init-global.el、init-elpa.el

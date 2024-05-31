@@ -7,6 +7,7 @@
 (setq org-directory (concat (getenv "HOME") "/Documents/RDS/NOTES/Org"))
 
 (use-package org-roam
+  :ensure t
   :after org
   :init (setq org-roam-v2-ack t) ;; Acknowledge V2 upgrade
   :custom
@@ -15,6 +16,7 @@
   (add-hood 'after-init-hook 'org-roam-mode)
   :config
   (org-roam-setup)
+  (org-roam-db-autosync-enable)
   :bind (("C-c r f" . org-roam-node-find)
          ("C-c r r" . org-roam-node-random)		    
          (:map org-mode-map
@@ -30,7 +32,7 @@
 
 ;;;;;;;
 ;; to ensure that org-roam is available on startup
-(org-roam-db-autosync-mode)
+; (org-roam-db-autosync-mode)
 
 ;;;;;;;
 ;; My Org-roam capture templates. There is one for each zettel type.
@@ -72,6 +74,7 @@
 
 ;;;;;;;
 ;; Creating the property “type” on my nodes.
+(with-eval-after-load 'org-roam
 (cl-defmethod org-roam-node-type ((node org-roam-node))
   "Return the TYPE of NODE."
   (condition-case nil
@@ -79,7 +82,7 @@
        (directory-file-name
         (file-name-directory
          (file-relative-name (org-roam-node-file node) org-roam-directory))))
-    (error "")))
+    (error ""))))
 
 ;;;;;;;
 ;; Modifying the display template to show the node “type”
@@ -89,8 +92,9 @@
 
 ;;;;;;;
 ;; roam sqlite database
-(use-package emacsql-sqlite)
-(setq org-roam-database-connector 'sqlite3)
+(use-package emacsql-sqlite
+  :ensure t)
+(setq org-roam-database-connector 'sqlite)
 
 ;;;;;;;
 ;; To configure what sections are displayed in the buffer
@@ -114,7 +118,8 @@
 (setq org-roam-completion-everywhere t)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(require 'org-roam-protocol)
+; (use-package org-roam-protocol
+;  :ensure t)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; use journal
@@ -147,7 +152,8 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; export
-(require 'org-roam-export)
+; (use-package org-roam-export
+;   :ensure t)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; garbage collection

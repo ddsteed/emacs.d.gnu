@@ -44,18 +44,9 @@
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 缩进显示
 (setq org-startup-indented t)
+(org-reload)
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; 利用 highlight-regexp 高亮指定的正则表达式
-(defun rds/bigboss-highlight ()
-  (interactive)
-  (highlight-regexp "0[0-9]\\{2\\}-[0-9]\\{8\\}" 'phone-number-lock-face)
-  (highlight-regexp "Lisp\\|Scheme" 'language-lock-face)
-  (highlight-regexp "神之编辑器\\|编辑器之神" 'emacs-vim-lock-face)
-)
-
-(add-hook 'org-mode-hook 'rds/bigboss-highlight)
-
 ;; org src 语法高亮
 (setq org-confirm-babel-evaluate nil
       org-src-fontify-natively t
@@ -131,7 +122,7 @@
 
 ; agenda 里面时间块彩色显示
 ; From: https://emacs-china.org/t/org-agenda/8679/3
-(defun ljg/org-agenda-time-grid-spacing ()
+(defun rds/org-agenda-time-grid-spacing ()
   "Set different line spacing w.r.t. time duration."
   (save-excursion
     (let* ((background (alist-get 'background-mode (frame-parameters)))
@@ -156,10 +147,84 @@
             (overlay-put ov 'line-height line-height)
             (overlay-put ov 'line-spacing (1- line-height))))))))
 
-(add-hook 'org-agenda-finalize-hook #'ljg/org-agenda-time-grid-spacing)
+(add-hook 'org-agenda-finalize-hook #'rds/org-agenda-time-grid-spacing)
 
 ;; 日程表视图默认显示当天，可以用 w，d 切换称一周或一天
 (setq org-agenda-span 'day)
+
+;; remove tags from the agenda view
+(customize-set-variable 'org-agenda-remove-tags t)
+
+;; customize the prefix and keyword formats
+(customize-set-variable 'org-agenda-prefix-format " %-12c %?-14t% s")
+(customize-set-variable 'org-agenda-todo-keyword-format "%-10s")
+
+;; distinct scheduling and deadlines
+(customize-set-variable 'org-agenda-scheduled-leaders
+                        '("[S] : " "[S] x%3d d.: "))
+(customize-set-variable 'org-agenda-deadline-leaders
+                        '("[D] : " "[D] +%3d d.: " "[D] -%3d d.: "))
+
+;; refine time grid
+(customize-set-variable 'org-agenda-time-grid
+                        '((today require-timed remove-match)
+                          (0600 1000 1200 1400 1800 2200)
+                          ":  " "┈┈┈┈┈┈┈┈┈┈┈┈┈"))
+(customize-set-variable 'org-agenda-current-time-string "ᐊ┈┈┈┈┈┈┈┈ now")
+
+;; weekly overview
+(add-to-list
+ 'org-agenda-custom-commands
+ '("w" "THIS WEEK"
+   ((agenda ""
+            ((org-agenda-overriding-header
+              (concat "THIS WEEK (W" (format-time-string "%V") ")")))))))
+
+;; daily agenda view
+(add-to-list
+ 'org-agenda-custom-commands
+ '("d" "DAY'S AGENDA"
+   ((agenda ""
+            ((org-agenda-overriding-header
+              (concat "TODAY (W" (format-time-string "%V") ")"))
+             (org-agenda-span 'day)
+             (org-agenda-sorting-strategy
+              '((agenda time-up priority-down category-keep)))
+             (org-agenda-show-log t)
+             (org-agenda-log-mode-items '(clock)))))))
+
+;; custom overview
+(add-to-list
+ 'org-agenda-custom-commands
+ '("c" "CUSTOM OVERVIEW"
+   ((tags-todo "+PRIORITY=\"A\""
+               ((org-agenda-overriding-header "PRIO A")))
+    (agenda ""
+            ((org-agenda-overriding-header
+              (concat "TODAY (W" (format-time-string "%V") ")"))
+             (org-agenda-span 'day)
+             (org-agenda-sorting-strategy
+              '((agenda time-up priority-down category-keep)))
+             (org-agenda-show-log t)
+             (org-agenda-log-mode-items '(clock))))
+    (agenda ""
+            ((org-agenda-overriding-header
+              (concat "FOLLOWING DAYS (W" (format-time-string "%V") ")"))
+             (org-agenda-skip-function
+              '(org-agenda-skip-entry-if 'unscheduled))
+             (org-agenda-span 6)
+             (org-agenda-start-day "+1d")
+             (org-agenda-start-on-weekday 1)))
+    (tags-todo "+private"
+               ((org-agenda-overriding-header "PRIVATE TASKS")
+                (org-agenda-skip-function
+                 '(org-agenda-skip-entry-if 'unscheduled))))
+    (tags-todo "+work"
+               ((org-agenda-overriding-header "WORK TASKS")
+                (org-agenda-skip-function
+                 '(org-agenda-skip-entry-if 'unscheduled))))
+    (tags "CLOSED>=\"<-7d>\"|DONE>=\"<-7d>\"|CANCELLED>=\"<-7d>\""
+          ((org-agenda-overriding-header "Completed in the Last 7 Days\n"))))))
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Clock
@@ -284,7 +349,9 @@ as the default task."
 
 (add-hook 'org-clock-out-hook 'rds/clock-out-maybe 'append)
 
+(load-file "~/.emacs.d/addons/org-id.el")
 (require 'org-id)
+
 (defun rds/clock-in-task-by-id (id)
   "Clock in a task by id"
   (org-with-point-at (org-id-find id 'marker)
@@ -373,27 +440,9 @@ A prefix arg forces clock in of the default task."
 (setq org-archive-location "%s_archive::* Archived Tasks")
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; org bullets
-(use-package org-bullets
-  :ensure t
-  :init
-  (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
-  (setq org-bullets-bullet-list '("☯" "✿" "❀" "►" "✚" "◉"))
-)
-
-;; org alert
-(use-package org-alert
-  :defer t
-  :config
-  (progn
-    (setq alert-default-style 'libnotify)
-  )
-)
-
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Reminders
 
-; Erase all reminders and rebuilt reminders for today from the agenda
+                                        ; Erase all reminders and rebuilt reminders for today from the agenda
 (defun rds/org-agenda-to-appt ()
   (interactive)
   (setq appt-time-msg-list nil)
@@ -417,9 +466,6 @@ A prefix arg forces clock in of the default task."
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 设置 org 插入图片的存储方式
-(setq org-download-method 'directory)
-
-(require 'org-download)
 
 ;; Drag-and-drop to `dired`
 (add-hook 'dired-mode-hook 'org-download-enable)
@@ -431,8 +477,10 @@ A prefix arg forces clock in of the default task."
 	  :config
 	  (require 'org-download)
 	  ;; Drag and drop to Dired
+      (setq org-download-method 'directory)
 	  (add-hook 'dired-mode-hook 'org-download-enable)
 	  )
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 支持多个语言
@@ -443,6 +491,8 @@ A prefix arg forces clock in of the default task."
    (emacs-lisp . t)
    (perl       . t)
    (python     . t)   
+;  (ipython    . t)   
+   (jupyter    . t)   
    (C          . t)
    (fortran    . t)
    (latex      . t)
@@ -450,6 +500,8 @@ A prefix arg forces clock in of the default task."
    (css        . t)
   )
 )
+
+(org-babel-jupyter-override-src-block "python")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; org mode 转换功能
@@ -496,10 +548,16 @@ A prefix arg forces clock in of the default task."
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; count words
+(use-package wc-mode
+  :ensure t)
+
 (add-hook 'org-mode-hook 'wc-mode)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; cdlatex minor-mode
+(use-package cdlatex
+  :ensure t)
+
 (add-hook 'org-mode-hook #'turn-on-org-cdlatex)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -535,7 +593,86 @@ LEVEL 是一个数字，作为参数提供，默认指定第 4 级"
             (local-set-key (kbd "C-c C-h n 2") (lambda () (interactive) (my/count-org-headings 2)))
             (local-set-key (kbd "C-c C-h n 4") (lambda () (interactive) (my/count-org-headings 4)))
             (local-set-key (kbd "C-c C-h c") 'my/org-count-4headings-in-parentheses)
-))
+            ))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Improve org mode looks
+(setq-default org-startup-indented t
+              org-pretty-entities t
+              org-use-sub-superscripts "{}"
+              org-hide-emphasis-markers t
+              org-startup-with-inline-images t
+              org-image-actual-width '(300))
+
+(use-package org-appear
+  :ensure t
+  :hook
+  (org-mode . org-appear-mode))
+
+(use-package org-modern
+  :ensure t
+  :hook
+  (org-mode . global-org-modern-mode)
+  :custom
+  (org-modern-keyword nil)
+  (org-modern-checkbox nil)
+  (org-modern-table nil))
+
+;; LaTeX previews
+(use-package org-fragtog
+  :ensure t
+  :after org
+  :custom
+  (org-startup-with-latex-preview t)
+  :hook
+  (org-mode . org-fragtog-mode)
+  :custom
+  (org-format-latex-options
+   (plist-put org-format-latex-options :scale 2)
+   (plist-put org-format-latex-options :foreground 'auto)
+   (plist-put org-format-latex-options :background 'auto)))
+
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; org bullets
+(use-package org-bullets
+  :ensure t
+  :config
+  (setq org-bullets-bullet-list '("☯" "✿" "❀" "►" "✚" "◉"))
+  :hook (org-mode . org-bullets-mode)
+  )
+
+;; org alert
+(use-package org-alert
+  :ensure t
+  :defer t
+  :config
+  (progn
+    (setq alert-default-style 'libnotify)
+    )
+  )
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Distraction-free writing
+(defun ews-distraction-free ()
+  "Distraction-free writing environment using Olivetti package."
+  (interactive)
+  (if (equal olivetti-mode nil)
+      (progn
+        (window-configuration-to-register 1)
+        (delete-other-windows)
+        (text-scale-set 1)
+        (olivetti-mode t))
+    (progn
+      (if (eq (length (window-list)) 1)
+          (jump-to-register 1))
+      (olivetti-mode 0)
+      (text-scale-set 0))))
+
+(use-package olivetti
+  :ensure t
+  :demand t
+  :bind
+  (("<f9>" . ews-distraction-free)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (provide 'init-org)

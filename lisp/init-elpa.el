@@ -3,30 +3,30 @@
 ;;; Code:
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; use straight to manage package
-(setq straight-repository-branch "develop")
-
-;; Install straight.el
-(defvar bootstrap-version)
-(let ((bootstrap-file
-       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
-      (bootstrap-version 6))
-  (unless (file-exists-p bootstrap-file)
-    (with-current-buffer
-        (url-retrieve-synchronously
-         "https://radian-software.github.io/straight.el/install.el"
-         'silent 'inhibit-cookies)
-      (goto-char (point-max))
-      (eval-print-last-sexp)))
-  (load bootstrap-file nil 'nomessage))
-
-;; Install use-package
-(straight-use-package 'use-package)
-
-;; Configure use-package to use straight.el by default
-(use-package straight
-  :custom
-  (straight-use-package-by-default t))
+; ;; use straight to manage package
+; (setq straight-repository-branch "develop")
+; 
+; ;; Install straight.el
+; (defvar bootstrap-version)
+; (let ((bootstrap-file
+;        (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+;       (bootstrap-version 6))
+;   (unless (file-exists-p bootstrap-file)
+;     (with-current-buffer
+;         (url-retrieve-synchronously
+;          "https://radian-software.github.io/straight.el/install.el"
+;          'silent 'inhibit-cookies)
+;       (goto-char (point-max))
+;       (eval-print-last-sexp)))
+;   (load bootstrap-file nil 'nomessage))
+; 
+; ;; Install use-package
+; (straight-use-package 'use-package)
+; 
+; ;; Configure use-package to use straight.el by default
+; (use-package straight
+;   :custom
+;   (straight-use-package-by-default t))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (require 'package) ;; package 必须首先手动安装，以后碰到 use-package 时再安装

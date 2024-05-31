@@ -3,7 +3,8 @@
 ;;;   multi terminal
 ;;; Code:
 
-(use-package multi-term)
+(use-package multi-term
+  :ensure t)
 
 (setq multi-term-program "/bin/zsh")
 (setq system-uses-terminfo nil)

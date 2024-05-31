@@ -23,8 +23,8 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; gtags
-
-(use-package ggtags)
+(use-package ggtags
+  :ensure t)
 
 (global-set-key (kbd "M-.") 'gtags-find-tag)
 (global-set-key (kbd "M-,") 'gtags-find-rtag)
@@ -46,10 +46,6 @@
 
 (add-hook 'emacs-lisp-mode-hook (lambda () (setq truncate-lines nil)))
 (add-hook 'emacs-lisp-mode-hook (lambda () (visual-line-mode -1)))
-
-(add-hook 'emacs-lisp-mode-hook (lambda () 
-            (add-to-list (make-local-variable 'company-backends) 
-            '(company-elisp))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Python
@@ -128,7 +124,7 @@
 ;; company: complete anything
 
 (use-package company
-  :ensure t
+; :ensure t
   :init (global-company-mode)
   :config
   (setq company-minimum-prefix-length 2) ; 只需敲 2 个字母就开始进行自动补全
@@ -143,6 +139,10 @@
   :ensure t
   :if window-system
   :hook (company-mode . company-box-mode))
+
+(add-hook 'emacs-lisp-mode-hook (lambda () 
+            (add-to-list (make-local-variable 'company-backends) 
+            '(company-elisp))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 代码扩展和自动补全
@@ -177,7 +177,7 @@
 (global-set-key (kbd "M-/") 'hippie-expand)
 
 ;; ;; auto-complete
-(ac-config-default)
+; (ac-config-default)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; show line numbers in programming modes
@@ -222,6 +222,63 @@
 (use-package treemacs-projectile
   :ensure t
   :after (treemacs projectile))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; format code: aggressive-indent-mode
+(use-package aggressive-indent
+  :ensure t)
+
+(add-hook 'emacs-lisp-mode-hook #'aggressive-indent-mode)
+(add-hook 'css-mode-hook #'aggressive-indent-mode)
+(add-hook 'org-mode-hook #'aggressive-indent-mode)
+
+(global-aggressive-indent-mode 1)
+
+(add-to-list 'aggressive-indent-excluded-modes 'html-mode)
+(add-to-list 'aggressive-indent-excluded-modes 'org-mode)
+
+(add-to-list
+ 'aggressive-indent-dont-indent-if
+ '(and (derived-mode-p 'c++-mode)
+       (null (string-match "\\([;{}]\\|\\b\\(if\\|for\\|while\\)\\b\\)"
+                           (thing-at-point 'line)))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; tree-sitter
+(use-package treesit-auto
+  :ensure t
+  :custom
+  (treesit-auto-install 'prompt)
+  :config
+  (treesit-auto-add-to-auto-mode-alist 'all)
+  (global-treesit-auto-mode))
+
+(setq treesit-language-source-alist
+      '((bash "https://github.com/tree-sitter/tree-sitter-bash")
+        (cmake "https://github.com/uyha/tree-sitter-cmake")
+        (css "https://github.com/tree-sitter/tree-sitter-css")
+        (elisp "https://github.com/Wilfred/tree-sitter-elisp")
+        (go "https://github.com/tree-sitter/tree-sitter-go")
+        (html "https://github.com/tree-sitter/tree-sitter-html")
+        (javascript "https://github.com/tree-sitter/tree-sitter-javascript" "master" "src")
+        (json "https://github.com/tree-sitter/tree-sitter-json")
+        (make "https://github.com/alemuller/tree-sitter-make")
+        (markdown "https://github.com/ikatyang/tree-sitter-markdown")
+        (python "https://github.com/tree-sitter/tree-sitter-python")
+        (toml "https://github.com/tree-sitter/tree-sitter-toml")
+        (tsx "https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src")
+        (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")
+        (yaml "https://github.com/ikatyang/tree-sitter-yaml")))
+
+(setq major-mode-remap-alist
+      '((yaml-mode . yaml-ts-mode)
+        (bash-mode . bash-ts-mode)
+        (css-mode . css-ts-mode)
+        (js2-mode . js-ts-mode)
+        (json-mode . json-ts-mode)
+        (markdown-mode . markdown-ts-mode)
+        (typescript-mode . typescript-ts-mode)
+        (python-mode . python-ts-mode)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (provide 'init-language)

@@ -377,6 +377,13 @@ Version 2015-01-26"
 (setq tramp-mode nil)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Emacs Smart Input Source (SIS)
+(use-package sis
+  :ensure t)
+
+(sis-ism-lazyman-config nil "rime" 'native)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (provide 'init-global)
 
 ;;; init-global.el ends here

@@ -44,7 +44,6 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 代码跳转: 必须设置 jedi:setup，否则要手动执行这个命令
-
 (use-package company-jedi
   :ensure t
   :config
@@ -59,6 +58,18 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 接受 UTF-8 
 (define-coding-system-alias 'UTF-8 'utf-8)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; ;; conda
+; (use-package conda
+;   :straight t
+;   :config
+;   (setq conda-anaconda-home (expand-file-name "/opt/homebrew/Caskroom/miniconda/"))
+;   (setq conda-env-home-directory (expand-file-name "/opt/homebrew/Caskroom/miniconda/"))
+;   (setq conda-env-subdirectory "envs"))
+; 
+; (unless (getenv "CONDA_DEFAULT_ENV")
+;   (conda-env-activate "base"))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (provide 'init-python)
