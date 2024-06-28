@@ -17,8 +17,10 @@
     :ensure t)
   :hook
   ((python-mode . py-autopep8-mode)
-   (python-mode . jedi:setup))  ; 代码跳转/函数查询
-)
+   (python-mode . jedi:setup)   ; 代码跳转/函数查询
+   (python-mode . jedi:ac-setup)
+   (python-mode . auto-complete-mode))
+  )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; python virtual environment
