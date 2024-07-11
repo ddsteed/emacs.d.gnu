@@ -67,17 +67,18 @@
 
 (setq org-todo-keywords
       '((sequence "☞ TODO(t)"
-                  "⚑ WAIT(w)"
+                  "⚑ WAIT(w!)"
                   "☟ NEXT(n)"
                   "⚔ INPR(i)"
+                  "✔ DONE(d)"
                   "|"
                   "✰ IMPO(I)"
                   "❤ LOVE(l)"
                   "✍ NOTE(N)"
-                  "✔ DONE(d)"
-                  "✘ CANL(c@)"
                   "|"
-                  "☕ BREK(b)"
+                  "✘ SUSP(s@/!)"
+                  "✘ CANL(c@/!)"
+                  "☕ BREK(b@/!)"
                   )))
 
 (setq org-todo-keyword-faces
@@ -86,6 +87,7 @@
               ("⚔ INPR" :foreground "red" :weight thin)
               ("✔ DONE" :foreground "forest green" :weight thin)
               ("⚑ WAIT" :foreground "orange" :weight thin)
+              ("⚑ SUSP" :foreground "orange" :weight thin)
               ("✘ CANL" :foreground "dark red" :weight bold)
               )))
 
@@ -591,6 +593,7 @@ LEVEL 是一个数字，作为参数提供，默认指定第 4 级"
 (add-hook 'org-mode-hook
           (lambda ()
             (local-set-key (kbd "C-c C-h n 2") (lambda () (interactive) (my/count-org-headings 2)))
+            (local-set-key (kbd "C-c C-h n 3") (lambda () (interactive) (my/count-org-headings 3)))
             (local-set-key (kbd "C-c C-h n 4") (lambda () (interactive) (my/count-org-headings 4)))
             (local-set-key (kbd "C-c C-h c") 'my/org-count-4headings-in-parentheses)
             ))
