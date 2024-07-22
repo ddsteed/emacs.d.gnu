@@ -66,20 +66,21 @@
 ; 如果同时设定@和!,使用@/!
 
 (setq org-todo-keywords
-      '((sequence "☞ TODO(t)"
-                  "⚑ WAIT(w!)"
-                  "☟ NEXT(n)"
-                  "⚔ INPR(i)"
-                  "✔ DONE(d)"
-                  "|"
-                  "✰ IMPO(I)"
-                  "❤ LOVE(l)"
-                  "✍ NOTE(N)"
-                  "|"
-                  "✘ SUSP(s@/!)"
-                  "✘ CANL(c@/!)"
-                  "☕ BREK(b@/!)"
-                  )))
+      '((sequence
+         "⚔ INPR(i)"
+         "☟ NEXT(n)"
+         "⚑ WAIT(w!)"
+         "☞ TODO(t)"
+         "|"
+         "✰ IMPO(I)"
+         "❤ LOVE(l)"
+         "✍ NOTE(N)"
+         "|"
+         "✔ DONE(d)"
+         "✘ SUSP(s@/!)"
+         "✘ CANL(c@/!)"
+         "☕ BREK(b@/!)"
+         )))
 
 (setq org-todo-keyword-faces
       (quote (("☞ TODO" :foreground "magenta" :weight thin)
