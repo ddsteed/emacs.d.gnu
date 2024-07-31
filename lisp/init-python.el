@@ -19,7 +19,7 @@
     :ensure t)
   :hook
   ((python-mode . py-autopep8-mode)
-   (python-mode . jedi:setup)   ; 代码跳转/函数查询
+   (python-mode . jedi:setup)             ; 代码跳转/函数查询。 第一次执行的时候，必须手动运行 jedi:setup 命令，系统会在后台执行 jediepcserver
    (python-mode . jedi:ac-setup)
    (python-mode . auto-complete-mode))
   )

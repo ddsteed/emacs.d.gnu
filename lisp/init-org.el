@@ -445,23 +445,33 @@ A prefix arg forces clock in of the default task."
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Reminders
 
-                                        ; Erase all reminders and rebuilt reminders for today from the agenda
-(defun rds/org-agenda-to-appt ()
-  (interactive)
-  (setq appt-time-msg-list nil)
-  (org-agenda-to-appt))
+;; ;; Erase all reminders and rebuilt reminders for today from the agenda
+;; (defun rds/org-agenda-to-appt ()
+;;   (interactive)
+;;   (setq appt-time-msg-list nil)
+;;   (org-agenda-to-appt))
 
-; Rebuild the reminders everytime the agenda is displayed
-(add-hook 'org-agenda-finalize-hook 'rds/org-agenda-to-appt 'append)
+;; ; Rebuild the reminders everytime the agenda is displayed
+;; (add-hook 'org-agenda-finalize-hook 'rds/org-agenda-to-appt 'append)
 
-; This is at the end of my .emacs - so appointments are set up when Emacs starts
-(rds/org-agenda-to-appt)
+;; ; This is at the end of my .emacs - so appointments are set up when Emacs starts
+;; (rds/org-agenda-to-appt)
 
-; Activate appointments so we get notifications
-(appt-activate t)
+;; ; Activate appointments so we get notifications
+;; (appt-activate t)
 
-; If we leave Emacs running overnight - reset the appointments one minute after midnight
-(run-at-time "24:01" nil 'rds/org-agenda-to-appt)
+;; ; If we leave Emacs running overnight - reset the appointments one minute after midnight
+;; (run-at-time "24:01" nil 'rds/org-agenda-to-appt)
+
+(add-hook 'org-finalize-agenda-hook
+          (lambda ()
+            (setq appt-message-warning-time 10        ;; warn 10 min in advance
+                  appt-display-diary nil              ;; do not display diary when (appt-activate) is called
+                  appt-display-mode-line t            ;; show in the modeline
+                  appt-display-format 'window         ;; display notification in window
+                  calendar-mark-diary-entries-flag t) ;; mark diary entries in calendar
+            (org-agenda-to-appt)                      ;; copy all agenda schedule to appointments
+            (appt-activate 1)))                       ;; active appt (appointment notification)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 设置 org mode 自动换行

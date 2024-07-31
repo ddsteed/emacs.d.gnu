@@ -384,6 +384,10 @@ Version 2015-01-26"
 (sis-ism-lazyman-config nil "rime" 'native)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Exiting emacs without confirmation to kill running processes
+(setq confirm-kill-processes nil)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (provide 'init-global)
 
 ;;; init-global.el ends here
