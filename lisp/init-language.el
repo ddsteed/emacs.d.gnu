@@ -281,6 +281,23 @@
         (python-mode . python-ts-mode)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; highlight indent vertical lines
+
+(use-package highlight-indent-guides
+  :ensure t
+  :hook (prog-mode . highlight-indent-guides-mode))
+
+(defun my-highlighter (level responsive display)
+  (if (> 2 level)
+      nil
+    (highlight-indent-guides--highlighter-default level responsive display)))
+(setq highlight-indent-guides-highlighter-function 'my-highlighter)
+
+(use-package indent-guide
+  :ensure t
+  :hook (prog-mode . indent-guide-mode))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (provide 'init-language)
 
 ;;; init-language.el ends here

@@ -350,27 +350,13 @@ Version 2015-01-26"
 			  ("M-A" . marginalia-cycle)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; dashboard: 欢迎界面
-(use-package dashboard
-  :ensure t
-  :config
-  (setq dashboard-banner-logo-title "Life is too short to be little!") ;; 个性签名，随读者喜好设置
-  (setq dashboard-projects-backend 'projectile) 
-  (setq dashboard-startup-banner 'official) ;; 也可以自定义图片
-  (setq dashboard-items '((recents  . 2)    ;; 显示多少个最近文件
-                          (bookmarks . 2)   ;; 显示多少个最近书签
-                          (projects . 2))   ;; 显示多少个最近项目
-  )
-  (dashboard-setup-startup-hook))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 英文之间自动增加空格
 (use-package pangu-spacing
   :ensure t
   :config
   (global-pangu-spacing-mode 1)
   (setq pangu-spacing-real-insert-separtor t)
-)
+  )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; disable tramp: it often hang up emacs :-(
