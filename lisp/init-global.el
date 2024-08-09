@@ -144,27 +144,42 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; 
 ;; 增强 minibuffer 补全：vertico 和 Orderless
-(package-install 'vertico)
-(vertico-mode t)
+(use-package vertico
+  :ensure t
+  :config
+  (setq vertico-mode t)
+  )
 
-(package-install 'orderless)
-(setq completion-styles '(orderless))
+(use-package orderless
+  :ensure t
+  :config
+  (setq completion-styles '(orderless))
+  )
  
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 配置 Marginalia 增强 minubuffer 的 annotation
-(package-install 'marginalia)
-(marginalia-mode t)
+(use-package marginalia
+  :ensure t
+  :config
+  (setq marginalia-mode t)
+  )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; minibuffer action 和自适应的 context menu：Embark
-(package-install 'embark)
-(global-set-key (kbd "C-;") 'embark-act)
-(setq prefix-help-command 'embark-prefix-help-command)
+(use-package embark
+  :ensure t
+  :config
+  (global-set-key (kbd "C-;") 'embark-act)
+  (setq prefix-help-command 'embark-prefix-help-command)
+  )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 增强文件内搜索和跳转函数定义：Consult
-(use-package consult)
-(global-set-key (kbd "C-s") 'consult-line)
+(use-package consult
+  :ensure t
+  :config
+  (global-set-key (kbd "C-s") 'consult-line)
+  )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 高亮当前行，当文本内容很多时可以很容易找到光标的位置。

@@ -83,25 +83,27 @@
          )))
 
 (setq org-todo-keyword-faces
-      (quote (("☞ TODO" :foreground "magenta" :weight thin)
-              ("☟ NEXT" :foreground "blue" :weight thin)
-              ("⚔ INPR" :foreground "red" :weight thin)
-              ("✔ DONE" :foreground "forest green" :weight thin)
-              ("⚑ WAIT" :foreground "orange" :weight thin)
+      (quote (
+                                        ;             ("☞ TODO" :foreground "magenta" :weight thin)
+                                        ;             ("☟ NEXT" :foreground "blue" :weight thin)
+                                        ;             ("⚔ INPR" :foreground "red" :weight thin)
+              ("☞ TODO" :foreground "dark red" :weight thin)
+              ("☟ NEXT" :foreground "magenta" :weight thin)
+              ("⚔ INPR" :foreground "forest green" :weight thin)
+              ("✔ DONE" :foreground "blue" :weight thin)
+              ("⚑ WAIT" :foreground "magenta" :weight thin)
               ("⚑ SUSP" :foreground "orange" :weight thin)
               ("✘ CANL" :foreground "dark red" :weight bold)
               )))
 
-
-; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Agenda
-; 将该目录下所有的 org 和 org_archive 文件作为日程表搜索范围
+;; 将该目录下所有的 org 和 org_archive 文件作为日程表搜索范围
 (setq org-agenda-files (directory-files-recursively "~/Work/GTD/" "\\.org*"))
 
 ;; 融合 ical 和 agenda
 (add-to-list 'org-modules 'org-mac-iCal)
 
-; 显示节日
+;; 显示节日
 (setq org-agenda-include-diary t)
 
 ;; Do not dim blocked tasks
@@ -532,8 +534,8 @@ A prefix arg forces clock in of the default task."
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; ox-hugo: org to html
 (use-package ox-hugo
-  :ensure t   ;Auto-install the package from Melpa
-  :pin melpa  ;`package-archives' should already have ("melpa" . "https://melpa.org/packages/")
+  :ensure t   
+  :pin melpa  ; 'package-archives' should already have ("melpa" . "https://melpa.org/packages/")
   :after ox)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -628,7 +630,8 @@ LEVEL 是一个数字，作为参数提供，默认指定第 4 级"
   :hook
   (org-mode . global-org-modern-mode)
   :custom
-  (org-modern-keyword nil)
+                                        ; (org-modern-keyword nil)
+  (org-modern-keyword t)
   (org-modern-checkbox nil)
   (org-modern-table nil))
 
