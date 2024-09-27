@@ -36,34 +36,7 @@
 ;; Avoid inverting hl-todo face
 (setq vscode-dark-plus-invert-hl-todo nil)
 
-; ;; ------------
-; ;; timu-caribbean
-; (use-package timu-caribbean-theme
-;   :ensure t
-;   :config
-;   (load-theme 'timu-caribbean t))
-
 ;; ------------
-; ;; timu-spacegrey
-; (use-package timu-spacegrey-theme
-;   :ensure t
-;   :config
-;   (load-theme 'timu-spacegrey t))
-
-; ;; ------------
-; ;; timu-rouge
-; (use-package timu-rouge-theme
-;   :ensure t
-;   :config
-;   (load-theme 'timu-rouge t))
-
-; ;; ------------
-; ;; timu-macos
-; (use-package timu-macos-theme
-;   :ensure t
-;   :config
-;   (load-theme 'timu-macos t))
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 自定义界面外观，一般要放在其他的 theme 之后，否则有些设置会被 theme 里重新定义
 
@@ -157,20 +130,21 @@
 ;; Setting English Font
 (set-face-attribute
  'default nil
- :font "Monaco 12" 
+ ;; :font "Monaco 12" 
+ :font "IBM Plex Sans 14" 
  :height 120
-)
+ )
 
 ;; Chinese Font
 (dolist (charset '(kana han symbol cjk-misc bopomofo))
   (set-fontset-font (frame-parameter nil 'font)
-      charset
-      (font-spec
-         :family "PingFang SC Regular"
-         :size 16
-      )
-   )
-)
+                    charset
+                    (font-spec
+                     :family "PingFang SC Regular"
+                     :size 16
+                     )
+                    )
+  )
 
 ;; 缺省字体；
 (setq +font-family "Iosevka Comfy")
@@ -254,6 +228,34 @@
                           (projects . 2))   ;; 显示多少个最近项目
         )
   (dashboard-setup-startup-hook))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;  different themes
+;; (load-theme 'material t)
+;; ------------
+;;; timu-caribbean
+;;   (use-package timu-caribbean-theme
+;;     :ensure t
+;;     :config
+;;     (load-theme 'timu-caribbean t))
+;; 
+;;   ;; timu-spacegrey
+;;   (use-package timu-spacegrey-theme
+;;     :ensure t
+;;     :config
+;;     (load-theme 'timu-spacegrey t))
+;; 
+;;   ;; timu-rouge
+;;   (use-package timu-rouge-theme
+;;     :ensure t
+;;     :config
+;;     (load-theme 'timu-rouge t))
+;; 
+;;   ;; timu-macos
+(use-package timu-macos-theme
+  :ensure t
+  :config
+  (load-theme 'timu-macos t))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (provide 'init-look)

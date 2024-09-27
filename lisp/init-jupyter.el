@@ -3,8 +3,38 @@
 ;;;   jupyter setup
 ;;; Code:
 
+
+(use-package conda
+  :defer t
+  :init
+  (setq conda-anaconda-home (expand-file-name "/opt/homebrew/Caskroom/miniforge/")
+	    conda-env-home-directory (expand-file-name "/opt/homebrew/Caskroom/miniforge/"))
+  :config
+  (conda-env-initialize-interactive-shells)
+  (conda-env-initialize-eshell))
+
 (use-package jupyter
-  :ensure t)
+  :defer t
+  :init
+  (setq org-babel-default-header-args:jupyter-python '((:async . "yes")
+                                                       (:session . "py"))))
+
+
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((python . t)
+   (jupyter . t)))
+
+(add-to-list 'org-src-lang-modes '("jupyter" . python))
+
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((python . t)
+   (jupyter . t)
+   ;; other languages..
+   ))
+
+(org-babel-jupyter-override-src-block "python")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; ein
@@ -14,7 +44,7 @@
   (add-hook 'ein:notebook-mode-hook 'jedi:setup)
   :config
   (setq ein:output-area-inlined-images t)
-)
+  )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defun my/jupyter-refresh-kernelspecs ()

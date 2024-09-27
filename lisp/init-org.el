@@ -545,7 +545,6 @@ A prefix arg forces clock in of the default task."
       '(
         ("\\.xlsx\\'" . "excel %s")
         ("\\.md\\'" . "MacDown %s")
-        ("\\.nb\\'" . "mathematica %s")
         ))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

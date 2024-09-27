@@ -64,18 +64,6 @@
 (define-coding-system-alias 'UTF-8 'utf-8)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-; ;; conda
-; (use-package conda
-;   :straight t
-;   :config
-;   (setq conda-anaconda-home (expand-file-name "/opt/homebrew/Caskroom/miniconda/"))
-;   (setq conda-env-home-directory (expand-file-name "/opt/homebrew/Caskroom/miniconda/"))
-;   (setq conda-env-subdirectory "envs"))
-; 
-; (unless (getenv "CONDA_DEFAULT_ENV")
-;   (conda-env-activate "base"))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (provide 'init-python)
 
 ;;; init-python.el ends here

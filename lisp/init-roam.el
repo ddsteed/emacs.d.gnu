@@ -14,6 +14,7 @@
   (org-roam-directory (file-truename "~/Documents/RDS/NOTES/Org/Roam"))
   (find-file-visit-truename t)
   (add-hood 'after-init-hook 'org-roam-mode)
+  (org-roam-database-connector 'sqlite-builtin)
   :config
   (org-roam-setup)
   (org-roam-db-autosync-enable)
@@ -89,12 +90,6 @@
 (setq org-roam-node-display-template
       (concat "${type:15} ${title:*} "
               (propertize "${tags:10}" 'face 'org-tag)))
-
-;;;;;;;
-;; roam sqlite database
-(use-package emacsql-sqlite
-  :ensure t)
-(setq org-roam-database-connector 'sqlite)
 
 ;;;;;;;
 ;; To configure what sections are displayed in the buffer
