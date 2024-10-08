@@ -9,12 +9,15 @@
 (use-package org-roam
   :ensure t
   :after org
-  :init (setq org-roam-v2-ack t) ;; Acknowledge V2 upgrade
+  :init
+  (setq org-roam-v2-ack t) ;; Acknowledge V2 upgrade
+  (org-roam-db-sync) ;; have to run database sync manually at init time
   :custom
   (org-roam-directory (file-truename "~/Documents/RDS/NOTES/Org/Roam"))
   (find-file-visit-truename t)
   (add-hood 'after-init-hook 'org-roam-mode)
   (org-roam-database-connector 'sqlite-builtin)
+  (org-roam-db-location "~/.emacs.d/org-roam.db")
   :config
   (org-roam-setup)
   (org-roam-db-autosync-enable)
