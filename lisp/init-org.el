@@ -638,11 +638,10 @@ LEVEL 是一个数字，作为参数提供，默认指定第 4 级"
 (use-package org-fragtog
   :ensure t
   :after org
-  :custom
-  (org-startup-with-latex-preview t)
   :hook
   (org-mode . org-fragtog-mode)
   :custom
+  (org-startup-with-latex-preview t)
   (org-format-latex-options
    (plist-put org-format-latex-options :scale 2)
    (plist-put org-format-latex-options :foreground 'auto)
