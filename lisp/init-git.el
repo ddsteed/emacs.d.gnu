@@ -1,10 +1,10 @@
 ;;; init-git.el --- Summary
 ;;; Commentary:
-;;;    git setup
+;;;   git
 ;;; Code:
 
 (use-package magit
-  :ensure t)
+:ensure t)
 
 (use-package git-gutter
   :ensure t
@@ -19,7 +19,6 @@
   (define-fringe-bitmap 'git-gutter-fr:modified [224] nil nil '(center repeated))
   (define-fringe-bitmap 'git-gutter-fr:deleted [128 192 224 240] nil nil 'bottom))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (provide 'init-git)
 
 ;;; init-git.el ends here

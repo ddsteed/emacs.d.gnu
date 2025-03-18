@@ -1,9 +1,8 @@
-;;; init-python.el -- Summary
+;;; init-python.el --- Summary
 ;;; Commentary:
-;;;   python language
+;;;   python
 ;;; Code:
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (use-package python
   :ensure t
   :mode ("\\.py\\'" . python-mode)
@@ -24,8 +23,6 @@
    (python-mode . auto-complete-mode))
   )
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; python virtual environment
 (use-package auto-virtualenv
   :ensure t
   :init
@@ -36,8 +33,6 @@
   (add-hook 'projectile-after-switch-project-hook 'auto-virtualenv-set-virtualenv)  ;; If using projectile
   )
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; elpy: Emacs Lisp Python Environment
 (use-package elpy
   :ensure t
   :init
@@ -46,24 +41,19 @@
   (elpy-mode . flycheck-mode) ;; 添加 flycheck, 替换 flymake
 )
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; 代码跳转: 必须设置 jedi:setup，否则要手动执行这个命令
 (use-package company-jedi
   :ensure t
   :config
   (add-to-list 'company-backends 'company-jedi)
 )
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 取消自动折行
 (add-hook 'python-mode-hook (lambda () (setq truncate-lines nil)))
 (add-hook 'python-mode-hook (lambda () (visual-line-mode -1)))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; 接受 UTF-8 
+; 接受 UTF-8 
 (define-coding-system-alias 'UTF-8 'utf-8)
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (provide 'init-python)
 
 ;;; init-python.el ends here

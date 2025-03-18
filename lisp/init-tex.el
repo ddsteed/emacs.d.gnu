@@ -1,6 +1,6 @@
-;;; init-tex.el -- Summary
+;;; init-tex.el --- Summary
 ;;; Commentary:
-;;;   TeX/LaTeX-mode
+;;;   tex
 ;;; Code:
 
 (add-hook 'LaTeX-mode-hood 'turn-on-cdlatex)       ;;
@@ -9,7 +9,6 @@
                                                    ;;
 (setq org-latex-compiler "xelatex")                ;;
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (provide 'init-tex)
 
 ;;; init-tex.el ends here

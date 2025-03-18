@@ -1,47 +1,47 @@
-;;; init.el --- Summary
+;;; init.el --- Load the full configuration -*- lexical-binding: t -*-
 ;;; Commentary:
-;;;    Emacs init setup
+
+;; This file bootstraps the configuration, which is divided into
+;; a number of other files.
+
 ;;; Code:
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; 把目录 lisp/添加到搜索路径中去
+(let ((minver "28.1"))
+  (when (version< emacs-version minver)
+    (error "Your Emacs is too old -- this config requires v%s or higher" minver)))
+(when (version< emacs-version "29.1")
+  (message "Your Emacs is old, and some functionality in this config will be disabled. Please upgrade if possible."))
+
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
-
-;; 把自定义的插件目录添加进来
-(add-to-list 'load-path "~/.emacs.d/elpa")
-(add-to-list 'load-path "~/.emacs.d/addons")
-;(add-to-list 'load-path (expand-file-name "~/.emacs.d/addons"))
-
-;; 下面每一个被 require 的 feature 都对应一个 lisp/目录下的同名 elisp 文件，
-;; 例如 init-global.el、init-elpa.el
-
-(require 'init-elpa)     ;; package repository
-(require 'init-execpath) ;; eshell path
-(require 'init-look)     ;; look face
-(require 'init-global)   ;; global variables
-(require 'init-evil)     ;; evil mode
-(require 'init-language) ;; programming language style
-(require 'init-org)      ;; org mode
-(require 'init-roam)     ;; org-roam mode
-(require 'init-markdown) ;; markdown mode
-(require 'init-tex)      ;; TeX/LaTeX mode
-(require 'init-cal)      ;; calendar
-(require 'init-git)      ;; magit
-(require 'init-mterm)    ;; multi-term
-;(require 'init-lsp)      ;; LSP
-;(require 'init-lspb)     ;; lsp-bridge
-;(require 'init-eaf)      ;; emacs-application-framework
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; 设置一个空的 custom file，这样系统默认的 custom 就不会每次自动写入 init.el
-(setq custom-file "~/.emacs.d/custom.el")
-      
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; server start automatically
-(use-package server)
+(add-to-list 'load-path "~/.emacs.d.rds/elpa")
+(add-to-list 'load-path "~/.emacs.d.rds/addons")
+;; Adjust garbage collection threshold for early startup
+(setq gc-cons-threshold (* 128 1024 1024))
+(setq custom-file "~/.emacs.d.rds/custom.el")
+(load "server")
 (unless (server-running-p) (server-start))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(require 'init-elpa)
+(require 'init-look)
+(require 'init-general)
+(require 'init-buffer)
+(require 'init-chinese)
+(require 'init-vi)
+(require 'init-terminal)
+(require 'init-calendar)
+(require 'init-language)
+(require 'init-company)
+(require 'init-cpp)
+(require 'init-cmake)
+(require 'init-fortran)
+(require 'init-git)
+(require 'init-lisp)
+(require 'init-markdown)
+(require 'init-python)
+(require 'init-tex)
+(require 'init-org)
+(require 'init-roam)
+
 (provide 'init)
 
 ;;; init.el ends here
