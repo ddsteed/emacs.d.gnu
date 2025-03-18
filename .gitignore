@@ -38,4 +38,5 @@ url
 !.gitignore
 !clean
 !init.el
+!early-init.el
 !lisp/
