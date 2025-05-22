@@ -135,6 +135,6 @@
            )
 )
 
-(provide 'init-roam)
 
+(provide 'init-roam)
 ;;; init-roam.el ends here

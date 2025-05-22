@@ -14,6 +14,8 @@
 
 (add-to-list 'auto-mode-alist '("\\.\\(org\\|org_archive\\|txt\\)$" . org-mode))
 
+(setq org-export-backends (quote (ascii html icalendar latex md)))
+
 (global-set-key  "\C-ca"  'org-agenda)
 (global-set-key  "\C-cc"  'org-capture)
 (global-set-key  "\C-cb"  'org-switchb)
@@ -22,7 +24,7 @@
 
 (use-package wc-mode
   :ensure t
-  :defer t)
+  :defer 30)
 
 (add-hook 'org-mode-hook 'wc-mode)
 
@@ -55,13 +57,13 @@ LEVEL 是一个数字，作为参数提供，默认指定第 4 级"
 
 (add-hook 'org-mode-hook
          (lambda ()
-           (local-set-key (kbd "C-c C-h n 2")
+           (local-set-key (kbd "C-c C-x n 2")
                 (lambda () (interactive) (my/count-org-headings 2)))
-           (local-set-key (kbd "C-c C-h n 3")
+           (local-set-key (kbd "C-c C-x n 3")
                 (lambda () (interactive) (my/count-org-headings 3)))
-           (local-set-key (kbd "C-c C-h n 4")
+           (local-set-key (kbd "C-c C-x n 4")
                 (lambda () (interactive) (my/count-org-headings 4)))
-           (local-set-key (kbd "C-c C-h c")
+           (local-set-key (kbd "C-c C-x c")
                 'my/org-count-4headings-in-parentheses)))
 
 (setq org-file-apps
@@ -79,7 +81,7 @@ LEVEL 是一个数字，作为参数提供，默认指定第 4 级"
 
 (use-package org-download
       :ensure t 
-      :defer t
+      :defer 30
       ;;将截屏功能绑定到快捷键：Ctrl + Shift + Y
       :bind ("C-S-y" . org-download-screenshot)
       :config
@@ -110,7 +112,7 @@ LEVEL 是一个数字，作为参数提供，默认指定第 4 级"
 
 (use-package org-alert
   :ensure t
-  :defer t
+  :defer 30
   :config
   (progn
     (setq alert-default-style 'libnotify)
@@ -119,7 +121,7 @@ LEVEL 是一个数字，作为参数提供，默认指定第 4 级"
 
 (use-package org-bullets
   :ensure t
-  :defer t
+  :defer 30
   :config
   (setq org-bullets-bullet-list '("☯" "✿" "❀" "►" "✚" "◉"))
   :hook (org-mode . org-bullets-mode)
@@ -134,13 +136,13 @@ LEVEL 是一个数字，作为参数提供，默认指定第 4 级"
 
 (use-package org-appear
   :ensure t
-  :defer t
+  :defer 30
   :hook
   (org-mode . org-appear-mode))
 
 (use-package org-modern
   :ensure t
-  :defer t
+  :defer 30
   :hook
   (org-mode . global-org-modern-mode)
   :custom
@@ -398,14 +400,14 @@ LEVEL 是一个数字，作为参数提供，默认指定第 4 级"
 
 (use-package cdlatex
   :ensure t
-  :defer t)
+  :defer 30)
 
 (add-hook 'org-mode-hook #'turn-on-org-cdlatex)
 
 ;; LaTeX previews
 (use-package org-fragtog
   :ensure t
-  :defer t
+  :defer 30
   :after org
   :hook
   (org-mode . org-fragtog-mode)
@@ -419,16 +421,15 @@ LEVEL 是一个数字，作为参数提供，默认指定第 4 级"
 ;; ox-hugo: org to html
 (use-package ox-hugo
   :ensure t   
-  :defer t
   :after ox)
 
 ;; org preview html
 (use-package org-preview-html
   :ensure t
-  :defer t)
+)
 
 (setq org-preview-html-viewer 'eww)
 
-(provide 'init-org)
 
+(provide 'init-org)
 ;;; init-org.el ends here

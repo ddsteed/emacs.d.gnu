@@ -15,8 +15,10 @@
 (setq load-prefer-newer t)
 
 ;; Set Garbage Collection threshold to 1GB during startup. `gcmh' will clean things up later.
-(setq gc-cons-threshold 1073741824
-      gc-cons-percentage 0.6)
+; (setq gc-cons-threshold 1073741824
+;       gc-cons-percentage 0.6)
+(setq gc-cons-threshold most-positive-fixnum)
+(add-hook 'after-init-hook #'(lambda () (setq gc-cons-threshold 800000)))
 
 ;; Write any customizations to a temp file so they are discarded.
 (setq custom-file (make-temp-file "custom-" nil ".el"))
@@ -39,6 +41,9 @@
 
 ;; Ignore X resources; its settings would be redundant with the other settings in this file and can conflict with later config (particularly where the cursor color is concerned).
 (advice-add #'x-apply-session-resources :override #'ignore)
+
+;; 让Emacs停顿少一点
+(setq redisplay-dont-pause t)
 
 ;; So we can detect this having been loaded
 (provide 'early-init)

@@ -9,8 +9,11 @@
  ;; Global settings (defaults)
  (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
        doom-themes-enable-italic t) ; if nil, italics is universally disabled
+;(load-theme 'doom-acario-dark t)
 ;(load-theme 'doom-bluloco-dark t)
- (load-theme 'doom-one t)
+;(load-theme 'doom-challenger-deep t)
+ (load-theme 'doom-dark+ t)
+;(load-theme 'doom-one t)
 
  ;; Enable flashing mode-line on errors
  (doom-themes-visual-bell-config)
@@ -53,12 +56,12 @@
 
 ;; 在标题栏显示 buffer 的名字						
 (setq frame-title-format "Life is too short to be little! @ %b")
-(setq user-full-name "RDS") 
 ;; 在标题栏显示 buffer 的名字						
 (setq frame-title-format "Life is too short to be little! @ %b")
+
 (setq user-full-name "RDS") 
 
-(blink-cursor-mode -1)		  ;; 光标不要闪烁		
+(blink-cursor-mode -1)          ;; 光标不要闪烁		
 (set-cursor-color "green")      ;; 光标颜色
 (setq-default cursor-type 'bar) ;; 光标形状
   
@@ -70,10 +73,13 @@
 
 (use-package smart-mode-line
   :ensure t
+  :defer 30
   :init (sml/setup))
   
 (use-package highlight-parentheses
-  :ensure t)
+  :ensure t
+  :defer 30)
+
 (define-globalized-minor-mode global-highlight-parentheses-mode
   highlight-parentheses-mode
   (lambda ()
@@ -82,7 +88,9 @@
   
 ;; all-the-icons 只能在 GUI 模式下使用。
 (when (display-graphic-p)
-    (use-package all-the-icons :demand))
+    (use-package all-the-icons
+      :ensure t
+      :defer 30))
 
 (setq +font-family "Iosevka Comfy")
 ;; modeline 字体，未设置的情况下使用 variable-pitch 字体。
@@ -103,14 +111,16 @@
     :font "IBM Plex Sans 14" 
     :height 120
 )
-(dolist (charset '(kana han symbol cjk-misc bopomofo))
-  (set-fontset-font
-        (frame-parameter nil 'font)
-        charset (font-spec
-                     :family "PingFang SC Regular"
-                     :size 16
-                )
-        )
+(when (display-graphic-p)
+    (dolist (charset '(kana han symbol cjk-misc bopomofo))
+      (set-fontset-font
+            (frame-parameter nil 'font)
+            charset (font-spec
+                         :family "PingFang SC Regular"
+                         :size 16
+                    )
+            )
+    )
 )
 
 (setq +font-unicode-family "LXGW WenKai Screen")
@@ -202,10 +212,11 @@
 
 (use-package good-scroll
   :ensure t
+  :defer 30
   :if window-system          ; 在图形化界面时才使用这个插件
   :init
   (good-scroll-mode))
 
-(provide 'init-look)
 
+(provide 'init-look)
 ;;; init-look.el ends here

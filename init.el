@@ -17,11 +17,13 @@
 (add-to-list 'load-path "~/.emacs.d.rds/addons")
 ;; Adjust garbage collection threshold for early startup
 (setq gc-cons-threshold (* 128 1024 1024))
-(setq custom-file "~/.emacs.d.rds/custom.el")
+(setq custom-file (locate-user-emacs-file "custom.el"))
 (load "server")
 (unless (server-running-p) (server-start))
 
 (require 'init-elpa)
+(require 'init-exec-path)
+(require 'init-frame-hooks)
 (require 'init-look)
 (require 'init-general)
 (require 'init-buffer)
@@ -29,7 +31,8 @@
 (require 'init-vi)
 (require 'init-terminal)
 (require 'init-calendar)
-(require 'init-language)
+(require 'init-program)
+(require 'init-eglot)
 (require 'init-company)
 (require 'init-cpp)
 (require 'init-cmake)
@@ -38,10 +41,12 @@
 (require 'init-lisp)
 (require 'init-markdown)
 (require 'init-python)
+(require 'init-ruff)
+(require 'init-wolfram)
 (require 'init-tex)
 (require 'init-org)
 (require 'init-roam)
+(require 'init-ai)
 
 (provide 'init)
-
 ;;; init.el ends here

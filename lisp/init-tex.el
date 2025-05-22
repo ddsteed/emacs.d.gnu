@@ -9,6 +9,6 @@
                                                    ;;
 (setq org-latex-compiler "xelatex")                ;;
 
-(provide 'init-tex)
 
+(provide 'init-tex)
 ;;; init-tex.el ends here

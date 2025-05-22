@@ -1,21 +1,22 @@
 ;;; init-language.el --- Summary
-;;; Commentary:
-;;;  通用编程语言设置
-;;; Code:
+  ;;; Commentary:
+  ;;;  通用编程语言设置
+  ;;; Code:
 
 (use-package flycheck
   :ensure t
+  :defer 30
   :init (global-flycheck-mode))
-
-; 关闭 flymake，使用 flycheck
-(when (require 'flycheck nil t)
-  (add-hook 'elpy-mode-hook 'flycheck-mode))
 
 (use-package rainbow-delimiters
   :ensure t
+  :defer 30
   :hook (prog-mode . rainbow-delimiters-mode))
 
-(use-package ggtags :ensure t)
+(use-package ggtags
+  :ensure t
+  :defer 30
+)
 
 (add-hook 'c-mode-common-hood
           (lambda ()
@@ -23,12 +24,16 @@
               (ggtags-mode 1))))
 
 ;; mwim: mwim stands for Move Where I Mean.
-(use-package mwim :ensure t)
+(use-package mwim
+  :ensure t
+  :defer 30
+)
 
 (add-hook 'prog-mode-hook #'display-line-numbers-mode)
 
 (use-package highlight-indent-guides
   :ensure t
+  :defer 30
   :hook (prog-mode . highlight-indent-guides-mode))
 
 (defun my-highlighter (level responsive display)
@@ -39,10 +44,13 @@
 
 (use-package indent-guide
   :ensure t
+  :defer 30
   :hook (prog-mode . indent-guide-mode))
 
 (use-package aggressive-indent
-  :ensure t)
+  :ensure t
+  :defer 30
+)
 
 (add-hook 'emacs-lisp-mode-hook #'aggressive-indent-mode)
 (add-hook 'css-mode-hook #'aggressive-indent-mode)
@@ -59,9 +67,17 @@
        (null (string-match "\\([;{}]\\|\\b\\(if\\|for\\|while\\)\\b\\)"
                            (thing-at-point 'line)))))
 
+
+;; great for programmers
+(use-package format-all :ensure t :defer t
+  ;; 开启保存时自动格式化
+  :hook (prog-mode . format-all-mode)
+  ;; 绑定一个手动格式化的快捷键
+  :bind ("C-c f" . #'format-all-region-or-buffer))
+
 (use-package treemacs
   :ensure t
-  :defer t
+  :defer 30
   :config
   (treemacs-tag-follow-mode)
   (treemacs-project-follow-mode)
@@ -71,6 +87,7 @@
 
 (use-package treemacs-projectile
   :ensure t
+  :defer 30
   :after (treemacs projectile))
 
 ;; treemacs: 工作区管理
@@ -84,6 +101,7 @@
 
 (use-package treesit-auto
   :ensure t
+  :defer 30
   :custom
   (treesit-auto-install 'prompt)
   :config
@@ -120,6 +138,34 @@
         (yaml-mode . yaml-ts-mode)
         (python-mode . python-ts-mode)))
 
-(provide 'init-language)
+(use-package yasnippet
+  :ensure t
+  :defer 30
+  :hook
+  (prog-mode . yas-minor-mode)
+  :config
+  (yas-reload-all)
+  ;; add company-yasnippet to company-backends
+  (defun company-mode/backend-with-yas (backend)
+    (if (and (listp backend) (member 'company-yasnippet backend))
+    backend
+      (append (if (consp backend) backend (list backend))
+              '(:with company-yasnippet))))
+  
+  ;; unbind <TAB> completion
+  (define-key yas-minor-mode-map [(tab)]        nil)
+  (define-key yas-minor-mode-map (kbd "TAB")    nil)
+  (define-key yas-minor-mode-map (kbd "<tab>")  nil)
+  :bind
+  (:map yas-minor-mode-map ("S-<tab>" . yas-expand)))
 
+(use-package yasnippet-snippets
+  :ensure t
+  :defer 30
+  :after yasnippet)
+(yas-global-mode 1)
+(define-key yas-minor-mode-map (kbd "<tab>") nil)
+(define-key yas-minor-mode-map (kbd "TAB") nil)
+
+(provide 'init-language)
 ;;; init-language.el ends here
