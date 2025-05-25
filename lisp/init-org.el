@@ -3,14 +3,14 @@
 ;;;   org
 ;;; Code:
 
- (use-package org
-   :pin gnu
-   :hook
-   (org-babel-after-execute . org-redisplay-inline-images)
-   :custom
-   ;; Do not ask before evaluating a code block
-   (org-confirm-babel-evaluate nil)
- )
+(use-package org
+  :pin gnu
+  :hook
+  (org-babel-after-execute . org-redisplay-inline-images)
+  :custom
+  ;; Do not ask before evaluating a code block
+  (org-confirm-babel-evaluate nil)
+)
 
 (add-to-list 'auto-mode-alist '("\\.\\(org\\|org_archive\\|txt\\)$" . org-mode))
 
@@ -24,7 +24,7 @@
 
 (use-package wc-mode
   :ensure t
-  :defer 30)
+)
 
 (add-hook 'org-mode-hook 'wc-mode)
 
@@ -80,16 +80,15 @@ LEVEL 是一个数字，作为参数提供，默认指定第 4 级"
 (add-hook 'dired-mode-hook 'org-download-enable)
 
 (use-package org-download
-      :ensure t 
-      :defer 30
-      ;;将截屏功能绑定到快捷键：Ctrl + Shift + Y
-      :bind ("C-S-y" . org-download-screenshot)
-      :config
-      (require 'org-download)
-      ;; Drag and drop to Dired
-      (setq org-download-method 'directory)
-      (add-hook 'dired-mode-hook 'org-download-enable)
-      )
+   :ensure t 
+   ;;将截屏功能绑定到快捷键：Ctrl + Shift + Y
+   :bind ("C-S-y" . org-download-screenshot)
+   :config
+   (require 'org-download)
+   ;; Drag and drop to Dired
+   (setq org-download-method 'directory)
+   (add-hook 'dired-mode-hook 'org-download-enable)
+)
 
 (add-hook 'org-mode-hook (lambda ()
                            (visual-line-mode 1)))
@@ -112,7 +111,6 @@ LEVEL 是一个数字，作为参数提供，默认指定第 4 级"
 
 (use-package org-alert
   :ensure t
-  :defer 30
   :config
   (progn
     (setq alert-default-style 'libnotify)
@@ -121,7 +119,6 @@ LEVEL 是一个数字，作为参数提供，默认指定第 4 级"
 
 (use-package org-bullets
   :ensure t
-  :defer 30
   :config
   (setq org-bullets-bullet-list '("☯" "✿" "❀" "►" "✚" "◉"))
   :hook (org-mode . org-bullets-mode)
@@ -136,13 +133,11 @@ LEVEL 是一个数字，作为参数提供，默认指定第 4 级"
 
 (use-package org-appear
   :ensure t
-  :defer 30
   :hook
   (org-mode . org-appear-mode))
 
 (use-package org-modern
   :ensure t
-  :defer 30
   :hook
   (org-mode . global-org-modern-mode)
   :custom
@@ -400,14 +395,13 @@ LEVEL 是一个数字，作为参数提供，默认指定第 4 级"
 
 (use-package cdlatex
   :ensure t
-  :defer 30)
+)
 
 (add-hook 'org-mode-hook #'turn-on-org-cdlatex)
 
 ;; LaTeX previews
 (use-package org-fragtog
   :ensure t
-  :defer 30
   :after org
   :hook
   (org-mode . org-fragtog-mode)

@@ -71,14 +71,82 @@
 ;; 避免每次开启 hi lock mode 时询问是否需要高亮指定表达式
 (setq hi-lock-file-patterns-policy #'(lambda (dummy) t)) 
 
+;; 先把所有 mode 设置为空
+(setq-default mode-line-format '(" "))
+
+;; 行列号
+(setq mode-line-number
+(list
+ "  (" (propertize "%l" 'face 'font-lock-type-face)
+ "," (propertize "%c" 'face 'font-lock-type-face) ")   "))
+
+;; 日期时间
+(setq mode-line-datetime
+    (list
+     (propertize (format-time-string "%m/%d @ %1I:%M %p ") 'face 'font-lock-type-face) ))
+
+(defun mode-line-fill (reserve)
+  (when
+  (and window-system (eq 'right (get-scroll-bar-mode)))
+    (setq reserve (- reserve 3)))
+  (propertize " " 'display
+      `((space :align-to (- (+ right right-fringe right-margin) ,reserve)))))
+
+(defun mode-line-flush-right (right-line)
+  (let ((right-length (length (format-mode-line right-line))))
+    (list (mode-line-fill right-length) right-line)))
+
+(defun truncate-mode-line-construct (construct length)
+  (let* ((full-string (format-mode-line construct))
+     (truncated-string (truncate-string-to-width full-string length)))
+    (replace-regexp-in-string "%" "%%" truncated-string)))
+
+(setq-default mode-line-format
+      (list
+       '(:eval (propertize "%e"   'face 'font-lock-type-face))
+       mode-line-front-space
+       '(:eval (propertize "%@"   'face 'font-lock-constant-face))
+       '(:eval (propertize "%t%Z" 'face 'font-lock-string-face))
+       '(:eval (propertize "%*%+" 'face 'font-lock-warning-face))
+       mode-line-number
+       '(:eval (propertize "  %b" 'face 'font-lock-escape-face))
+       
+       ;; 剩下的信息右对齐
+       '(:eval (mode-line-flush-right
+            (list
+             mode-line-modes
+             ; " ["
+             ; (propertize "%F  " 'face 'font-lock-keyword-face)
+             ; (propertize (truncate-mode-line-construct "%p" 3) 'face 'font-lock-comment-face)
+             ; (propertize ":"    'face 'font-lock-warning-face)
+             ; (propertize "%I"   'face 'font-lock-string-face)
+             ; (format-time-string "%m/%d/%Y @ %1I:%M:%S %p") ; show time
+             ; (format-time-string "%m/%d @ %1I:%M %p ") ; show time
+             mode-line-datetime
+             ; "] "
+            mode-line-end-spaces)))))
+
+; (run-with-timer 0 1 #'(lambda () (force-mode-line-update t))) ;; update time every second
+
+;; smart-mode-line: 一个让 mode line 更加漂亮、方便管理的插件，可以自动做一些模式的隐藏等等，也可以选择多种主题。
 (use-package smart-mode-line
-  :ensure t
-  :defer 30
-  :init (sml/setup))
-  
+:ensure t
+:init
+(setq sml/no-confirm-load-theme t)  ; avoid asking when startup
+(setq sml/theme 'powerline)
+(sml/setup)
+:config
+(setq rm-blacklist
+  (format "^ \\(%s\\)$"
+    (mapconcat #'identity
+      '("Projectile.*" "company.*" "Google"
+        "Fly*" "company-box*" "counsel*" "*ivy*"
+        "Undo-Tree" "counsel" "ivy" "yas" "WK")
+       "\\|"))))
+
 (use-package highlight-parentheses
   :ensure t
-  :defer 30)
+)
 
 (define-globalized-minor-mode global-highlight-parentheses-mode
   highlight-parentheses-mode
@@ -89,8 +157,8 @@
 ;; all-the-icons 只能在 GUI 模式下使用。
 (when (display-graphic-p)
     (use-package all-the-icons
-      :ensure t
-      :defer 30))
+      :ensure t)
+)
 
 (setq +font-family "Iosevka Comfy")
 ;; modeline 字体，未设置的情况下使用 variable-pitch 字体。
@@ -212,7 +280,6 @@
 
 (use-package good-scroll
   :ensure t
-  :defer 30
   :if window-system          ; 在图形化界面时才使用这个插件
   :init
   (good-scroll-mode))
