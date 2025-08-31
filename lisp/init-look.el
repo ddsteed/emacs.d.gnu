@@ -289,70 +289,38 @@
 
 (+load-font)
 
+  (use-package nerd-icons
+    :ensure t
+  ;; :custom
+  ;; The Nerd Font you want to use in GUI
+  ;; "Symbols Nerd Font Mono" is the default and is recommended
+  ;; but you can use any other Nerd Font if you want
+  ;; (nerd-icons-font-family "Symbols Nerd Font Mono")
+  )
 
-(set-face-attribute
-    'default nil
-    :font "IBM Plex Sans 14" 
-    :height 120
+  (add-to-list 'nerd-icons-extension-icon-alist '("epub" nerd-icons-faicon "nf-fa-book" :face nerd-icons-green))
+
+  (use-package dirvish
+    :ensure t
+    :init
+    (dirvish-override-dired-mode)
+    :config
+    (setq dirvish-mode-line-format
+          '(:left (sort symlink) :right (omit yank index)))
+    (setq dirvish-mode-line-height 10)
+    (setq dirvish-attributes
+          '(nerd-icons file-time file-size collapse subtree-state vc-state git-msg))
+    (setq dirvish-subtree-state-style 'nerd)
+    (setq delete-by-moving-to-trash t)
+    (setq dirvish-path-separators (list
+                                   (format "  %s " (nerd-icons-codicon "nf-cod-home"))
+                                   (format "  %s " (nerd-icons-codicon "nf-cod-root_folder"))
+                                   (format " %s " (nerd-icons-faicon "nf-fa-angle_right"))))
+    (setq dired-listing-switches
+          "-l --almost-all --human-readable --group-directories-first --no-group")
+    (dirvish-peek-mode) ; Preview files in minibuffer
+    (dirvish-side-follow-mode) ; similar to `treemacs-follow-mode'
 )
-
-(when (display-graphic-p)
-    (dolist (charset '(kana han symbol cjk-misc bopomofo))
-      (set-fontset-font
-            (frame-parameter nil 'font)
-            charset (font-spec
-                         :family "PingFang SC Regular"
-                         :size 16
-                    )
-            )
-    )
-)
-
-(setq +font-unicode-family "LXGW WenKai Screen")
-
-;; 中文字体和英文字体按照 1:1 缩放，在偶数字号的情况下可以实现等宽等高。
-(setq face-font-rescale-alist '(("LXGW WenKai Screen" . 1))) ;; 1:1 缩放。
-(setq +font-size 14) ;; 偶数字号。
-
-(defun +load-ext-font ()
-  (when window-system
-    (let ((font (frame-parameter nil 'font))
-      (font-spec (font-spec :family +font-unicode-family)))
-      (dolist (charset '(kana han hangul cjk-misc bopomofo))
-    (set-fontset-font font charset font-spec)))))
-
-;; 设置各特定 face 的字体。
-(defun +load-face-font (&optional frame)
-  (let ((font-spec (format "%s" +font-family))
-    (modeline-font-spec (format "%s" +modeline-font-family))
-    (variable-pitch-font-spec (format "%s" +variable-pitch-family))
-    (fixed-pitch-font-spec (format "%s" +fixed-pitch-family)))
-    (set-face-attribute 'variable-pitch frame :font variable-pitch-font-spec)
-    (set-face-attribute 'fixed-pitch frame :font fixed-pitch-font-spec)
-    (set-face-attribute 'fixed-pitch-serif frame :font fixed-pitch-font-spec)
-    (set-face-attribute 'tab-bar frame :font font-spec)
-    (set-face-attribute 'mode-line frame :font modeline-font-spec)
-    (set-face-attribute 'mode-line-inactive frame :font modeline-font-spec)))
-
-(defun +load-emoji-font ()
-(when window-system
-  (setq use-default-font-for-symbols nil)
-  (set-fontset-font t 'emoji (font-spec :family "Apple Color Emoji")) ;; Noto Color Emoji
-  (set-fontset-font t 'symbol (font-spec :family "Apple Symbols"))))  ;; Symbola
-
-(add-hook 'after-make-frame-functions 
-      ( lambda (f) 
-        (+load-face-font)
-        (+load-ext-font)
-        (+load-emoji-font)))
-
-(defun +load-font ()
-(+load-base-font)
-(+load-face-font)
-(+load-ext-font)
-(+load-emoji-font))
-
-(+load-font)
 
 (use-package dashboard
     :ensure t

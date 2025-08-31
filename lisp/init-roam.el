@@ -40,29 +40,31 @@
 (setq org-roam-capture-templates
      '(("f" "fleeting" plain "%?" :if-new (file+head "fleeting/${slug}.org" "#+title: ${title}\n#+filetags: :fleeting:\n")
          :immediate-finish t :unnarrowed t)
-         ("p" "progress" plain "%?" :if-new (file+head "progress/${title}.org" "#+title: ${title}\n#+filetags: :progress:\n")
+       ("p" "progress" plain "%?" :if-new (file+head "progress/${title}.org" "#+title: ${title}\n#+filetags: :progress:\n")
          :immediate-finish t :unnarrowed t)
-        ("r" "reference" plain "%?" :if-new (file+head "reference/${title}.org" "#+title: ${title}\n#+filetags: :reference:\n")
+       ("r" "reference" plain "%?" :if-new (file+head "reference/${title}.org" "#+title: ${title}\n#+filetags: :reference:\n")
          :immediate-finish t :unnarrowed t)
-        ("a" "article" plain "%?" :if-new (file+head "articles/${title}.org" "#+title: ${title}\n#+filetags: :article:\n")
+       ("a" "article" plain "%?" :if-new (file+head "articles/${title}.org" "#+title: ${title}\n#+filetags: :article:\n")
          :immediate-finish t :unnarrowed t)
      )
 )
 
 (add-to-list 'org-roam-capture-templates
-   '("i" "Ideas" plain "%?" :if-new (file+head "Zettel/Slip/Ideas/%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+filetags: :ideas:\n\n")
+   '("i" "Ideas" plain "%?"
+     :if-new (file+head "Zettel/Slip/Ideas/%<%Y%m%d%H%M%S>-${slug}.org"
+                        "#+title: ${title}\n#+filetags: :ideas:\n\n")
     "* %i%? \n %U" :immediate-finish t :unnarrowed t))
 
 (add-to-list 'org-roam-capture-templates
-   '("e" "Exerpts" plain "%?" :if-new (file+head "Zettel/Slip/Exerpts/%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+filetags: :exerpts:\n")
+   '("e" "Exerpts" plain "%?"
+     :if-new (file+head "Zettel/Slip/Exerpts/%<%Y%m%d%H%M%S>-${slug}.org"
+                        "#+title: ${title}\n#+filetags: :exerpts:\n")
     "* %i%? \n %U" :immediate-finish t :unnarrowed t))
 
 (add-to-list 'org-roam-capture-templates
-   '("l" "Literature" plain "%?" :if-new (file+head "Zettel/Literature/%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+filetags: :literal:\n")
-    "* %i%? \n %U" :immediate-finish t :unnarrowed t))
-
-(add-to-list 'org-roam-capture-templates
-   '("P" "Permanent" plain "%?" :if-new (file+head "Zettel/Permanent/${slug}.org" "#+title: ${title}\n#+filetags: :permanent:\n")
+   '("l" "Literature" plain "%?"
+     :if-new (file+head "Zettel/Literature/%<%Y%m%d%H%M%S>-${slug}.org"
+                        "#+title: ${title}\n#+filetags: :literal:\n")
     "* %i%? \n %U" :immediate-finish t :unnarrowed t))
 
 (with-eval-after-load 'org-roam
