@@ -14,11 +14,11 @@
 ;; If an `.el' file is newer than its corresponding `.elc', load the `.el'.
 (setq load-prefer-newer t)
 
-;; Set Garbage Collection threshold to 1GB during startup. `gcmh' will clean things up later.
-; (setq gc-cons-threshold 1073741824
-;       gc-cons-percentage 0.6)
+;; Temporarily increase GC threshold during startup
 (setq gc-cons-threshold most-positive-fixnum)
-(add-hook 'after-init-hook #'(lambda () (setq gc-cons-threshold 800000)))
+;; Restore to normal value after startup (e.g. 5GB)
+(add-hook 'emacs-startup-hook
+        (lambda () (setq gc-cons-threshold (* 5000 1024 1024))))
 
 ;; Write any customizations to a temp file so they are discarded.
 (setq custom-file (make-temp-file "custom-" nil ".el"))
@@ -31,18 +31,15 @@
 
 ;; Give the frame basic coloring while waiting for the theme to load. The main purpose of this is to not blind me when it's dark by flashing a screen full of white. These colors are from doom-one.
 (set-face-attribute 'default nil :background "#282c34" :foreground "#bbc2cf")
-;; Default frame settings. This is actually maximized, not full screen.
-(push '(fullscreen . maximized) initial-frame-alist)
-(push '(ns-transparent-titlebar . t) default-frame-alist)
 
 ;; Resizing the Emacs frame can be a terribly expensive part of changing the font. By inhibiting this, we easily halve startup times with fonts that are larger than the system default.
 (setq frame-inhibit-implied-resize t
       frame-resize-pixelwise t)
 
-;; Ignore X resources; its settings would be redundant with the other settings in this file and can conflict with later config (particularly where the cursor color is concerned).
+ ;; Ignore X resources; its settings would be redundant with the other settings in this file and can conflict with later config (particularly where the cursor color is concerned).
 (advice-add #'x-apply-session-resources :override #'ignore)
 
-;; 让Emacs停顿少一点
+;; 让 Emacs 停顿少一点
 (setq redisplay-dont-pause t)
 
 ;; So we can detect this having been loaded

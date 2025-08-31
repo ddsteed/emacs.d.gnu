@@ -2,7 +2,10 @@
 ;;; Commentary:
 ;;;   wolfram mathematica
 ;;; Code:
-(use-package wolfram)
+(use-package wolfram
+  :ensure t
+  :defer t
+)
 
 (setq wolfram-alpha-app-id "4EEGR9-2J4263E6QU")
 (setq wolfram-use-dark-version t)

@@ -16,20 +16,181 @@
 
 (setq org-export-backends (quote (ascii html icalendar latex md)))
 
+(setq-default org-startup-indented t
+              org-pretty-entities t
+              org-use-sub-superscripts "{}"
+              org-hide-emphasis-markers t
+              org-startup-with-inline-images t
+              org-image-actual-width '(300))
+
+
+(use-package org-appear
+  :ensure t
+  :config
+  (add-hook 'org-mode-hook 'org-appear-mode)
+)
+
+(custom-set-faces '(org-block
+   ((t (:background "gray10" :extend t))))
+)
+
+;(set-face-attribute 'org-block-begin-line nil
+;    ;	        :underline t
+;              :height 0.9
+;    ;         :background 'unspecified
+;              :inherit '(font-lock-comment-face fixed-pitch))
+
+;(set-face-attribute 'org-block-end-line nil
+;    ;	        :overline t
+;		      :height 0.9
+;    ;         :background 'unspecified
+;		      :inherit '(font-lock-comment-face fixed-pitch))
+
+  (setq org-image-actual-width nil)  ; 不自动设置图片的大小，请自行在 org 文件里指定
+; (setq org-image-actual-width (/ (display-pixel-width) 3)) ; 图片显示大小固定位屏幕宽度的三分之一
+  
+(setq org-startup-indented t)
+
+(setq org-columns-default-format "%80ITEM(Task) %10Effort(Effort){:} %10CLOCKSUM")
+
+(setq org-confirm-babel-evaluate nil
+      org-src-fontify-natively t
+      org-src-tab-acts-natively t)
+
+(custom-set-faces
+ `(org-level-1 ((t (:foreground "LightBlue" :height 1.2 :bold t))))
+ `(org-level-2 ((t (:foreground "cyan"      :height 1.1 :bold t))))
+ `(org-level-3 ((t (:foreground "PaleGreen" :height 1.1 :bold nil))))
+ `(org-level-4 ((t (:foreground "DarkTurquoise" :height 1.0 :bold t))))
+)
+
+(use-package org-alert
+  :ensure t
+  :defer t
+  :config
+  (progn (setq alert-default-style 'libnotify))
+)
+
+(use-package org-bullets
+  :ensure t
+  :after org
+  :config
+  (setq org-bullets-face-name (quote org-bullet-face))
+  (setq org-bullets-bullet-list '("◉" "✿" "☯" "✚" "♰" "☥" "✞" "✟" "✝" "†" "✠" "✚" "✜" "✛" "✢" "✣" "✤" "✥" "♱" ))
+  (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+)
+
+(add-hook 'org-mode-hook 'org-bullets-mode)
+
+(setq org-log-done 'time)
+
+(setq org-todo-keywords
+      (quote  ((sequence "☞ TODO(t)" "☞ NEXT(n)" "|" "✔ DONE(d!)")
+               (sequence "⚔ INPR(i)" "⚑ WAIT(w)" "|" "✘ CANL(c@/!)" "☕ BREK(b@/!)"))))
+
+(setq org-todo-keyword-faces
+      (quote (("☞ TODO"  . (:foreground "cyan"       :weight thin))
+              ("☞ NEXT"  . (:foreground "magenta"    :weight thin))
+              ("✔ DONE"  . (:foreground "PaleGreen" :weight thin))
+              ("⚔ INPR"  . (:foreground "cyan"       :weight thin))
+              ("⚑ WAIT"  . (:foreground "magenta"   :weight thin))
+              ("✘ CANL"  . (:foreground "orange"     :weight bold))
+              ("☕ BREK" . (:foreground "red"       :weight thin))
+             )
+       )
+)
+
+; The triggers break down to the following rules:
+  ; Moving a task to CANCELLED adds a CANCELLED tag
+  ; Moving a task to WAITING adds a WAITING tag
+  ; Moving a task to TODO removes WAITING, CANCELLED tags
+  ; Moving a task to NEXT removes WAITING, CANCELLED tags
+  ; Moving a task to DONE removes WAITING, CANCELLED tags
+(setq org-todo-state-tags-triggers
+    (quote (("✘ CANL" ("  CANL" . t))
+            ("⚑ WAIT" ("  WAIT" . t))
+            ("☞ TODO" ("⚑ WAIT") ("✘ CANL"))
+            ("☞ NEXT" ("⚑ WAIT") ("✘ CANL"))
+            ("✔ DONE" ("⚑ WAIT") ("✘ CANL")))))
+
+(setq org-html-validation-link nil            ;; Don't show validation link
+      org-html-head-include-scripts nil       ;; Use our own scripts
+      org-html-head-include-default-style nil ;; Use our own styles
+      org-html-htmlize-output-type 'inline-css ;; 保留代码块高亮
+      org-html-head "<link rel=\"stylesheet\" type=\"text/css\" href=\"http://files.cnblogs.com/csophys/orgstyle.css\"/>"
+)
+
+(use-package cdlatex
+  :ensure t
+  :defer t
+  :after org
+  :custom
+  (org-preview-latex-image-directory "/tmp/ltximg/")
+  :config
+  (setq org-latex-pdf-process '(
+      "xelatex -interaction nonstopmode %f"
+      "xelatex -interaction nonstopmode %f"))
+
+  (setq org-format-latex-options (plist-put org-format-latex-options :scale 1.5))
+  (setq org-startup-with-latex-preview nil)
+  (define-key org-mode-map (kbd "s-i") 'org-latex-preview) ;default C-c C-x l
+)
+
+;; LaTeX previews
+(use-package org-fragtog
+  :ensure t
+  :defer t
+  :custom
+  ; (org-startup-with-latex-preview t)
+  (org-format-latex-options
+   (plist-put org-format-latex-options :scale 2)
+   (plist-put org-format-latex-options :foreground 'auto)
+   (plist-put org-format-latex-options :background 'auto)))
+
+;; ox-hugo: org to html
+(use-package ox-hugo
+  :ensure t   
+  :defer t
+  :after ox)
+
+;; org preview html
+(use-package org-preview-html
+  :ensure t
+  :defer t
+)
+
+(setq org-preview-html-viewer 'eww)
+
 (global-set-key  "\C-ca"  'org-agenda)
 (global-set-key  "\C-cc"  'org-capture)
 (global-set-key  "\C-cb"  'org-switchb)
 
 (global-set-key "\C-cl" 'org-insert-link) ;; link
+ 
+;; 自动换行
+(add-hook 'org-mode-hook (lambda () (setq truncate-lines nil)))
 
-(use-package wc-mode
-  :ensure t
-)
-
+;; 自动计数
 (add-hook 'org-mode-hook 'wc-mode)
 
+;; 计算某一级的数目
+(add-hook 'org-mode-hook
+    (lambda ()
+      (local-set-key (kbd "C-c C-x n 2") (lambda () (interactive) (rds/count-org-headings 2)))
+      (local-set-key (kbd "C-c C-x n 3") 'rds/org-count-3headings-in-parentheses) 
+      (local-set-key (kbd "C-c C-x n 4") 'rds/org-count-4headings-in-parentheses)
+    )
+)
+
+;; 自动折行
+(add-hook 'org-mode-hook (lambda () (visual-line-mode 1)))  
+
+;; 融合latex
+(add-hook 'org-mode-hook 'turn-on-org-cdlatex)
+(add-hook 'org-mode-hook 'org-fragtog-mode)
+
 ;; Counting sub-headings
-(cl-defun my/count-org-headings (&optional (level 4))
+(cl-defun rds/count-org-headings (&optional (level 4))
   "计算当前 headings 下指定 sub-headings 的数目.
 LEVEL 是一个数字，作为参数提供，默认指定第 4 级"
   (interactive "nLevel: ")
@@ -45,7 +206,7 @@ LEVEL 是一个数字，作为参数提供，默认指定第 4 级"
     (insert (number-to-string count))
     (message "Number of level %d subheadings: %d" level count)))
 
-(defun my/org-count-4headings-in-parentheses ()
+(defun rds/org-count-3headings-in-parentheses ()
   "Delete the content inside parentheses and execute a function."
   (interactive)
   (save-excursion
@@ -53,34 +214,35 @@ LEVEL 是一个数字，作为参数提供，默认指定第 4 级"
           (end (progn (forward-sexp) (point))))
       (delete-region (+ beg 1) (- end 1))
       (goto-char (+ beg 1))
-       (apply '(my/count-org-headings 4)))))
+       (apply '(rds/count-org-headings 3)))))
 
-(add-hook 'org-mode-hook
-         (lambda ()
-           (local-set-key (kbd "C-c C-x n 2")
-                (lambda () (interactive) (my/count-org-headings 2)))
-           (local-set-key (kbd "C-c C-x n 3")
-                (lambda () (interactive) (my/count-org-headings 3)))
-           (local-set-key (kbd "C-c C-x n 4")
-                (lambda () (interactive) (my/count-org-headings 4)))
-           (local-set-key (kbd "C-c C-x c")
-                'my/org-count-4headings-in-parentheses)))
+(defun rds/org-count-4headings-in-parentheses ()
+  "Delete the content inside parentheses and execute a function."
+  (interactive)
+  (save-excursion
+    (let ((beg (progn (backward-up-list) (point)))
+          (end (progn (forward-sexp) (point))))
+      (delete-region (+ beg 1) (- end 1))
+      (goto-char (+ beg 1))
+       (apply '(rds/count-org-headings 4)))))
+
+(use-package wc-mode
+  :ensure t
+  :defer t
+)
 
 (setq org-file-apps
       '(
         ("\\.xlsx\\'" . "excel %s")
-        ("\\.md\\'" . "MacDown %s")
+        ("\\.md\\'"   . "MacDown %s")
         ))
 
-; global Effort estimate values
-; global STYLE property values for completion
-(setq org-global-properties (quote (("Effort_ALL" . "0:15 0:30 0:45 1:00 2:00 3:00 4:00 5:00 6:00 0:00")
-                                    ("STYLE_ALL" . "habit"))))
 ;; Drag-and-drop to `dired`
 (add-hook 'dired-mode-hook 'org-download-enable)
 
 (use-package org-download
    :ensure t 
+   :defer t
    ;;将截屏功能绑定到快捷键：Ctrl + Shift + Y
    :bind ("C-S-y" . org-download-screenshot)
    :config
@@ -90,64 +252,22 @@ LEVEL 是一个数字，作为参数提供，默认指定第 4 级"
    (add-hook 'dired-mode-hook 'org-download-enable)
 )
 
-(add-hook 'org-mode-hook (lambda ()
-                           (visual-line-mode 1)))
+(setq org-capture-templates 
+             '(("p" "Personal" entry (file+headline "~/Work/GTD/Inbox.org" "Personal")
+               "* %i%? \n %U" :empty-lines-before 1)))
 
-(setq org-image-actual-width nil)  ; 不自动设置图片的大小，请自行在 org 文件里指定
-; (setq org-image-actual-width (/ (display-pixel-width) 3)) ; 图片显示大小固定位屏幕宽度的三分之一
-
-(setq org-startup-indented t)
-(org-reload)
-
-(setq org-columns-default-format "%80ITEM(Task) %10Effort(Effort){:} %10CLOCKSUM")
-
-(setq org-confirm-babel-evaluate nil
-      org-src-fontify-natively t
-      org-src-tab-acts-natively t)
-
-(set-face-attribute 'org-level-1 nil :height 1.2 :bold t)
-(set-face-attribute 'org-level-2 nil :height 1.1 :bold t)
-(set-face-attribute 'org-level-3 nil :height 1.1)
-
-(use-package org-alert
-  :ensure t
-  :config
-  (progn
-    (setq alert-default-style 'libnotify)
-    )
-  )
-
-(use-package org-bullets
-  :ensure t
-  :config
-  (setq org-bullets-bullet-list '("☯" "✿" "❀" "►" "✚" "◉"))
-  :hook (org-mode . org-bullets-mode)
-  )
-
-(setq-default org-startup-indented t
-              org-pretty-entities t
-              org-use-sub-superscripts "{}"
-              org-hide-emphasis-markers t
-              org-startup-with-inline-images t
-              org-image-actual-width '(300))
-
-(use-package org-appear
-  :ensure t
-  :hook
-  (org-mode . org-appear-mode))
-
-(use-package org-modern
-  :ensure t
-  :hook
-  (org-mode . global-org-modern-mode)
-  :custom
-  (org-modern-keyword t)
-  (org-modern-checkbox nil)
-  (org-modern-table nil))
+(add-to-list 'org-capture-templates 
+             '("t" "Tasks" entry (file+headline "~/Work/GTD/Inbox.org" "Tasks")
+               "* %i%? \n %U" :empty-lines-before 1))
 
 ;; 将该目录下所有的 org 和 org_archive 文件作为日程表搜索范围
 (setq org-agenda-files (directory-files-recursively "~/Work/GTD/" "\\.org*"))
+(setq org-agenda-skip-scheduled-if-done t)
 
+;; custom overview
+(setq org-agenda-skip-function
+    '(org-agenda-skip-entry-if 'todo '("✔ DONE" "✘ CANL")))
+   
 ;; 融合 ical 和 agenda
 (add-to-list 'org-modules 'org-mac-iCal)
 
@@ -161,17 +281,17 @@ LEVEL 是一个数字，作为参数提供，默认指定第 4 级"
 (setq org-agenda-compact-blocks t)
 
 (add-hook 'org-agenda-cleanup-fancy-diary-hook
-          (lambda ()
-            (goto-char (point-min))
+          (lambda () (goto-char (point-min))
             (save-excursion
               (while (re-search-forward "^[a-z]" nil t)
                 (goto-char (match-beginning 0))
-                (insert "0:00-24:00 ")))
-            (while (re-search-forward "^ [a-z]" nil t)
-              (goto-char (match-beginning 0))
-              (save-excursion
-                (re-search-backward "^[0-9]+:[0-9]+-[0-9]+:[0-9]+ " nil t))
-              (insert (match-string 0)))))
+                (insert "0:00-24:00 "))
+              (while (re-search-forward "^ [a-z]" nil t)
+                (goto-char (match-beginning 0))
+                (save-excursion
+                  (re-search-backward "^[0-9]+:[0-9]+-[0-9]+:[0-9]+ " nil t))
+                (insert (match-string 0)))))
+)
 
 ; agenda 里面时间块彩色显示
 ; From: https://emacs-china.org/t/org-agenda/8679/3
@@ -223,78 +343,14 @@ LEVEL 是一个数字，作为参数提供，默认指定第 4 级"
                           ":  " "┈┈┈┈┈┈┈┈┈┈┈┈┈"))
 (customize-set-variable 'org-agenda-current-time-string "ᐊ┈┈┈┈┈┈┈┈ now")
 
-;; weekly overview
-(add-to-list
- 'org-agenda-custom-commands
- '("w" "THIS WEEK"
-   ((agenda ""
-            ((org-agenda-overriding-header
-              (concat "THIS WEEK (W" (format-time-string "%V") ")")))))))
-
-;; daily agenda view
-(add-to-list
- 'org-agenda-custom-commands
- '("d" "DAY'S AGENDA"
-   ((agenda ""
-            ((org-agenda-overriding-header
-              (concat "TODAY (W" (format-time-string "%V") ")"))
-             (org-agenda-span 'day)
-             (org-agenda-sorting-strategy
-              '((agenda time-up priority-down category-keep)))
-             (org-agenda-show-log t)
-             (org-agenda-log-mode-items '(clock)))))))
-
-;; custom overview
-(add-to-list
- 'org-agenda-custom-commands
- '("c" "CUSTOM OVERVIEW"
-   ((tags-todo "+PRIORITY=\"A\""
-               ((org-agenda-overriding-header "PRIO A")))
-    (agenda ""
-            ((org-agenda-overriding-header
-              (concat "TODAY (W" (format-time-string "%V") ")"))
-             (org-agenda-span 'day)
-             (org-agenda-sorting-strategy
-              '((agenda time-up priority-down category-keep)))
-             (org-agenda-show-log t)
-             (org-agenda-log-mode-items '(clock))))
-    (agenda ""
-            ((org-agenda-overriding-header
-              (concat "FOLLOWING DAYS (W" (format-time-string "%V") ")"))
-             (org-agenda-skip-function
-              '(org-agenda-skip-entry-if 'unscheduled))
-             (org-agenda-span 6)
-             (org-agenda-start-day "+1d")
-             (org-agenda-start-on-weekday 1)))
-    (tags-todo "+private"
-               ((org-agenda-overriding-header "PRIVATE TASKS")
-                (org-agenda-skip-function
-                 '(org-agenda-skip-entry-if 'unscheduled))))
-    (tags-todo "+work"
-               ((org-agenda-overriding-header "WORK TASKS")
-                (org-agenda-skip-function
-                 '(org-agenda-skip-entry-if 'unscheduled))))
-    (tags "CLOSED>=\"<-7d>\"|DONE>=\"<-7d>\"|CANCELLED>=\"<-7d>\""
-          ((org-agenda-overriding-header "Completed in the Last 7 Days\n"))))))
-
-    ;; Agenda log mode items to display (closed and state changes by default)
-    (setq org-agenda-log-mode-items (quote (closed state)))
+;; Agenda log mode items to display (closed and state changes by default)
+(setq org-agenda-log-mode-items (quote (closed state)))
 
 (setq org-archive-mark-done nil)
 (setq org-archive-location "%s_archive::* Archived Tasks")
 
-(setq org-capture-templates '(("t" "Todo [Inbox]" entry
-                               (file+headline "~/Work/GTD/Inbox.org" "Tasks")
-                               "* TODO %i%?")))
-
-; add org capture file
-(add-to-list 'org-capture-templates 
-             '("T" "Tickler" entry (file+headline "~/Work/GTD/Tickler.org" "Tickler")
-                "* %i%? \n %U"))
-
 ;; Resume clocking task when emacs is restarted
 (org-clock-persistence-insinuate)
-;;
 ;; Show lot of clocking history so it's easy to pick items off the C-F11 list
 (setq org-clock-history-length 23)
 ;; Resume clocking task on clock-in if the clock is open
@@ -356,73 +412,10 @@ LEVEL 是一个数字，作为参数提供，默认指定第 4 级"
             (org-agenda-to-appt)                      ;; copy all agenda schedule to appointments
             (appt-activate 1)))                       ;; active appt (appointment notification)
 
-(setq org-log-done 'time)
-
-(setq org-todo-keywords
-      '((sequence
-         "⚔ INPR(i)"
-         "☟ NEXT(n)"
-         "⚑ WAIT(w!)"
-         "☞ TODO(t)"
-         "|"
-         "✰ IMPO(I)"
-         "❤ LOVE(l)"
-         "✍ NOTE(N)"
-         "|"
-         "✔ DONE(d)"
-         "✘ SUSP(s@/!)"
-         "✘ CANL(c@/!)"
-         "☕ BREK(b@/!)"
-         )))
-
-(setq org-todo-keyword-faces
-      (quote (
-              ("☞ TODO" :foreground "dark red" :weight thin)
-              ("☟ NEXT" :foreground "magenta" :weight thin)
-              ("⚔ INPR" :foreground "forest green" :weight thin)
-              ("✔ DONE" :foreground "blue" :weight thin)
-              ("⚑ WAIT" :foreground "magenta" :weight thin)
-              ("⚑ SUSP" :foreground "orange" :weight thin)
-              ("✘ CANL" :foreground "dark red" :weight bold)
-              )))
-
-(setq org-html-validation-link nil            ;; Don't show validation link
-      org-html-head-include-scripts nil       ;; Use our own scripts
-      org-html-head-include-default-style nil ;; Use our own styles
-      org-html-htmlize-output-type 'inline-css ;; 保留代码块高亮
-      org-html-head "<link rel=\"stylesheet\" type=\"text/css\" href=\"http://files.cnblogs.com/csophys/orgstyle.css\"/>"
-)
-
-(use-package cdlatex
-  :ensure t
-)
-
-(add-hook 'org-mode-hook #'turn-on-org-cdlatex)
-
-;; LaTeX previews
-(use-package org-fragtog
-  :ensure t
-  :after org
-  :hook
-  (org-mode . org-fragtog-mode)
-  :custom
-  (org-startup-with-latex-preview t)
-  (org-format-latex-options
-   (plist-put org-format-latex-options :scale 2)
-   (plist-put org-format-latex-options :foreground 'auto)
-   (plist-put org-format-latex-options :background 'auto)))
-
-;; ox-hugo: org to html
-(use-package ox-hugo
-  :ensure t   
-  :after ox)
-
-;; org preview html
-(use-package org-preview-html
-  :ensure t
-)
-
-(setq org-preview-html-viewer 'eww)
+; global Effort estimate values
+; global STYLE property values for completion
+(setq org-global-properties (quote (("Effort_ALL" . "0:15 0:30 0:45 1:00 2:00 3:00 4:00 5:00 6:00 0:00")
+                                    ("STYLE_ALL" . "habit"))))
 
 
 (provide 'init-org)
