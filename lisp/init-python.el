@@ -21,8 +21,6 @@
   )
 )
 
-(add-to-list 'auto-mode-alist '("\\.\\(env\\|env\\.sample\\)$" . python-mode))
-
 (use-package auto-virtualenv
   :ensure t
   :defer t

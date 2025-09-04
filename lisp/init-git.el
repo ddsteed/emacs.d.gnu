@@ -6,6 +6,9 @@
 (use-package magit
    :ensure t
    :defer t
+   :bind (("\C-x g" . magit-status))
+   :config
+   (setq magit-auto-revert-mode t)
 )
 
 (use-package git-gutter

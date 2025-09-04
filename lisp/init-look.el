@@ -192,22 +192,6 @@
     (highlight-parentheses-mode t)))
 (global-highlight-parentheses-mode t)
 
-;; all-the-icons 只能在 GUI 模式下使用。
-(when (display-graphic-p)
-    (use-package all-the-icons
-      :defer t
-      :ensure t)
-)
-
-(use-package all-the-icons-completion
-  :ensure t
-  :defer 2
-  :after (marginalia all-the-icons)
-  :hook (marginalia-mode . all-the-icons-completion-marginalia-setup)
-  :init
-  (all-the-icons-completion-mode)
-)
-
 (setq +font-family "Iosevka Comfy")
 
 ;; modeline 字体，未设置的情况下使用 variable-pitch 字体。
@@ -289,38 +273,34 @@
 
 (+load-font)
 
-  (use-package nerd-icons
-    :ensure t
-  ;; :custom
-  ;; The Nerd Font you want to use in GUI
-  ;; "Symbols Nerd Font Mono" is the default and is recommended
-  ;; but you can use any other Nerd Font if you want
-  ;; (nerd-icons-font-family "Symbols Nerd Font Mono")
-  )
+;; all-the-icons 只能在 GUI 模式下使用。
+(use-package all-the-icons
+:ensure t
+:when (display-graphic-p)
+:commands all-the-icons-install-fonts) ;; 安装完成之后需要执行 all-the-icons-install-fonts 命令安装对应字体
+(use-package all-the-icons-dired
+  :ensure t
+  :hook (dired-mode . all-the-icons-dired-mode))
 
-  (add-to-list 'nerd-icons-extension-icon-alist '("epub" nerd-icons-faicon "nf-fa-book" :face nerd-icons-green))
-
-  (use-package dirvish
-    :ensure t
-    :init
-    (dirvish-override-dired-mode)
-    :config
-    (setq dirvish-mode-line-format
-          '(:left (sort symlink) :right (omit yank index)))
-    (setq dirvish-mode-line-height 10)
-    (setq dirvish-attributes
-          '(nerd-icons file-time file-size collapse subtree-state vc-state git-msg))
-    (setq dirvish-subtree-state-style 'nerd)
-    (setq delete-by-moving-to-trash t)
-    (setq dirvish-path-separators (list
-                                   (format "  %s " (nerd-icons-codicon "nf-cod-home"))
-                                   (format "  %s " (nerd-icons-codicon "nf-cod-root_folder"))
-                                   (format " %s " (nerd-icons-faicon "nf-fa-angle_right"))))
-    (setq dired-listing-switches
-          "-l --almost-all --human-readable --group-directories-first --no-group")
-    (dirvish-peek-mode) ; Preview files in minibuffer
-    (dirvish-side-follow-mode) ; similar to `treemacs-follow-mode'
+(use-package all-the-icons-completion
+  :ensure t
+  :defer 2
+  :after (marginalia all-the-icons)
+  :hook (marginalia-mode . all-the-icons-completion-marginalia-setup)
+  :init
+  (all-the-icons-completion-mode)
 )
+
+(use-package nerd-icons
+  :ensure t
+;; :custom
+;; The Nerd Font you want to use in GUI
+;; "Symbols Nerd Font Mono" is the default and is recommended
+;; but you can use any other Nerd Font if you want
+;; (nerd-icons-font-family "Symbols Nerd Font Mono")
+)
+
+(add-to-list 'nerd-icons-extension-icon-alist '("epub" nerd-icons-faicon "nf-fa-book" :face nerd-icons-green))
 
 (use-package dashboard
     :ensure t
@@ -377,6 +357,37 @@
   :if window-system          ; 在图形化界面时才使用这个插件
   :init
   (good-scroll-mode))
+
+ (use-package dired-ranger
+ :ensure t
+ :bind (:map dired-mode-map
+             ("C" . dired-ranger-copy)
+             ("X" . dired-ranger-move)
+             ("Y" . dired-ranger-paste)))
+
+ (use-package dired-quick-sort
+ :ensure t
+ :config
+ (dired-quick-sort-setup))
+
+;;preview files in dired
+(use-package peep-dired
+  :ensure t
+  :defer 2 ; don't access `dired-mode-map' until `peep-dired' is loaded
+  :bind (:map dired-mode-map
+              ("p" . peep-dired)))
+
+;;narrow dired to match filter
+(use-package dired-narrow
+  :ensure t
+  :bind (:map dired-mode-map
+              ("/" . dired-narrow)))
+
+(use-package dired-subtree
+:config
+(bind-keys :map dired-mode-map
+           ("i" . dired-subtree-insert)
+           (";" . dired-subtree-remove)))
 
 
 (provide 'init-look)
