@@ -11,6 +11,10 @@
    (setq magit-auto-revert-mode t)
 )
 
+(use-package magit-imerge
+  :ensure t
+)
+
 (use-package git-gutter
   :ensure t
   :defer t
