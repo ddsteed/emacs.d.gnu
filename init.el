@@ -60,6 +60,7 @@
 (require 'init-ruff)
 (require 'init-wolfram)
 (require 'init-tex)
+(require 'init-vue)
 (require 'init-org)
 (require 'init-roam)
 (require 'init-ref)
