@@ -152,8 +152,7 @@
   :load-path "~/.emacs.d.rds/addons"
   :custom ((mathpix-app-id "app-id")
            (mathpix-app-key "app-key"))
-  :bind
-  ("C-x m" . mathpix-screenshot))
+)
 
 (setq org-roam-db-gc-threshold most-positive-fixnum)
 

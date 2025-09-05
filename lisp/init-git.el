@@ -6,7 +6,11 @@
 (use-package magit
    :ensure t
    :defer t
-   :bind (("\C-x g" . magit-status))
+   :bind
+   (
+    ("\C-x g" . magit-status)
+    ("\C-x m" . magit-show-commit)
+   )
    :config
    (setq magit-auto-revert-mode t)
 )
@@ -14,6 +18,13 @@
 (use-package magit-imerge
   :ensure t
 )
+;(global-set-key (kbd "C-x m") 'magit-show-commit)
+
+;(use-package magit-delta
+;  :ensure t
+;  :hook
+;  (magit-mode . magit-delta-mode)
+;)
 
 (use-package git-gutter
   :ensure t
