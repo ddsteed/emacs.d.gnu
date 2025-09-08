@@ -51,19 +51,19 @@
 
 (add-to-list 'org-roam-capture-templates
    '("i" "Ideas" plain "%?"
-     :if-new (file+head "Zettel/Slip/Ideas/%<%Y%m%d%H%M%S>-${slug}.org"
+     :if-new (file+head "Slip/Ideas/%<%Y%m%d%H%M%S>-${slug}.org"
                         "#+title: ${title}\n#+filetags: :ideas:\n\n")
     "* %i%? \n %U" :immediate-finish t :unnarrowed t))
 
 (add-to-list 'org-roam-capture-templates
    '("e" "Exerpts" plain "%?"
-     :if-new (file+head "Zettel/Slip/Exerpts/%<%Y%m%d%H%M%S>-${slug}.org"
+     :if-new (file+head "Slip/Exerpts/%<%Y%m%d%H%M%S>-${slug}.org"
                         "#+title: ${title}\n#+filetags: :exerpts:\n")
     "* %i%? \n %U" :immediate-finish t :unnarrowed t))
 
 (add-to-list 'org-roam-capture-templates
    '("l" "Literature" plain "%?"
-     :if-new (file+head "Zettel/Literature/%<%Y%m%d%H%M%S>-${slug}.org"
+     :if-new (file+head "Literature/%<%Y%m%d%H%M%S>-${slug}.org"
                         "#+title: ${title}\n#+filetags: :literal:\n")
     "* %i%? \n %U" :immediate-finish t :unnarrowed t))
 
@@ -112,6 +112,20 @@
 (use-package corfu
   :ensure t
   :defer t
+  :custom
+  ;; Make the popup appear quicker
+  (corfu-popupinfo-delay '(0.5 . 0.5))
+  ;; Always have the same width
+  (corfu-min-width 80)
+  (corfu-max-width corfu-min-width)
+  (corfu-count 14)
+  (corfu-scroll-margin 4)
+  ;; Have Corfu wrap around when going up
+  (corfu-cycle t)
+  (corfu-preselect-first t)
+  :bind (:map corfu-map
+              ;; Match `corfu-quick-complete' keybinding to `avy-goto-line'
+              ("s-j" . corfu-quick-complete))
   :init
   (progn
     (setq corfu-auto t)
@@ -125,8 +139,37 @@
     (setq corfu-auto-prefix 1)
     (setq corfu-on-exact-match nil)
     (global-corfu-mode)
+    (corfu-history-mode t)
+    ;; Allow Corfu to show help text next to suggested completion
+    (corfu-popupinfo-mode t)
   )
 )
+
+;; Enable auto completion and configure quitting
+(setq corfu-auto t
+      corfu-quit-no-match 'separator) ;; or t
+
+(use-package cape
+:ensure t
+:init
+;; Add `completion-at-point-functions', used by `completion-at-point'.
+(setq-default completion-at-point-functions
+              (append (default-value 'completion-at-point-functions)
+                      (list #'cape-dabbrev #'cape-file #'cape-abbrev))))
+
+;; Use Dabbrev with Corfu!
+(use-package dabbrev
+  :ensure t
+  ;; Swap M-/ and C-M-/
+  :bind (("M-/" . dabbrev-completion)
+         ("C-M-/" . dabbrev-expand))
+  :config
+  (add-to-list 'dabbrev-ignored-buffer-regexps "\\` ")
+  ;; Available since Emacs 29 (Use `dabbrev-ignored-buffer-regexps' on older Emacs)
+  (add-to-list 'dabbrev-ignored-buffer-modes 'authinfo-mode)
+  (add-to-list 'dabbrev-ignored-buffer-modes 'doc-view-mode)
+  (add-to-list 'dabbrev-ignored-buffer-modes 'pdf-view-mode)
+  (add-to-list 'dabbrev-ignored-buffer-modes 'tags-table-mode))
 
 (use-package org-journal
   :ensure t
