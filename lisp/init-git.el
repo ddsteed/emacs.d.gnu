@@ -14,6 +14,7 @@
    :config
    (setq magit-auto-revert-mode t)
 )
+(global-set-key (kbd "C-x M-g") 'magit-dispatch)
 
 (use-package magit-imerge
   :ensure t
