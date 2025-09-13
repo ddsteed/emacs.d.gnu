@@ -1,7 +1,8 @@
 .DS_Store
 *
+*.elc
 !.gitignore
 !clean
 !init.el
 !early-init.el
-!lisp/
+!lisp/*.el

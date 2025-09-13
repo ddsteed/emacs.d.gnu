@@ -12,8 +12,13 @@
     ("\C-x m" . magit-show-commit)
    )
    :config
+   (setq ediff-diff-options "")
+   (setq ediff-custom-diff-options "-u")
+   (setq ediff-window-setup-function 'ediff-setup-windows-plain)
+   (setq ediff-split-window-function 'split-window-vertically)
    (setq magit-auto-revert-mode t)
 )
+
 (global-set-key (kbd "C-x M-g") 'magit-dispatch)
 
 (use-package magit-imerge

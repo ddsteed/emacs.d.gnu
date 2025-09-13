@@ -8,11 +8,21 @@
 
 ;;; Code:
 
+;; Ensure Emacs loads the most recent byte-compiled files.
+(setq load-prefer-newer t)
+
+;; Make Emacs Native-compile .elc files asynchronously by setting
+;; `native-comp-jit-compilation' to t.
+(setq native-comp-jit-compilation t)
+(setq native-comp-deferred-compilation native-comp-jit-compilation)  ; Deprecated
+(native-comp-available-p)
+
 ;; 启动的时候先不加载各种 package，等真需要的时候再加
 (setq package-enable-at-startup nil)
 
 ;; If an `.el' file is newer than its corresponding `.elc', load the `.el'.
 (setq load-prefer-newer t)
+
 
 ;; Temporarily increase GC threshold during startup
 (setq gc-cons-threshold most-positive-fixnum)

@@ -34,17 +34,17 @@
    ((t (:background "gray10" :extend t))))
 )
 
-;(set-face-attribute 'org-block-begin-line nil
-;    ;	        :underline t
-;              :height 0.9
-;    ;         :background 'unspecified
-;              :inherit '(font-lock-comment-face fixed-pitch))
+(set-face-attribute 'org-block-begin-line nil
+    ;	        :underline t
+              :height 0.9
+    ;         :background 'unspecified
+              :inherit '(font-lock-comment-face fixed-pitch))
 
-;(set-face-attribute 'org-block-end-line nil
-;    ;	        :overline t
-;		      :height 0.9
-;    ;         :background 'unspecified
-;		      :inherit '(font-lock-comment-face fixed-pitch))
+(set-face-attribute 'org-block-end-line nil
+    ;	        :overline t
+		      :height 0.9
+    ;         :background 'unspecified
+		      :inherit '(font-lock-comment-face fixed-pitch))
 
   (setq org-image-actual-width nil)  ; 不自动设置图片的大小，请自行在 org 文件里指定
 ; (setq org-image-actual-width (/ (display-pixel-width) 3)) ; 图片显示大小固定位屏幕宽度的三分之一
