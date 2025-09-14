@@ -68,6 +68,7 @@
 (require 'init-buffer)
 (require 'init-chinese)
 (require 'init-vi)
+(require 'init-dired)
 (require 'init-terminal)
 (require 'init-calendar)
 (require 'init-program)

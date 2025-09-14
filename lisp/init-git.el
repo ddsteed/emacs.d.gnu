@@ -5,12 +5,14 @@
 
 (use-package magit
    :ensure t
-   :defer t
+   :commands magit-status
    :bind
    (
     ("\C-x g" . magit-status)
     ("\C-x m" . magit-show-commit)
    )
+   :custom
+   (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1)
    :config
    (setq ediff-diff-options "")
    (setq ediff-custom-diff-options "-u")
@@ -20,6 +22,9 @@
 )
 
 (global-set-key (kbd "C-x M-g") 'magit-dispatch)
+
+(use-package forge
+:after magit)
 
 (use-package magit-imerge
   :ensure t

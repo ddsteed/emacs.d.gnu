@@ -27,7 +27,9 @@
   :init
   (use-package pyvenv
     :ensure t
-    :defer t
+    :after python-mode
+    :config
+    (pyvenv-mode 1)
   )
 )
 

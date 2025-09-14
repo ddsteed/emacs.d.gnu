@@ -10,10 +10,11 @@
  (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
        doom-themes-enable-italic t) ; if nil, italics is universally disabled
 ;(load-theme 'doom-acario-dark t)
- (load-theme 'doom-bluloco-dark t)
+;(load-theme 'doom-bluloco-dark t)
 ;(load-theme 'doom-challenger-deep t)
 ;(load-theme 'doom-dark+ t)
 ;(load-theme 'doom-one t)
+ (load-theme 'doom-palenight t)
 
  ;; Enable flashing mode-line on errors
  (doom-themes-visual-bell-config)
@@ -91,6 +92,11 @@
 
 ;; 先把所有 mode 设置为空
 (setq-default mode-line-format '(" "))
+
+(use-package doom-modeline
+  :ensure t
+  :init (doom-modeline-mode 1)
+  :custom ((doom-modeline-height 15)))
 
 ;; smart-mode-line: 一个让 mode line 更加漂亮、方便管理的插件，可以自动做一些模式的隐藏等等，也可以选择多种主题。
 ;; 这里用于屏蔽某些显示内容
@@ -198,7 +204,8 @@
 (setq +modeline-font-family "Iosevka Comfy")
 
 ;; fixed-pitch 字体；
-(setq +fixed-pitch-family "Iosevka Comfy")
+;(setq +fixed-pitch-family "Iosevka Comfy")
+(setq +fixed-pitch-family "Fira Code Retina")
 
 ;; variable-pitch 字体；
 (setq +variable-pitch-family "LXGW WenKai Screen")
@@ -211,7 +218,8 @@
 
 (set-face-attribute
     'default nil
-    :font "IBM Plex Sans 14" 
+    ;:font "IBM Plex Sans 14" 
+    :font "Fira Code Retina"
     :height 120
 )
 
@@ -357,37 +365,6 @@
   :if window-system          ; 在图形化界面时才使用这个插件
   :init
   (good-scroll-mode))
-
- (use-package dired-ranger
- :ensure t
- :bind (:map dired-mode-map
-             ("C" . dired-ranger-copy)
-             ("X" . dired-ranger-move)
-             ("Y" . dired-ranger-paste)))
-
- (use-package dired-quick-sort
- :ensure t
- :config
- (dired-quick-sort-setup))
-
-;;preview files in dired
-(use-package peep-dired
-  :ensure t
-  :defer 2 ; don't access `dired-mode-map' until `peep-dired' is loaded
-  :bind (:map dired-mode-map
-              ("p" . peep-dired)))
-
-;;narrow dired to match filter
-(use-package dired-narrow
-  :ensure t
-  :bind (:map dired-mode-map
-              ("/" . dired-narrow)))
-
-(use-package dired-subtree
-:config
-(bind-keys :map dired-mode-map
-           ("i" . dired-subtree-insert)
-           (";" . dired-subtree-remove)))
 
 
 (provide 'init-look)

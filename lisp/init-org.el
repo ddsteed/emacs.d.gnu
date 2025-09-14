@@ -60,7 +60,7 @@
 (custom-set-faces
  `(org-level-1 ((t (:foreground "LightBlue" :height 1.2 :bold t))))
  `(org-level-2 ((t (:foreground "cyan"      :height 1.1 :bold t))))
- `(org-level-3 ((t (:foreground "PaleGreen" :height 1.1 :bold nil))))
+ `(org-level-3 ((t (:foreground "PaleGreen" :height 1.05 :bold nil))))
  `(org-level-4 ((t (:foreground "DarkTurquoise" :height 1.0 :bold t))))
 )
 

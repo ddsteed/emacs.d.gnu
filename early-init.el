@@ -24,8 +24,10 @@
 (setq load-prefer-newer t)
 
 
-;; Temporarily increase GC threshold during startup
+;; Make gc pauses faster by decreasing the threshold.
 (setq gc-cons-threshold most-positive-fixnum)
+;(setq gc-cons-threshold (* 2 1000 1000))
+
 ;; Restore to normal value after startup (e.g. 5GB)
 (add-hook 'emacs-startup-hook
         (lambda () (setq gc-cons-threshold (* 5000 1024 1024))))
