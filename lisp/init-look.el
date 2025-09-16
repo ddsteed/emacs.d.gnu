@@ -10,11 +10,11 @@
  (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
        doom-themes-enable-italic t) ; if nil, italics is universally disabled
 ;(load-theme 'doom-acario-dark t)
-;(load-theme 'doom-bluloco-dark t)
+ (load-theme 'doom-bluloco-dark t)
 ;(load-theme 'doom-challenger-deep t)
 ;(load-theme 'doom-dark+ t)
 ;(load-theme 'doom-one t)
- (load-theme 'doom-palenight t)
+;(load-theme 'doom-palenight t)
 
  ;; Enable flashing mode-line on errors
  (doom-themes-visual-bell-config)
@@ -43,8 +43,8 @@
 )
 
 ;; make a frame transparent
-(set-frame-parameter (selected-frame) 'alpha '(85 . 65))
-(add-to-list 'default-frame-alist '(alpha . (85 . 65)))
+(set-frame-parameter (selected-frame) 'alpha '(95 . 75))
+(add-to-list 'default-frame-alist '(alpha . (95 . 75)))
 
 (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
 (add-to-list 'default-frame-alist '(ns-appearance . dark))

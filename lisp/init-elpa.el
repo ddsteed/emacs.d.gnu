@@ -16,6 +16,21 @@
 ;; Initialize use-package
 (unless (package-installed-p 'use-package)
   (package-install 'use-package))
+(use-package auto-package-update
+ :ensure t
+ :config
+ (setq auto-package-update-delete-old-versions t
+       auto-package-update-interval 4)
+ (auto-package-update-maybe))
+
+(use-package paradox
+  :ensure t
+  :defer t
+  :init
+  (setq paradox-github-token t)
+  (setq paradox-execute-asynchronously t)
+  (setq paradox-automatically-star t))
+
 
 (provide 'init-elpa)
 ;;; init-elpa.el ends here
