@@ -3,7 +3,6 @@
 ;;;   wolfram mathematica
 ;;; Code:
 (use-package wolfram
-  :ensure t
   :defer t
 )
 

@@ -36,23 +36,33 @@
 (setq custom-file (make-temp-file "custom-" nil ".el"))
 
 ;; Faster to disable these here (before they've been initialized)
-(push '(menu-bar-lines . 0) default-frame-alist)
-(push '(tool-bar-lines . 0) default-frame-alist)
+(push '(menu-bar-lines   . 0) default-frame-alist)
+(push '(tool-bar-lines   . 0) default-frame-alist)
 (push '(scroll-bar-lines . 0) default-frame-alist)
 (push '(vertical-scroll-bars) default-frame-alist)
 
-;; Give the frame basic coloring while waiting for the theme to load. The main purpose of this is to not blind me when it's dark by flashing a screen full of white. These colors are from doom-one.
+;; Give the frame basic coloring while waiting for the theme to load. The main
+;; purpose of this is to not blind me when it's dark by flashing a screen full
+;; of white. These colors are from doom-one.
 (set-face-attribute 'default nil :background "#282c34" :foreground "#bbc2cf")
 
-;; Resizing the Emacs frame can be a terribly expensive part of changing the font. By inhibiting this, we easily halve startup times with fonts that are larger than the system default.
+;; Resizing the Emacs frame can be a terribly expensive part of changing the
+;; font. By inhibiting this, we easily halve startup times with fonts that are
+;; larger than the system default.
 (setq frame-inhibit-implied-resize t
-      frame-resize-pixelwise t)
+      frame-resize-pixelwise t
+)
 
- ;; Ignore X resources; its settings would be redundant with the other settings in this file and can conflict with later config (particularly where the cursor color is concerned).
+ ;; Ignore X resources; its settings would be redundant with the other settings
+ ;; in this file and can conflict with later config (particularly where the
+ ;; cursor color is concerned).
 (advice-add #'x-apply-session-resources :override #'ignore)
 
 ;; 让 Emacs 停顿少一点
 (setq redisplay-dont-pause t)
+
+;; 关闭启动画面
+(setq inhibit-startup-message t)
 
 ;; So we can detect this having been loaded
 (provide 'early-init)

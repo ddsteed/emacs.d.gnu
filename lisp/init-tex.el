@@ -10,7 +10,6 @@
 
 (use-package auctex
   :defer t
-  :ensure t
 )
 
 (add-hook 'LaTeX-mode-hook 'turn-on-cdlatex)       ;;

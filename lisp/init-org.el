@@ -14,7 +14,7 @@
 
 (add-to-list 'auto-mode-alist '("\\.\\(org\\|org_archive\\|txt\\)$" . org-mode))
 
-(setq org-export-backends (quote (ascii html icalendar latex md)))
+(setq org-export-backends (quote (ascii hugo html icalendar latex md)))
 
 (setq-default org-startup-indented t
               org-pretty-entities t
@@ -25,7 +25,6 @@
 
 
 (use-package org-appear
-  :ensure t
   :config
   (add-hook 'org-mode-hook 'org-appear-mode)
 )
@@ -65,14 +64,12 @@
 )
 
 (use-package org-alert
-  :ensure t
   :defer t
   :config
   (progn (setq alert-default-style 'libnotify))
 )
 
 (use-package org-bullets
-  :ensure t
   :after org
   :config
   (setq org-bullets-face-name (quote org-bullet-face))
@@ -121,7 +118,6 @@
 )
 
 (use-package cdlatex
-  :ensure t
   :defer t
   :after org
   :custom
@@ -138,7 +134,6 @@
 
 ;; LaTeX previews
 (use-package org-fragtog
-  :ensure t
   :defer t
   :custom
   ; (org-startup-with-latex-preview t)
@@ -147,15 +142,15 @@
    (plist-put org-format-latex-options :foreground 'auto)
    (plist-put org-format-latex-options :background 'auto)))
 
-;; ox-hugo: org to html
+;; org to hugo
 (use-package ox-hugo
-  :ensure t   
   :defer t
   :after ox)
 
+(add-to-list 'org-export-backends '(hugo))
+
 ;; org preview html
 (use-package org-preview-html
-  :ensure t
   :defer t
 )
 
@@ -227,7 +222,6 @@ LEVEL 是一个数字，作为参数提供，默认指定第 4 级"
        (apply '(rds/count-org-headings 4)))))
 
 (use-package wc-mode
-  :ensure t
   :defer t
 )
 
@@ -241,7 +235,6 @@ LEVEL 是一个数字，作为参数提供，默认指定第 4 级"
 (add-hook 'dired-mode-hook 'org-download-enable)
 
 (use-package org-download
-   :ensure t 
    :defer t
    ;;将截屏功能绑定到快捷键：Ctrl + Shift + Y
    :bind ("C-S-y" . org-download-screenshot)
@@ -257,7 +250,7 @@ LEVEL 是一个数字，作为参数提供，默认指定第 4 级"
                "* %i%? \n %U" :empty-lines-before 1)))
 
 (add-to-list 'org-capture-templates 
-             '("t" "Tasks" entry (file+headline "~/Work/GTD/Inbox.org" "Tasks")
+             '("t" "Tasks" entry (file+headline "~/Work/GTD/Task.org" "Tasks")
                "* %i%? \n %U" :empty-lines-before 1))
 
 ;; 将该目录下所有的 org 和 org_archive 文件作为日程表搜索范围
@@ -416,6 +409,11 @@ LEVEL 是一个数字，作为参数提供，默认指定第 4 级"
 ; global STYLE property values for completion
 (setq org-global-properties (quote (("Effort_ALL" . "0:15 0:30 0:45 1:00 2:00 3:00 4:00 5:00 6:00 0:00")
                                     ("STYLE_ALL" . "habit"))))
+
+(setq org-plantuml-jar-path (expand-file-name "~/.emacs.d/addons/plantuml/plantuml.jar"))
+(add-to-list 'org-src-lang-modes '("plantuml" . plantuml))
+
+(org-babel-do-load-languages 'org-babel-load-languages '((plantuml . t))) ; this line activates plantuml
 
 
 (provide 'init-org)

@@ -4,7 +4,6 @@
 ;;; Code:
 
  (use-package org-roam
-   :ensure t
    :after org
    :init
    (setq org-roam-v2-ack t) 
@@ -22,8 +21,9 @@
 )
 
 ;; 融合 org
-;; 任意 mode 都可以找到笔记
+;; 任意 mode 都可以找到/新建笔记
 (global-set-key (kbd "C-c r f") 'org-roam-node-find)
+(global-set-key (kbd "C-c r i") 'org-roam-node-insert)
 
 (add-hook 'org-mode-hook
           (lambda ()
@@ -110,7 +110,6 @@
 (setq org-roam-completion-everywhere t)
 
 (use-package corfu
-  :ensure t
   :defer t
   :custom
   ;; Make the popup appear quicker
@@ -150,16 +149,15 @@
       corfu-quit-no-match 'separator) ;; or t
 
 (use-package cape
-:ensure t
-:init
-;; Add `completion-at-point-functions', used by `completion-at-point'.
-(setq-default completion-at-point-functions
-              (append (default-value 'completion-at-point-functions)
-                      (list #'cape-dabbrev #'cape-file #'cape-abbrev))))
+  :init
+  ;; Add `completion-at-point-functions', used by `completion-at-point'.
+  (setq-default completion-at-point-functions
+                (append (default-value 'completion-at-point-functions)
+                        (list #'cape-dabbrev #'cape-file #'cape-abbrev))))
 
 ;; Use Dabbrev with Corfu!
 (use-package dabbrev
-  :ensure t
+  :defer t
   ;; Swap M-/ and C-M-/
   :bind (("M-/" . dabbrev-completion)
          ("C-M-/" . dabbrev-expand))
@@ -172,7 +170,6 @@
   (add-to-list 'dabbrev-ignored-buffer-modes 'tags-table-mode))
 
 (use-package org-journal
-  :ensure t
   :defer t
   :bind
   ("C-c n j" . org-journal-new-entry)

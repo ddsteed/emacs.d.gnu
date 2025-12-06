@@ -4,7 +4,6 @@
 ;;; Code:
 
 (use-package markdown-mode
- :ensure t
  :defer t
  :commands (markdown-mode gfm-mode)
  :mode (("README\\.md\\'" . gfm-mode)
@@ -12,12 +11,11 @@
         ("\\.markdown\\'" . markdown-mode))
  :init (setq markdown-command "/usr/local/bin/pandoc"))
 
-(use-package markdown-ts-mode
- :ensure t
- :defer t
- :mode ("\\.md\\'" . markdown-ts-mode)
- :defer 't
-)
+;(use-package markdown-ts-mode
+; :defer t
+; :mode ("\\.md\\'" . markdown-ts-mode)
+; :defer 't
+;)
 
 
 
