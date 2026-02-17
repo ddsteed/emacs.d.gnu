@@ -27,23 +27,46 @@
  ;; Corrects (and improves) org-mode's native fontification.
  (doom-themes-org-config))
 
-(global-set-key [(f9)] 'loop-alpha)  ; 注意这行中的 F9 , 可以改成你想要的按键
-(setq alpha-list '((100 100) (95 85) (90 80) (85 65) (75 55) (65 45)))
+;; 透明度：数值越大越不透明；ACTIVE > INACTIVE
+(defvar my/alpha-focus-list '((100 . 92)
+                             (98  . 88)
+                             (96  . 85)
+                             (94  . 82)
+                             (92  . 78)
+                             (90  . 74)
+                             (88  . 70))
+  "Pairs of (active . inactive) frame alpha values.")
 
-(defun loop-alpha ()
+(defun my/loop-alpha-focus ()
   (interactive)
-  (let ((h (car alpha-list)))                
-    ((lambda (a ab)
-       (set-frame-parameter (selected-frame) 'alpha (list a ab))
-       (add-to-list 'default-frame-alist (cons 'alpha (list a ab)))
-       ) (car h) (car (cdr h)))
-    (setq alpha-list (cdr (append alpha-list (list h))))
-  )
-)
+  (unless (display-graphic-p)
+    (user-error "Transparency only works in GUI frames"))
 
-;; make a frame transparent
-(set-frame-parameter (selected-frame) 'alpha '(95 . 85))
-(add-to-list 'default-frame-alist '(alpha . (95 . 85)))
+  (let ((p (car my/alpha-focus-list)))
+    ;; rotate
+    (setq my/alpha-focus-list
+          (append (cdr my/alpha-focus-list) (list p)))
+
+    ;; apply
+    (set-frame-parameter nil 'alpha p)
+    (setf (alist-get 'alpha default-frame-alist) p)
+
+    (message "alpha(active . inactive) = %s" p)))
+
+(global-set-key (kbd "<f9>") #'my/loop-alpha-focus)
+
+;; 默认值（按你想要的：当前更不透明，失焦更透明）
+(when (display-graphic-p)
+  (let ((p '(94 . 82)))
+    (set-frame-parameter nil 'alpha p)
+    (setf (alist-get 'alpha default-frame-alist) p)))
+
+;; 如果你用 emacs --daemon / emacsclient，确保新建 frame 也继承
+(add-hook 'after-make-frame-functions
+          (lambda (_f)
+            (when (display-graphic-p)
+              (let ((p (alist-get 'alpha default-frame-alist)))
+                (when p (set-frame-parameter nil 'alpha p))))))
 
 (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
 (add-to-list 'default-frame-alist '(ns-appearance . dark))
@@ -57,72 +80,6 @@
 (setq frame-title-format "Life is too short to be little!")
 
 (setq user-full-name "Hao Feng") 
-
-;; FIXME: left-clicking a tab closes it https://github.com/ema2159/centaur-tabs/issues/225
-(use-package centaur-tabs
-  :demand t
-  :config
-  ;; FIXME: switching by numbers should probably be upstreamed
-  (defun idemacs-select-nth-tab (n)
-    (let* ((tabset  (centaur-tabs-current-tabset))
-           (tablist (centaur-tabs-tabs tabset))
-           (nth-tab (nth (- n 1) tablist)))
-      (centaur-tabs-buffer-select-tab nth-tab)))
-  (defmacro idemacs-generate-numeric-tab-commands ()
-    (cl-loop for n from 1 to 9 collect
-      `(defun ,(intern (format "idemacs-select-tab-%s" n)) ()
-         (interactive)
-         (idemacs-select-nth-tab ,n))
-      into defuns
-      finally return `(progn ,@defuns)))
-  (idemacs-generate-numeric-tab-commands)
-  ;; The default `centaur-tabs-buffer-groups' creates too many tab
-  ;; groups, which differs from VSCode behaviour. Users may get
-  ;; confused by why they can't see tabs for their files. So we reduce
-  ;; the number of tab groups to just two.
-  (defun centaur-tabs-buffer-groups ()
-    "Return a list of groups the current buffer should belong to.
-
-All buffer names starting with * will be grouped under \"Emacs\".
-All other buffers are grouped into \"User\"."
-    (list
-     (cond
-      ((or (string-match-p "^ ?\\*" (buffer-name))
-           (memq major-mode '(magit-process-mode
-                              magit-status-mode
-                              magit-diff-mode
-                              magit-log-mode
-                              magit-file-mode
-                              magit-blame-mode
-                              magit-blob-mode)))
-       "Emacs")
-      (t "User"))))
-  (setq centaur-tabs-style "bar"
-        centaur-tabs-height 32
-        centaur-tabs-set-icons t
-        centaur-tabs-show-new-tab-button t
-        centaur-tabs-set-modified-marker t
-        centaur-tabs-set-bar 'over
-        centaur-tabs-show-count nil
-        x-underline-at-descent-line t
-        ;; centaur-tabs-left-edge-margin nil
-  )
-  (centaur-tabs-mode 1)
-  :bind
-  ; ("C-<prior>" . centaur-tabs-backward)
-  ; ("C-<next>" . centaur-tabs-forward)
-  ("M-[" . centaur-tabs-move-current-tab-to-left)
-  ("M-]" . centaur-tabs-move-current-tab-to-right)
-  ("M-1" . idemacs-select-tab-1)
-  ("M-2" . idemacs-select-tab-2)
-  ("M-3" . idemacs-select-tab-3)
-  ("M-4" . idemacs-select-tab-4)
-  ("M-5" . idemacs-select-tab-5)
-  ("M-6" . idemacs-select-tab-6)
-  ("M-7" . idemacs-select-tab-7)
-  ("M-8" . idemacs-select-tab-8)
-  ("M-9" . idemacs-select-tab-9)
-  ("M-0" . centaur-tabs-select-end-tab))
 
 (blink-cursor-mode -1)          ;; 光标不要闪烁		
 (set-cursor-color "orange")     ;; 光标颜色
@@ -195,6 +152,10 @@ All other buffers are grouped into \"User\"."
 (setq hi-lock-file-patterns-policy #'(lambda (dummy) t)) 
 
 (global-visual-line-mode 1)
+
+;; 全局启用：让 word-wrap/visual-line-mode 能在 CJK 字符间断行
+(when (boundp 'word-wrap-by-category)
+  (setq-default word-wrap-by-category t))
 
 ;; 先把所有 mode 设置为空
 (setq-default mode-line-format '(" "))

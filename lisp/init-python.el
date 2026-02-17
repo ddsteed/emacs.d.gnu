@@ -31,7 +31,6 @@
   :config
   (direnv-mode))
 
-
 (use-package dap-mode
   :defer t
   :config

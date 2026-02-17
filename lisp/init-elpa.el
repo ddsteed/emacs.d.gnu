@@ -5,8 +5,15 @@
 
 (require 'package) 
 
-(add-to-list 'package-archives '("gnu"    . "http://elpa.gnu.org/packages/") t)
-(add-to-list 'package-archives '("melpa"  . "http://melpa.org/packages/") t)
+; (add-to-list 'package-archives '("gnu"    . "http://elpa.gnu.org/packages/") t)
+; (add-to-list 'package-archives '("melpa"  . "http://melpa.org/packages/") t)
+; (add-to-list 'package-archives '("nongnu" . "https://elpa.nongnu.org/nongnu/"))
+
+(setq package-archives
+    '(("gnu"   . "https://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
+      ("melpa" . "https://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
+      ("org"   . "https://mirrors.tuna.tsinghua.edu.cn/elpa/org/")))
+
 
 ;; 启动的时候先不加载各种 package，等真需要的时候再加
 (setq package-enable-at-startup nil)

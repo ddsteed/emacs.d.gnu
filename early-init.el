@@ -23,7 +23,6 @@
 ;; If an `.el' file is newer than its corresponding `.elc', load the `.el'.
 (setq load-prefer-newer t)
 
-
 ;; Make gc pauses faster by decreasing the threshold.
 (setq gc-cons-threshold most-positive-fixnum)
 ;(setq gc-cons-threshold (* 2 1000 1000))

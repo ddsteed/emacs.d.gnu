@@ -50,6 +50,58 @@
   
 (setq org-startup-indented t)
 
+;; 允许在中文紧贴 * 号时也生效
+(setq org-emphasis-regexp-components
+      '("[:multibyte:]-[:space:]('\"{"  ;; pre: 允许前面是多字节字符（中文）
+        "-[:space:].,:!?;'\")}\\["      ;; post: 允许后面是标点等
+        " \t\r\n"                       ;; border: 允许的空白符
+        "."                             ;; body-regexp: 内容允许的字符
+        1))                             ;; newline: 允许跨行数
+
+(with-eval-after-load 'org
+  ;; 让非 ASCII（含中文）更容易作为强调标记的相邻字符
+  (setcar org-emphasis-regexp-components " \t('\"{[:nonascii:]")
+  (setcar (nthcdr 1 org-emphasis-regexp-components) "[:nonascii:]- \t.,:!?;'\")}\\")
+  (org-set-emph-re 'org-emphasis-regexp-components org-emphasis-regexp-components))
+
+;; 让 visual-line-mode 在 CJK 字符间也能断行
+(setq-default word-wrap-by-category t)
+(add-hook 'org-mode-hook #'visual-line-mode)
+
+(add-hook 'org-mode-hook #'visual-fill-column-mode)
+
+(add-hook 'org-mode-hook #'visual-line-mode)
+
+;; 需要已安装 visual-fill-column
+(use-package visual-fill-column)
+
+(setq visual-para 0.9)
+(defun my/vfc--update-width (&optional frame)
+  "Set visual-fill-column width to visual-para * FRAME width (in columns)."
+  (with-selected-frame (or frame (selected-frame))
+    ;; visual-para 倍并取整；同时设个下限避免太窄（可按需调整）
+    (setq-default visual-fill-column-width
+                  (max 40 (floor (* visual-para (frame-width))))))
+  ;; 已存在的 buffer 里如果开启了 visual-fill-column-mode，需要刷新一下
+  (dolist (buf (buffer-list))
+    (with-current-buffer buf
+      (when (bound-and-true-p visual-fill-column-mode)
+        (visual-fill-column--adjust-window)))))
+
+;; 1) 启动时先算一次
+(my/vfc--update-width)
+
+;; 2) 任何 frame / window 尺寸变化时自动重算（包括全屏、最大化、拖拽、换显示器）
+(add-hook 'window-size-change-functions #'my/vfc--update-width)
+
+;; 3) 你希望在哪些模式启用（举例：org、markdown、text）
+(add-hook 'org-mode-hook #'visual-fill-column-mode)
+(add-hook 'markdown-mode-hook #'visual-fill-column-mode)
+(add-hook 'text-mode-hook #'visual-fill-column-mode)
+
+;; 可选：居中显示
+(setq-default visual-fill-column-center-text t)
+
 (setq org-columns-default-format "%80ITEM(Task) %10Effort(Effort){:} %10CLOCKSUM")
 
 (setq org-confirm-babel-evaluate nil
@@ -82,7 +134,7 @@
 (setq org-log-done 'time)
 
 (setq org-todo-keywords
-      (quote  ((sequence "☞ TODO(t)" "☞ NEXT(n)" "|" "✔ DONE(d!)")
+      (quote  ((sequence "☞ TODO(t)" "☞ NEXT(n)" "|" "✔ DONE(d)")
                (sequence "⚔ INPR(i)" "⚑ WAIT(w)" "|" "✘ CANL(c@/!)" "☕ BREK(b@/!)"))))
 
 (setq org-todo-keyword-faces
@@ -261,9 +313,6 @@ LEVEL 是一个数字，作为参数提供，默认指定第 4 级"
 (setq org-agenda-skip-function
     '(org-agenda-skip-entry-if 'todo '("✔ DONE" "✘ CANL")))
    
-;; 融合 ical 和 agenda
-(add-to-list 'org-modules 'org-mac-iCal)
-
 ;; 显示节日
 (setq org-agenda-include-diary t)
 
@@ -410,10 +459,36 @@ LEVEL 是一个数字，作为参数提供，默认指定第 4 级"
 (setq org-global-properties (quote (("Effort_ALL" . "0:15 0:30 0:45 1:00 2:00 3:00 4:00 5:00 6:00 0:00")
                                     ("STYLE_ALL" . "habit"))))
 
+;; 1) 强制 plantuml-mode 不用 server
+;; (setq plantuml-default-exec-mode 'jar)      ;; 或 'executable
+(setq plantuml-default-exec-mode 'executable)
+
+;; 2) 选择其一：jar 方式
+;; (setq plantuml-jar-path (expand-file-name "~/tools/plantuml.jar"))
+;; (setq org-plantuml-jar-path plantuml-jar-path)
+
+;; 2') 或者：executable 方式（系统装了 plantuml 命令时）
+(setq plantuml-executable-path "plantuml")
+
 (setq org-plantuml-jar-path (expand-file-name "~/.emacs.d/addons/plantuml/plantuml.jar"))
 (add-to-list 'org-src-lang-modes '("plantuml" . plantuml))
 
 (org-babel-do-load-languages 'org-babel-load-languages '((plantuml . t))) ; this line activates plantuml
+
+(use-package ob-mermaid)
+
+;; 让 org-babel 支持 mermaid
+(with-eval-after-load 'org
+  (add-to-list 'org-src-lang-modes '("mermaid" . mermaid))
+  (add-to-list 'org-src-lang-modes '("mermaid" . mermaid-ts))
+
+  ;; 如果 mmdc 不在 PATH 里，就指定绝对路径
+  ;; (setq ob-mermaid-cli-path "/opt/homebrew/bin/mmdc")
+  (setq ob-mermaid-cli-path "mmdc")
+
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((mermaid . t))))
 
 
 (provide 'init-org)

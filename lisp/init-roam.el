@@ -6,18 +6,15 @@
  (use-package org-roam
    :after org
    :init
-   (setq org-roam-v2-ack t) 
-   (org-roam-db-sync) 
+   (setq org-roam-v2-ack t)
    :custom
    (org-roam-directory (file-truename "~/Documents/RDS/NOTES/Org/Roam"))
-   (find-file-visit-truename t)
-   (add-hood 'after-init-hook 'org-roam-mode)
    (org-roam-database-connector 'sqlite-builtin)
-   (org-roam-db-location "~/.emacs.d.rds/org-roam.db")
+   (org-roam-db-location (expand-file-name "org-roam.db" user-emacs-directory))
    (org-roam-completion-everywhere t)
    :config
    (org-roam-setup)
-   (org-roam-db-autosync-enable)
+   (org-roam-db-autosync-mode 1)
 )
 
 ;; 融合 org
@@ -36,6 +33,11 @@
             (local-set-key (kbd "C-c r l") 'org-roam-buffer-toggle)
            )
 )
+
+(with-eval-after-load 'org
+  (add-hook 'org-mode-hook
+            (lambda ()
+              (org-cycle-hide-drawers 'all))))
 
 (setq org-roam-capture-templates
      '(("f" "fleeting" plain "%?" :if-new (file+head "fleeting/${slug}.org" "#+title: ${title}\n#+filetags: :fleeting:\n")
